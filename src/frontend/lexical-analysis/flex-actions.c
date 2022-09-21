@@ -1,9 +1,9 @@
 #include "../../backend/support/logger.h"
-#include "flex-actions.h"
+#include "flexnTags.h"
 #include <stdlib.h>
 
 /**
- * Implementación de "flex-actions.h".
+ * Implementación de "flexnTags.h".
  *
  * Cada función debe realizar 2 operaciones básicas para lograr el streaming
  * de tokens hacia Bison:
@@ -18,60 +18,143 @@
  * (mediante $1, $2, $3, etc.).
  */
 
+// Bloque de comentarios multilínea.
 void BeginCommentPatternAction() {
 	LogDebug("BeginCommentPatternAction.");
+}
+void EndCommentPatternAction() {
+	LogDebug("EndCommentPatternAction.");
+}
+
+
+// Patrones terminales del lenguaje diseñado.
+token StartPatternTag(const char * lexeme) {
+	LogDebug("StartOperatorPatternTag: '%s'.", lexeme);
 	yylval.token = START;
 	return START;
 }
 
-void EndCommentPatternAction() {
-	LogDebug("EndCommentPatternAction.");
+token EndPatternTag(const char * lexeme) {
+	LogDebug("EndParenthesisPatternTag: '%s'.", lexeme);
 	yylval.token = END;
 	return END;
 }
 
-token AdditionOperatorPatternAction(const char * lexeme) {
-	LogDebug("AdditionOperatorPatternAction: '%s'.", lexeme);
-	yylval.token = ADD;
-	return ADD;
+token ContainerPatternTag(const char * lexeme) {
+	LogDebug("BeginContainerPatternTag: '%s'.", lexeme);
+	yylval.token = CONTAINER;
+	return CONTAINER;
 }
 
-token CloseParenthesisPatternAction(const char * lexeme) {
-	LogDebug("CloseParenthesisPatternAction: '%s'.", lexeme);
-	yylval.token = CLOSE_PARENTHESIS;
-	return CLOSE_PARENTHESIS;
+token EndContainerPatternTag(const char * lexeme) {
+	LogDebug("EndContainerPatternTag: '%s'.", lexeme);
+	yylval.token = END_CONTAINER;
+	return END_CONTAINER;
 }
 
-token DivisionOperatorPatternAction(const char * lexeme) {
-	LogDebug("DivisionOperatorPatternAction: '%s'.", lexeme);
-	yylval.token = DIV;
-	return DIV;
+token TitlePatternTag(const char * lexeme, const int length) {
+	LogDebug("TitlePatternTag: '%s' (length = %d).", lexeme, length);
+	yylval.token = TITLE;
+	return TITLE;
 }
 
-token IntegerPatternAction(const char * lexeme, const int length) {
-	LogDebug("IntegerPatternAction: '%s' (length = %d).", lexeme, length);
-	yylval.integer = atoi(lexeme);
-	return INTEGER;
+token TablePatternTag(const char * lexeme) {
+	LogDebug("TablePatternTag: '%s'.", lexeme);
+	yylval.token = TABLE;
+	return TABLE;
 }
 
-token MultiplicationOperatorPatternAction(const char * lexeme) {
-	LogDebug("MultiplicationOperatorPatternAction: '%s'.", lexeme);
-	yylval.token = MUL;
-	return MUL;
+token EndTablePatternTag(const char * lexeme) {
+	LogDebug("OpenParenthesisPatternTag: '%s'.", lexeme);
+	yylval.token = END_TABLE;
+	return END_TABLE;
 }
 
-token OpenParenthesisPatternAction(const char * lexeme) {
-	LogDebug("OpenParenthesisPatternAction: '%s'.", lexeme);
-	yylval.token = OPEN_PARENTHESIS;
-	return OPEN_PARENTHESIS;
+token ImagePatternTag(const char * lexeme) {
+	LogDebug("ImagePatternTag: '%s'.", lexeme);
+	yylval.token = IMG;
+	return IMG;
 }
 
-token SubtractionOperatorPatternAction(const char * lexeme) {
-	LogDebug("SubtractionOperatorPatternAction: '%s'.", lexeme);
-	yylval.token = SUB;
-	return SUB;
+token LinkPatternTag(const char * lexeme) {
+	LogDebug("LinkPatternTag: '%s'.", lexeme);
+	yylval.token = LINK;
+	return LINK;
 }
 
+token RowPatternTag(const char * lexeme) {
+	LogDebug("RowPatternTag: '%s'.", lexeme);
+	yylval.token = ROW;
+	return ROW;
+}
+
+token EndRowPatternTag(const char * lexeme) {
+	LogDebug("LinkPatternTag: '%s'.", lexeme);
+	yylval.token = END_ROW;
+	return END_ROW;
+}
+
+token TextPatternTag(const char * lexeme) {
+	LogDebug("TextPatternTag: '%s'.", lexeme);
+	yylval.token = TEXT;
+	return TEXT;
+}
+
+token ColonPatternTag(const char * lexeme) {
+	LogDebug("ColonPatternTag: '%s'.", lexeme);
+	yylval.token = COLON;
+	return COLON;
+}
+
+token CommaPatternTag(const char * lexeme) {
+	LogDebug("CommaPatternTag: '%s'.", lexeme);
+	yylval.token = COMMA;
+	return COMMA;
+}
+
+token IdPatternAttribute(const char * lexeme) {
+	LogDebug("IdPatternTag: '%s'.", lexeme);
+	yylval.token = ID;
+	return ID;
+}
+
+token StringPatternAttribute(const char * lexeme) {
+	LogDebug("StringPatternTag: '%s'.", lexeme);
+	yylval.token = STRING;
+	return STRING;
+}
+
+token SizePatternAttribute(const char * lexeme) {
+	LogDebug("SizePatternTag: '%s'.", lexeme);
+	yylval.token = SIZE;
+	return SIZE;
+}
+
+token ColorPatternAttribute(const char * lexeme) {
+	LogDebug("ColorPatternTag: '%s'.", lexeme);
+	yylval.token = COLOR;
+	return COLOR;
+}
+
+token StylePatternAttribute(const char * lexeme) {
+	LogDebug("StylePatternTag: '%s'.", lexeme);
+	yylval.token = STYLE;
+	return STYLE;
+}
+
+token PositionPatternAttribute(const char * lexeme) {
+	LogDebug("PositionPatternTag: '%s'.", lexeme);
+	yylval.token = POSITION;
+	return POSITION;
+}
+
+token NumberPatternAttribute(const char * lexeme) {
+	LogDebug("NumberPatternTag: '%s'.", lexeme);
+	yylval.token = NUMBER;
+	return NUMBER;
+}
+
+// Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length) {
 	LogDebug("UnknownPatternAction: '%s' (length = %d).", lexeme, length);
 	yylval.token = YYUNDEF;
@@ -79,6 +162,7 @@ token UnknownPatternAction(const char * lexeme, const int length) {
 	return YYUNDEF;
 }
 
+// Regla que no hace nada, permite ignorar parte de la entrada.
 void IgnoredPatternAction(const char * lexeme, const int length) {
 	LogDebug("IgnoredPatternAction: '%s' (length = %d).", lexeme, length);
 	// Como no debe hacer nada con el patrón, solo se loguea en consola.

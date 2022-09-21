@@ -24,13 +24,28 @@ void BeginCommentPatternAction();
 void EndCommentPatternAction();
 
 // Patrones terminales del lenguaje diseñado.
-token AdditionOperatorPatternAction(const char * lexeme);
-token CloseParenthesisPatternAction(const char * lexeme);
-token DivisionOperatorPatternAction(const char * lexeme);
-token IntegerPatternAction(const char * lexeme, const int length);
-token MultiplicationOperatorPatternAction(const char * lexeme);
-token OpenParenthesisPatternAction(const char * lexeme);
-token SubtractionOperatorPatternAction(const char * lexeme);
+token StartPatternTag(const char * lexeme);
+token EndPatternTag(const char * lexeme);
+token ContainerPatternTag(const char * lexeme);
+token EndContainerPatternTag(const char * lexeme);
+token TitlePatternTag(const char * lexeme, const int length);
+token TablePatternTag(const char * lexeme);
+token EndTablePatternTag(const char * lexeme);
+token ImagePatternTag(const char * lexeme);
+token LinkPatternTag(const char * lexeme);
+token RowPatternTag(const char * lexeme);
+token EndRowPatternTag(const char * lexeme);
+token TextPatternTag(const char * lexeme);
+token ColonPatternTag(const char * lexeme);
+token CommaPatternTag(const char * lexeme);
+
+token IdPatternAttribute(const char * lexeme);
+token StringPatternAttribute(const char * lexeme);
+token SizePatternAttribute(const char * lexeme);
+token ColorPatternAttribute(const char * lexeme);
+token StylePatternAttribute(const char * lexeme);
+token PositionPatternAttribute(const char * lexeme);
+token NumberPatternAttribute(const char * lexeme);
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);
