@@ -20,8 +20,8 @@
 
 void BeginCommentPatternAction() {
 	LogDebug("BeginCommentPatternAction.");
-	yylval.token = BEGIN;
-	return BEGIN;
+	yylval.token = START;
+	return START;
 }
 
 void EndCommentPatternAction() {
