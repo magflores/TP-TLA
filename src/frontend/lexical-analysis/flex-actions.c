@@ -20,10 +20,14 @@
 
 void BeginCommentPatternAction() {
 	LogDebug("BeginCommentPatternAction.");
+	yylval.token = BEGIN;
+	return BEGIN;
 }
 
 void EndCommentPatternAction() {
 	LogDebug("EndCommentPatternAction.");
+	yylval.token = END;
+	return END;
 }
 
 token AdditionOperatorPatternAction(const char * lexeme) {
