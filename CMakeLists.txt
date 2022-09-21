@@ -49,6 +49,19 @@ elseif (CMAKE_C_COMPILER_ID STREQUAL "Clang")
 		OUTPUT ../src/frontend/lexical-analysis/flex-scanner.c
 		COMMAND flex -o ../src/frontend/lexical-analysis/flex-scanner.c ../src/frontend/lexical-analysis/flex-patterns.l
 		DEPENDS ../src/frontend/syntactic-analysis/bison-parser.c ../src/frontend/syntactic-analysis/bison-parser.h)
+
+elseif (CMAKE_C_COMPILER_ID STREQUAL "AppleClang")
+	message(NOTICE "El compilador de C es Apple Clang.")
+
+	# Opciones para Apple Clang.
+	# add_compile_options(...)
+
+	# Compilar el scanner con Flex.
+	add_custom_command(
+		OUTPUT ../src/frontend/lexical-analysis/flex-scanner.c
+		COMMAND flex -o ../src/frontend/lexical-analysis/flex-scanner.c ../src/frontend/lexical-analysis/flex-patterns.l
+		DEPENDS ../src/frontend/syntactic-analysis/bison-parser.c ../src/frontend/syntactic-analysis/bison-parser.h)
+	
 else ()
 	message(NOTICE "El compilador de C es desconocido.")
 	message(NOTICE "No se generará el scanner con Flex.")

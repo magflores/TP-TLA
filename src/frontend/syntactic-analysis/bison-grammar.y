@@ -9,64 +9,123 @@
 	// No-terminales (backend).
 	/*
 	Program program;
+	Expressions expressions;
 	Expression expression;
-	Factor factor;
-	Constant constant;
 	...
 	*/
 
 	// No-terminales (frontend).
 	int program;
+	int expressions;
 	int expression;
-	int factor;
-	int constant;
 
 	// Terminales.
 	token token;
-	int integer;
 }
 
 // IDs y tipos de los tokens terminales generados desde Flex.
-%token <token> ADD
-%token <token> SUB
-%token <token> MUL
-%token <token> DIV
-
-%token <token> OPEN_PARENTHESIS
-%token <token> CLOSE_PARENTHESIS
-
-%token <integer> INTEGER
+%token <token> START
+%token <token> END
+%token <token> CONTAINER
+%token <token> END_CONTAINER
+%token <token> TITLE
+%token <token> TABLE
+%token <token> END_TABLE
+%token <token> IMG
+%token <token> LINK
+%token <token> ROW
+%token <token> END_ROW
+%token <token> TEXT
+%token <token> COLON
+%token <token> COMMA
+%token <token> ID
+%token <token> STRING
+%token <token> SIZE
+%token <token> COLOR
+%token <token> STYLE
+%token <token> POSITION
+%token <token> NUMBER
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <program> program
+%type <expressions> expressions
 %type <expression> expression
-%type <factor> factor
-%type <constant> constant
-
-// Reglas de asociatividad y precedencia (de menor a mayor).
-%left ADD SUB
-%left MUL DIV
 
 // El símbolo inicial de la gramatica.
 %start program
 
 %%
 
-program: expression													{ $$ = ProgramGrammarAction($1); }
+program: START expressions END										{ $$ = ProgramGrammarAction($1); }
 	;
 
-expression: expression[left] ADD expression[right]					{ $$ = AdditionExpressionGrammarAction($left, $right); }
-	| expression[left] SUB expression[right]						{ $$ = SubtractionExpressionGrammarAction($left, $right); }
-	| expression[left] MUL expression[right]						{ $$ = MultiplicationExpressionGrammarAction($left, $right); }
-	| expression[left] DIV expression[right]						{ $$ = DivisionExpressionGrammarAction($left, $right); }
-	| factor														{ $$ = FactorExpressionGrammarAction($1); }
-	;
+expressions: expression 											{ $$ = ;}
+		| expressions expression 									{ $$ = ;}
+		;
 
-factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS				{ $$ = ExpressionFactorGrammarAction($2); }
-	| constant														{ $$ = ConstantFactorGrammarAction($1); }
-	;
+expression: title													{ $$ = ;}
+		| text														{ $$ = ;}
+		| img														{ $$ = ;}
+		| link														{ $$ = ;}
+		| table														{ $$ = ;}
+		| container													{ $$ = ;}
+		;
 
-constant: INTEGER													{ $$ = IntegerConstantGrammarAction($1); }
-	;
+title: TITLE title_attr STRING 										{ $$ = ; }
+		| TITLE STRING 												{ $$ = ; } 
+		;
+
+text: TEXT title_attr STRING										{ $$ = ; }
+		| TEXT STRING 												{ $$ = ; } 
+		;	
+		 
+title_attr: id size color position style { $$ = ; }
+		| id 														{ $$ = ; } 
+		| size														{ $$ = ; } 
+		| color														{ $$ = ; } 
+		| position													{ $$ = ; } 
+		| style 													{ $$ = ; } 
+		;
+
+img: IMG img_attr STRING											{ $$ = ; }
+	 	| IMG STRING												{ $$ = ; }
+		;
+
+img_attr: id size position											{ $$ = ; }
+		| id 														{ $$ = ; }
+		| size														{ $$ = ; }
+		| position													{ $$ = ; }
+		;
+
+
+link: LINK link_attrs STRING COMMA STRING									{ $$ = ; }
+		| LINK STRING STRING										{ $$ = ; }
+		;		
+
+link_attr: id size color position style 							{ $$ = ; } 
+		| id  														{ $$ = ; } 
+		| size  													{ $$ = ; } 
+		| color  													{ $$ = ; }
+		| position  												{ $$ = ; }
+		| style  													{ $$ = ; } 
+		;
+
+table: TABLE table_attr table_content END_TABLE 					{ $$ = ; }
+		;
+
+table_attr: id size  												{ $$ = ; } 
+		| size  													{ $$ = ; }  
+		;
+
+table_content: row_content  										{ $$ = ; } 
+		| table_content row_content  								{ $$ = ; } 
+		;
+
+row_content: ROW expression END_ROW 							 	{ $$ = ; } 
+		;
+
+container: CONTAINER expression END_CONTAINER  						{ $$ = ; } 
+		| CONTAINER expression END_CONTAINER  						{ $$ = ; } 
+		;
 
 %%
