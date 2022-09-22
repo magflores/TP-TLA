@@ -1,0 +1,19 @@
+START
+TABLE 3x3
+ROW
+TEXT "Fila 1 Colum 1"
+TEXT "Fila 2 Colum 1"
+TEXT "Fila 3 Colum 1"
+END ROW
+ROW
+TEXT "Fila 1 Colum 2"
+TEXT "Fila 2 Colum 2"
+TEXT "Fila 3 Colum 2"
+END ROW
+ROW
+TEXT "Fila 1 Colum 3"
+TEXT "Fila 2 Colum 3"
+TEXT "Fila 3 Colum 3"
+END ROW
+END TABLE
+END

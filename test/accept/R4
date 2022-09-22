@@ -1,0 +1,18 @@
+START
+BEGIN CONTAINER
+TITLE “Tabla de prueba”
+  BEGIN CONTAINER
+  TABLE id:2 2x2
+    ROW
+      TEXT “Prueba 1”
+      TEXT “Prueba 2”
+    END ROW
+    ROW
+      TEXT “Prueba 3”
+      TEXT “Prueba 4”
+    END ROW
+  END TABLE
+  END CONTAINER
+TEXT “Tabla 1”
+END CONTAINER
+END
