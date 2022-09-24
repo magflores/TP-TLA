@@ -52,7 +52,7 @@ token EndContainerPatternTag(const char * lexeme) {
 	return END_CONTAINER;
 }
 
-token TitlePatternTag(const char * lexeme, const int length) {
+token TitlePatternTag(const char * lexeme) {
 	LogDebug("TitlePatternTag: '%s' (length = %d).", lexeme, length);
 	yylval.token = TITLE;
 	return TITLE;
@@ -110,6 +110,12 @@ token CommaPatternTag(const char * lexeme) {
 	LogDebug("CommaPatternTag: '%s'.", lexeme);
 	yylval.token = COMMA;
 	return COMMA;
+}
+
+token XPatternTag(const char * lexeme) {
+	LogDebug("CommaPatternTag: '%s'.", lexeme);
+	yylval.token = X;
+	return X;
 }
 
 token IdPatternAttribute(const char * lexeme) {

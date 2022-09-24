@@ -37,30 +37,32 @@ whitespace		[ \f\n\r\t\v]
 <COMMENT>{endline}							{ ; }
 <COMMENT>"*/"								{ EndCommentPatternAction(); BEGIN(INITIAL); }
 
-"START"                                     { StartPatternTag(const char * lexeme); }
-"END"                                       { EndPatternTag(const char * lexeme); }
-"CONTAINER"                                 { ContainerPatternTag(const char * lexeme); }
-"END CONTAINER"                             { EndContainerPatternTag(const char * lexeme); }
-"TITLE"                                     { TitlePatternTag(const char * lexeme, const int length); }
-"TABLE"                                     { TablePatternTag(const char * lexeme); }
-"END TABLE"                                 { EndTablePatternTag(const char * lexeme); }
-"IMG"                                       { ImagePatternTag(const char * lexeme); }
-"LINK"                                      { LinkPatternTag(const char * lexeme); }
-"ROW"                                       { RowPatternTag(const char * lexeme); }
-"END ROW"                                   { EndRowPatternTag(const char * lexeme); }
-"TEXT"                                      { TextPatternTag(const char * lexeme); }
-":"                                         { ColonPatternTag(const char * lexeme); }
-","                                         { CommaPatternTag(const char * lexeme); }
+"START"                                     { StartPatternTag(yytext); }
+"END"                                       { EndPatternTag(yytext); }
+"CONTAINER"                                 { ContainerPatternTag(yytext); }
+"END CONTAINER"                             { EndContainerPatternTag(yytext); }
+"TITLE"                                     { TitlePatternTag(yytext); }
+"TABLE"                                     { TablePatternTag(yytext); }
+"END TABLE"                                 { EndTablePatternTag(yytext); }
+"IMG"                                       { ImagePatternTag(yytext); }
+"LINK"                                      { LinkPatternTag(yytext); }
+"ROW"                                       { RowPatternTag(yytext); }
+"END ROW"                                   { EndRowPatternTag(yytext); }
+"TEXT"                                      { TextPatternTag(yytext); }
+":"                                         { ColonPatternTag(yytext); }
+","                                         { CommaPatternTag(yytext); }
+"x"                                         { XPatternTag(yytext); }
 
-{id}                                        { IdPatternAttribute(const char * lexeme); }
-{string}                                    { StringPatternAttribute(const char * lexeme); }
-{size}                                      { SizePatternAttribute(const char * lexeme); }
-{color}                                     { ColorPatternAttribute(const char * lexeme); }
-{style}                                     { StylePatternAttribute(const char * lexeme); }
-{position}                                  { PositionPatternAttribute(const char * lexeme); }
-{number}                                    { NumberPatternAttribute(const char * lexeme); }
+
+{id}                                        { IdPatternAttribute(yytext); }
+{string}                                    { StringPatternAttribute(yytext); }
+{size}                                      { SizePatternAttribute(yytext); }
+{color}                                     { ColorPatternAttribute(yytext); }
+{style}                                     { StylePatternAttribute(yytext); }
+{position}                                  { PositionPatternAttribute(yytext); }
+{number}                                    { NumberPatternAttribute(yytext); }
 
 {whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
-.											{ return UnknownPatternAction(yytext); }
+.											{ return UnknownPatternAction(yytext, yyleng); }
 
 %%

@@ -28,7 +28,7 @@ token StartPatternTag(const char * lexeme);
 token EndPatternTag(const char * lexeme);
 token ContainerPatternTag(const char * lexeme);
 token EndContainerPatternTag(const char * lexeme);
-token TitlePatternTag(const char * lexeme, const int length);
+token TitlePatternTag(const char * lexeme);
 token TablePatternTag(const char * lexeme);
 token EndTablePatternTag(const char * lexeme);
 token ImagePatternTag(const char * lexeme);
@@ -38,6 +38,8 @@ token EndRowPatternTag(const char * lexeme);
 token TextPatternTag(const char * lexeme);
 token ColonPatternTag(const char * lexeme);
 token CommaPatternTag(const char * lexeme);
+token XPatternTag(const char * lexeme);
+
 
 token IdPatternAttribute(const char * lexeme);
 token StringPatternAttribute(const char * lexeme);

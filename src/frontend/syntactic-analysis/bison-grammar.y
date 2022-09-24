@@ -14,10 +14,26 @@
 	...
 	*/
 
+	int integer;
+	char * string;
+
 	// No-terminales (frontend).
 	int program;
 	int expressions;
 	int expression;
+	char * title;
+	char * text; 
+	char * img;
+	char * link;
+	char * table;
+	char * container;
+	char * title_attr;
+	char * img_attr;
+	char * link_attr;
+	char * table_attr;
+	char * table_content;
+	char * row_content;
+
 
 	// Terminales.
 	token token;
@@ -36,96 +52,110 @@
 %token <token> ROW
 %token <token> END_ROW
 %token <token> TEXT
+
 %token <token> COLON
 %token <token> COMMA
-%token <token> ID
-%token <token> STRING
-%token <token> SIZE
-%token <token> COLOR
-%token <token> STYLE
-%token <token> POSITION
-%token <token> NUMBER
+%token <token> X
+
+%token <string> ID
+%token <string> STRING
+%token <string> SIZE
+%token <string> COLOR
+%token <string> STYLE
+%token <string> POSITION
+
+%token <integer> NUMBER
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <program> program
 %type <expressions> expressions
 %type <expression> expression
+%type <title> title 
+%type <text> text
+%type <img> img
+%type <link> link
+%type <table> table
+%type <container> container
+%type <title_attr> title_attr 
+%type <img_attr> img_attr
+%type <link_attr> link_attr
+%type <table_attr> table_attr  
+%type <table_content> table_content
+%type <row_content> row_content
 
 // El símbolo inicial de la gramatica.
 %start program
 
 %%
 
-program: START expressions END										{ $$ = ProgramGrammarAction($1); }
+program: START expressions END										{ $$ = ProgramGrammarAction($2); }
 	;
 
-expressions: expression 											{ $$ = ;}
-		| expressions expression 									{ $$ = ;}
+expressions: expression 											{ }
+		| expressions expression 									{ }
 		;
 
-expression: title													{ $$ = ;}
-		| text														{ $$ = ;}
-		| img														{ $$ = ;}
-		| link														{ $$ = ;}
-		| table														{ $$ = ;}
-		| container													{ $$ = ;}
+expression: title													{ }
+		| text														{ }
+		| img														{ }
+		| link														{ }
+		| table														{ }
+		| container													{ }
 		;
 
-title: TITLE title_attr STRING 										{ $$ = ; }
-		| TITLE STRING 												{ $$ = ; } 
+title: TITLE title_attr STRING 										{ }
+		| TITLE STRING 												{ } 
 		;
 
-text: TEXT title_attr STRING										{ $$ = ; }
-		| TEXT STRING 												{ $$ = ; } 
-		;	
+text: TEXT title_attr STRING										{ }
+		| TEXT STRING 												{ }
 		 
-title_attr: id size color position style { $$ = ; }
-		| id 														{ $$ = ; } 
-		| size														{ $$ = ; } 
-		| color														{ $$ = ; } 
-		| position													{ $$ = ; } 
-		| style 													{ $$ = ; } 
+title_attr: ID SIZE COLOR POSITION STYLE 							{ }
+		| ID 														{ } 
+		| SIZE														{ } 
+		| COLOR														{ } 
+		| POSITION													{ } 
+		| STYLE 													{ } 
 		;
 
-img: IMG img_attr STRING											{ $$ = ; }
-	 	| IMG STRING												{ $$ = ; }
+img: IMG img_attr STRING											{ }
+	 	| IMG STRING												{ }
 		;
 
-img_attr: id size position											{ $$ = ; }
-		| id 														{ $$ = ; }
-		| size														{ $$ = ; }
-		| position													{ $$ = ; }
+img_attr: ID SIZE POSITION											{ }
+		| ID 														{ }
+		| SIZE														{ }
+		| POSITION													{ }
 		;
 
 
-link: LINK link_attrs STRING COMMA STRING									{ $$ = ; }
-		| LINK STRING STRING										{ $$ = ; }
+link: LINK link_attr STRING COMMA STRING							{ }
+		| LINK STRING COMMA STRING									{ }
 		;		
 
-link_attr: id size color position style 							{ $$ = ; } 
-		| id  														{ $$ = ; } 
-		| size  													{ $$ = ; } 
-		| color  													{ $$ = ; }
-		| position  												{ $$ = ; }
-		| style  													{ $$ = ; } 
+link_attr: ID SIZE COLOR POSITION STYLE 							{ } 
+		| ID  														{ } 
+		| SIZE  													{ } 
+		| COLOR  													{ }
+		| POSITION  												{ }
+		| STYLE  													{ } 
 		;
 
-table: TABLE table_attr table_content END_TABLE 					{ $$ = ; }
+table: TABLE table_attr table_content END_TABLE 					{ }
 		;
 
-table_attr: id size  												{ $$ = ; } 
-		| size  													{ $$ = ; }  
+table_attr: ID NUMBER X NUMBER 										{ } 
+		| NUMBER X NUMBER 											{ }  
 		;
 
-table_content: row_content  										{ $$ = ; } 
-		| table_content row_content  								{ $$ = ; } 
+table_content: row_content  										{ } 
+		| table_content row_content  								{ } 
 		;
 
-row_content: ROW expression END_ROW 							 	{ $$ = ; } 
+row_content: ROW expression END_ROW 							 	{ } 
 		;
 
-container: CONTAINER expression END_CONTAINER  						{ $$ = ; } 
-		| CONTAINER expression END_CONTAINER  						{ $$ = ; } 
+container: CONTAINER expressions END_CONTAINER  					{ } 
 		;
 
 %%
