@@ -1,6 +1,6 @@
 START
 
-FONT Arial
+FONT "Arial"
 TITLE "Titulo con font Arial"
 TEXT "Texto con font Arial"
 TITLE "TITULO HOLA MUNDO! CON TEXTO ARIAL"

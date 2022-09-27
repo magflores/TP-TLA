@@ -1,5 +1,5 @@
 #include "../../backend/support/logger.h"
-#include "flexnTags.h"
+#include "flex-actions.h"
 #include <stdlib.h>
 
 /**
@@ -53,7 +53,7 @@ token EndContainerPatternTag(const char * lexeme) {
 }
 
 token TitlePatternTag(const char * lexeme) {
-	LogDebug("TitlePatternTag: '%s' (length = %d).", lexeme, length);
+	LogDebug("TitlePatternTag: '%s'.", lexeme);
 	yylval.token = TITLE;
 	return TITLE;
 }
