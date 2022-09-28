@@ -64,7 +64,6 @@
 %token <token> ID
 %token <token> SIZE
 %token <token> COLOR
-%token <token> STYLE
 %token <token> POSITION
 %token <token> FONT
 
@@ -81,6 +80,33 @@
 %token <token> ENDLINE
 
 %token <token> NUMBER
+
+// Tipos de dato para los no-terminales generados desde Bison.
+%type <program> program
+%type <expressions> expressions
+%type <expression> expression
+%type <title> title 
+%type <text> text
+%type <img> img
+%type <link> link
+%type <table> table
+%type <container> container
+%type <title_attrs> title_attrs 
+%type <title_attr> title_attr 
+%type <img_attrs> img_attrs
+%type <img_attr> img_attr
+%type <container_attr> container_attrs
+%type <container_attr> container_attr
+%type <table_attr> table_attr  
+%type <table_content> table_content
+%type <row_content> row_content
+%type <id> id
+%type <size> size
+%type <color> color
+%type <position> position
+%type <style> style
+%type <properties> properties
+%type <property> property
 
 // El símbolo inicial de la gramatica.
 %start program
