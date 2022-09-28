@@ -1,6 +1,6 @@
 START
 FONT "Arial"
-TITLE id:1  size:large color:red position:centered style:bold,underlined “Hola mundo!”
+TITLE id:1 size:large color:red position:centered style:bold,underlined “Hola mundo!”
 TEXT size:medium position:right “Este es un mensaje de prueba”
 IMG size:xlarge position:centered “https://imagenes.20minutos.es/files/image_990 _v3/uploads/imagenes/2021/11/24/google-imagenes-2.png”
 LINK  color:blue style:underlined size:small position:left  “https://www.google. com/”,“Para mas informacion haga click aqui”

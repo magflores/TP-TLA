@@ -1,7 +1,7 @@
 START
 BEGIN CONTAINER
 TITLE “Tabla de prueba”
-  BEGIN CONTAINER
+  BEGIN CONTAINER 
   TABLE id:2 2x2
     ROW
       TEXT “Prueba 1”
