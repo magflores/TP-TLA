@@ -19,6 +19,7 @@
 	int expressions;
 	int expression;
 	int title;
+	int font;
 	int text; 
 	int img;
 	int link;
@@ -86,6 +87,7 @@
 %type <expressions> expressions
 %type <expression> expression
 %type <title> title 
+%type <font> font
 %type <text> text
 %type <img> img
 %type <link> link
@@ -121,6 +123,7 @@ expressions: expression expressions 								{ }
 		;
 
 expression: title													{ }
+		| font														{ }
 		| text														{ }
 		| img														{ }
 		| link														{ }
@@ -130,6 +133,9 @@ expression: title													{ }
 
 title: TITLE title_attrs STRING 									{ }
 		| TITLE STRING 												{ } 
+		;
+
+font: FONT FONT_ATTR												{ }
 		;
 
 text: TEXT title_attrs STRING										{ }
@@ -171,8 +177,8 @@ img_attr: id														{ }
 		| position 													{ }
 		;
 
-container_attrs: img_attr img_attrs									{ }
-		| img_attr													{ }
+container_attrs: container_attr container_attrs						{ }
+		| container_attr											{ }
 		;
 
 container_attr: id													{ }

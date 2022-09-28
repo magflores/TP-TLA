@@ -125,6 +125,12 @@ token TextPatternTag(const char * lexeme) {
 	return TEXT;
 }
 
+token FontPatternTag(const char * lexeme) {
+	LogDebug("TextPatternTag: '%s'.", lexeme);
+	yylval.token = FONT;
+	return FONT;
+}
+
 token IdPatternTag(const char * lexeme) {
 	LogDebug("TextPatternTag: '%s'.", lexeme);
 	yylval.token = ID;
