@@ -22,7 +22,7 @@ id              [A-Za-z][0-9]([A-Za-z]|[0-9])*
 size            (x-small|small|medium|large|x-large|xx-large)
 color           (black|red|blue|yellow|green|orange|purple)
 position        (left|center|right)
-font            (arial|times|calibri|helvetica)
+font            (Arial|Times|Calibri|Helvetica)
 number          [0-9]+
 string          \".*\"
 endline			\n
