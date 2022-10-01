@@ -1,19 +1,19 @@
 START
-FONT "Arial"
-TITLE id:1  size:large color:red position:centered style:bold,underlined “Hola mundo!”
-TEXT size:medium position:right “Este es un mensaje de prueba”
-IMG size:xlarge position:centered “https://imagenes.20minutos.es/files/image_990 _v3/uploads/imagenes/2021/11/24/google-imagenes-2.png”
-LINK  color:blue style:underlined size:small position:left  “https://www.google. com/”,“Para mas informacion haga click aqui”
-LINK  color:green style:underlined size:small position:right “#1”,“Volver al inicio”
-BEGIN CONTAINER
-TABLE id:2 2x2
+FONT Arial
+TITLE id:A1  size:large color:red position:center style:bold,underlined "Hola mundo!"
+TEXT size:medium position:right "Este es un mensaje de prueba"
+IMG size:x-large position:center 'https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png'
+LINK  color:blue style:underlined size:small position:left  'https://www.google.com/',"Para mas informacion haga click aqui"
+LINK  color:green style:underlined size:small position:right '#A1',"Volver al inicio"
+CONTAINER
+TABLE id:A2 rowxcol:2,2
 ROW
-TEXT size:medium position:right “Prueba 1”
-TEXT size:medium position:right “Prueba 2”
+TEXT size:medium position:right "Prueba 1"
+TEXT size:medium position:right "Prueba 2"
 END ROW
 ROW
-TEXT size:medium position:right “Prueba 3”
-TEXT size:medium position:right “Prueba 4”
+TEXT size:medium position:right "Prueba 3"
+TEXT size:medium position:right "Prueba 4"
 END ROW
 END TABLE
 END CONTAINER

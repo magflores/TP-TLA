@@ -40,6 +40,7 @@
 	int color;
 	int position;
 	int style;
+	int rowxcol;
 
 	int properties;
 	int property;
@@ -78,7 +79,9 @@
 %token <token> POSITION_ATTR
 %token <token> FONT_ATTR
 %token <token> STRING
+%token <token> SOURCE
 %token <token> ENDLINE
+%token <token> ROWXCOL
 
 %token <token> NUMBER
 
@@ -109,6 +112,7 @@
 %type <style> style
 %type <properties> properties
 %type <property> property
+%type <rowxcol> rowxcol
 
 // El símbolo inicial de la gramatica.
 %start program
@@ -129,6 +133,7 @@ expression: title													{ }
 		| link														{ }
 		| table														{ }
 		| container													{ }
+		| /*lambda*/												{ }
 		;
 
 title: TITLE title_attrs STRING 									{ }
@@ -142,12 +147,12 @@ text: TEXT title_attrs STRING										{ }
 		| TEXT STRING 												{ }
 		;
 
-img: IMG img_attrs STRING											{ }
-	 	| IMG STRING												{ }
+img: IMG img_attrs SOURCE											{ }
+	 	| IMG SOURCE												{ }
 		;
 
-link: LINK title_attrs STRING COMMA STRING							{ }
-		| LINK STRING COMMA STRING									{ }
+link: LINK title_attrs SOURCE COMMA STRING							{ }
+		| LINK SOURCE COMMA STRING									{ }
 		;	
 
 table: TABLE table_attr table_content END TABLE 					{ }
@@ -209,15 +214,18 @@ property: BOLD 														{ }
 		| ITALICS 													{ } 
 		; 	
 
-table_attr: id NUMBER X NUMBER 										{ } 
-		| NUMBER X NUMBER 											{ }  
+table_attr: id rowxcol												{ } 
+		| rowxcol		 											{ }  
+		;
+
+rowxcol: ROWXCOL COLON NUMBER COMMA NUMBER 							{ }
 		;
 
 table_content: row_content table_content  							{ } 
 		| row_content  												{ } 
 		;
 
-row_content: ROW expression END ROW 							 	{ } 
+row_content: ROW expressions END ROW 							 	{ } 
 		;
 
 %%

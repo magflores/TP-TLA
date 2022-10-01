@@ -1,7 +1,9 @@
 START
-FONT "Arial"
-TITLE “Hola mundo!”
-TEXT “Este es un mensaje de prueba”
-IMG “https://imagenes.20minutos.es/files/image_990 _v3/uploads/imagenes/2021/11/24/google-imagenes-2.png”
-LINK  “https://www.google. com/”,“Para mas informacion haga click aqui”
+
+FONT Arial
+TITLE "Hola mundo!"
+TEXT "Este es un mensaje de prueba"
+IMG 'https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png'
+LINK  'https://www.google.com/',"Para mas informacion haga click aqui"
+
 END

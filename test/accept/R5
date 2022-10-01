@@ -1,5 +1,5 @@
 START
 TITLE position:left "Titulo en posicion izquierda"
 TEXT position:center "Texto en posicion central"
-IMG position:right “https://imagenes.20minutos.es/files/image_990 _v3/uploads/imagenes/2021/11/24/google-imagenes-2.png”
+IMG position:right 'https://imagenes.20minutos.es/files/image_990 _v3/uploads/imagenes/2021/11/24/google-imagenes-2.png'
 END
