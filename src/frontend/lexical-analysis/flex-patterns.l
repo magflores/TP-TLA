@@ -16,23 +16,33 @@
 /* Contextos de Flex. */
 %x COMMENT
 %x STRING
+/*%x ID_CONTXT */
+/*%x TABLE */
 
 /* Patrones reutilizables. */
 crlf			\r\n
-id_attr         [A-Za-z][0-9]([A-Za-z]|[0-9])*
 size            (x-small|small|medium|large|x-large|xx-large)
 color           (black|red|blue|yellow|green|orange|purple)
 position        (left|center|right)
 font            (Arial|Times|Calibri|Helvetica)
 number          [0-9]+
-source          \'.*\'
-string          \".*\"
+id_attr         [A-Za-z][0-9]([A-Za-z]|[0-9])*
+
+/* source          \'.*\' */
+/* {source}                                    { return SourcePatternAttribute(yytext);} */
+ 
+/*string          .* */
 endline			\n
 whitespace		[ \f\n\r\t\v]
 
-/*"\""                                        { BEGIN(STRING); BeginStringPatternAction(); }*/
-/*<STRING>{string}                            { return StringPatternAttribute(yytext);}*/
-/*<STRING>"\""                                { EndStringPatternAction(); BEGIN(INITIAL);}*/
+/*"id:"                                        { BEGIN(ID_CONTXT); BeginIDContxtPatternAction(); }*/
+/*<ID_CONTXT>{id_attr}                         { return IdPatternAttribute(yytext);}*/
+/*<ID_CONTXT>" "                               { EndSIDContxtPatternAction(); BEGIN(INITIAL);}*/
+
+/*"TABLE"                                        { BEGIN(TABLE); BeginTablePatternAction(); }*/
+/*<TABLE>{number}                              { return NumberPatternAttribute(yytext);}*/
+/*<TABLE>{id_attr}                              { return IdPatternAttribute(yytext);}*/
+/*<TABLE>"END"                               { EndTablePatternAction(); BEGIN(INITIAL);}*/
 
 %%
 
@@ -40,6 +50,10 @@ whitespace		[ \f\n\r\t\v]
 <COMMENT>.									{ ; }
 <COMMENT>{endline}							{ ; }
 <COMMENT>"*/"								{ EndCommentPatternAction(); BEGIN(INITIAL); }
+
+"\""                                        { BEGIN(STRING); BeginStringPatternAction(); }
+<STRING>[^\"]*                              { return StringPatternAttribute(yytext);}
+<STRING>"\""                                { EndStringPatternAction(); BEGIN(INITIAL);}
 
 "START"                                     { return StartPatternTag(yytext); }
 "END"                                       { return EndPatternTag(yytext); }
@@ -62,18 +76,16 @@ whitespace		[ \f\n\r\t\v]
 "position"                                  { return PositionPatternTag(yytext); }
 "rowxcol"                                   { return TableSizePatternTag(yytext); }
 
-":"                                         { return ColonPatternTag(yytext); }
-","                                         { return CommaPatternTag(yytext); }
+":"                                         { return ColonPatternTag(yytext); } 
+","                                         { return CommaPatternTag(yytext); } 
 "x"                                         { return XPatternTag(yytext); }
 
-{id_attr}                                   { return IdPatternAttribute(yytext); }
 {size}                                      { return SizePatternAttribute(yytext); }
 {color}                                     { return ColorPatternAttribute(yytext); }
 {position}                                  { return PositionPatternAttribute(yytext); }
-{string}                                    { return StringPatternAttribute(yytext); }
-{source}                                    { return SourcePatternAttribute(yytext);}
 {number}                                    { return NumberPatternAttribute(yytext); }
 {font}                                      { return FontPatternAttribute(yytext); }
+{id_attr}                                   { return IdPatternAttribute(yytext); }
 {endline}                                   { EndlinePatternAttribute(yytext); }
 
 {whitespace}								{ IgnoredPatternAction(yytext, yyleng); }

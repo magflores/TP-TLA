@@ -1,3 +1,102 @@
 START
-TITULO "TUTORIAL" (COMPLETAR)
+
+TITLE id:A1 size:large "TUTORIAL"
+TEXT "Manual de uso del lenguaje simplificado de HTML."
+
+TITLE size:large "Atributos existentes"
+TEXT "Los atributos existentes en el lenguaje son: size, color, position, style, id y rowxcol."
+TEXT "Para los elementos TITLE, TEXT Y LINK se pueden usar los atributos size, color, position, style, id o no utlizar ninguno"
+TEXT "Para los elementos de imagen IMG se pueden usar los atributos size, position, id o no utilizar ninguno."
+TEXT "Para las tablas o grillas se aceptan los atributos id o rowxcol."
+TEXT "Los atributos aceptan los siguientes valores:"
+TEXT "size: x-small, small, medium, large, x-large o xx-large."
+TEXT "color: black, red, blue, yellow, green, orange o purple."
+TEXT "position: left, center o right."
+TEXT "style: bold, underlined o italics."
+TEXT "id: cualquier cadena que empiece con una letra minuscula o mayuscula, utilizando numeros o caracteres."
+TEXT "rowxcol: acepta dos numeros separados por una coma,
+ el primer numero indica la cantidad de filas y el segundo la cantidad de columnas."
+
+TITLE size:large "Fuentes"
+TEXT "El lenguaje permite definir una fuente a utilizar en todo el HTML, esto se puede hacer
+usando el tag “FONT” seguido por la fuente elegida."
+TEXT "Las fuentes soportadas hasta el momento son: Arial, Times, Calibri o Helvetica."
+TEXT "Ejemplo: FONT Arial"
+
+TITLE size:large "Titulos"
+TEXT "Pueden definirse titulos en el documento HTML usando el tag “TITLE”, la lista de atributos deseados y
+se encierra el contenido entre comillas dobles."
+TEXT "Modo de uso: TITLE attributes_list “content”"
+
+TEXT "Ejemplo: TITLE size:medium “Titulo de ejemplo”"
+TITLE size:medium "Titulo de ejemplo"
+
+TITLE size:large "Elementos de texto"
+TEXT "Para definir parrafos se utiliza el tag “TEXT”, la lista de atributos deseado y se encierra
+ el contenido entre comillas dobles."
+TEXT "Modo de uso: TEXT attributes_list “content”"
+
+TEXT "Ejemplo: TEXT size:small color:red “Texto de ejemplo 1”"
+TEXT size:small color:red "Texto de ejemplo 1"
+
+TEXT "Ejemplo: TEXT size:large color:blue “Texto de ejemplo 2”"
+TEXT size:large color:blue "Texto de ejemplo 2"
+
+TITLE "Elementos de imagen"
+TEXT "Se pueden agregar imagenes al documento HTML usando el tag “IMG”, la lista de atributos y el
+link de la imagen deseada encerrada entre comillas dobles."
+TEXT "Modo de uso: IMG attributes_list “source o link”"
+
+TEXT "Ejemplo: IMG size:x-large position:center “https://i.imgur.com/XgbZdeA.jpeg”"
+IMG size:x-large position:center "https://i.imgur.com/XgbZdeA.jpeg"
+
+TITLE "Links"
+TEXT "Se pueden agregar links al documento HTML usando el tag “LINK”, la lista de atributos, el link que se desea
+agregar encerrado entre comillas simples y el texto que se desea que aparezca como hipervinculo encerrado entre 
+comillas dobles"
+TEXT "Modo de uso: LINK attributes_list “source o link”,“content”"
+TEXT "Ejemplo: LINK color:blue position:right “www.google.com.ar”,“Link a Google.com.ar”"
+LINK color:blue position:right "www.google.com.ar","Link a Google.com.ar"
+
+TEXT "Ademas un link puede hacer referencia hacia alguno de los elementos referenciados con un ID"
+TEXT "Modo de uso: LINK attributes_list “#ID”,“content”"
+TEXT "Ejemplo: LINK color:green position:left “#A1”,“Link al comienzo de la pagina”"
+LINK color:green position:left "#A1","Link al comienzo de la pagina"
+
+/* Hay que terminar la tabla y el container*/
+TITLE "Tablas o grillas"
+TEXT "Pueden utilizarse tablas en el documento HTML por medio del tag “TABLE” y la lista de atributos"
+TEXT "Ejemplo:
+TABLE rowxcol:2,2
+    ROW
+        TEXT “ROW:1 COL:1”
+        TEXT “ROW:1 COL:2”
+    END ROW
+END TABLE"
+TABLE rowxcol:2,2
+    ROW
+        TEXT "ROW:1 COL:1"
+        TEXT "ROW:1 COL:2"
+    END ROW
+END TABLE
+
+TITLE "Contenedor"
+TEXT "Pueden definirse contenedores en el documento HTML por medio del tag “CONTAINER” y la lista de atributos"
+TEXT "Ejemplo:
+CONTAINER position:center
+    TITLE “Titulo dentro de contenedor 1”
+    TEXT “Texto dentro de contenedor 1”
+    CONTAINER position:right
+        TITLE “Titulo dentro de contenedor 2”
+    END CONTAINER
+END CONTAINER
+"
+CONTAINER position:center
+    TITLE "Titulo dentro de contenedor 1"
+    TEXT "Texto dentro de contenedor 1"
+    CONTAINER position:right
+        TITLE "Titulo dentro de contenedor 2"
+    END CONTAINER
+END CONTAINER
+
 END

@@ -79,7 +79,7 @@
 %token <token> POSITION_ATTR
 %token <token> FONT_ATTR
 %token <token> STRING
-%token <token> SOURCE
+// %token <token> SOURCE
 %token <token> ENDLINE
 %token <token> ROWXCOL
 
@@ -147,12 +147,12 @@ text: TEXT title_attrs STRING										{ }
 		| TEXT STRING 												{ }
 		;
 
-img: IMG img_attrs SOURCE											{ }
-	 	| IMG SOURCE												{ }
+img: IMG img_attrs STRING											{ }
+	 	| IMG STRING												{ }
 		;
 
-link: LINK title_attrs SOURCE COMMA STRING							{ }
-		| LINK SOURCE COMMA STRING									{ }
+link: LINK title_attrs STRING COMMA STRING							{ }
+		| LINK STRING COMMA STRING									{ }
 		;	
 
 table: TABLE table_attr table_content END TABLE 					{ }

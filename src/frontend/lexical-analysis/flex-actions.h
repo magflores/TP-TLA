@@ -23,8 +23,8 @@
 void BeginCommentPatternAction();
 void EndCommentPatternAction();
 
-//void BeginStringPatternAction();
-//void EndStringPatternAction();
+void BeginStringPatternAction();
+void EndStringPatternAction();
 
 // Patrones terminales del lenguaje diseñado.
 token StartPatternTag(const char * lexeme);
@@ -52,7 +52,7 @@ token TableSizePatternTag(const char * lexeme);
 
 token IdPatternAttribute(const char * lexeme);
 token StringPatternAttribute(const char * lexeme);
-token SourcePatternAttribute(const char * lexeme);
+/* token SourcePatternAttribute(const char * lexeme); */
 token SizePatternAttribute(const char * lexeme);
 token ColorPatternAttribute(const char * lexeme);
 token StylePatternAttribute(const char * lexeme);

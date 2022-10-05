@@ -26,13 +26,13 @@ void EndCommentPatternAction() {
 	LogDebug("EndCommentPatternAction.");
 }
 
-/*void BeginStringPatternAction() {
+void BeginStringPatternAction() {
 	LogDebug("BeginStringPatternAction.");
 }
 
 void EndStringPatternAction() {
 	LogDebug("EndStringPatternAction.");
-}*/
+}
 
 // Patrones terminales del lenguaje diseñado.
 token StartPatternTag(const char * lexeme) {
@@ -180,11 +180,11 @@ token StringPatternAttribute(const char * lexeme) {
 	return STRING;
 }
 
-token SourcePatternAttribute(const char * lexeme) {
+/* token SourcePatternAttribute(const char * lexeme) {
 	LogDebug("SourcePatternAttribute: '%s'.", lexeme);
 	yylval.token = SOURCE;
 	return SOURCE;
-}
+} */
 
 token SizePatternAttribute(const char * lexeme) {
 	LogDebug("SizePatternAttribute: '%s'.", lexeme);
