@@ -6,7 +6,7 @@ IMG size:x-large position:center "https://imagenes.20minutos.es/files/image_990_
 LINK  color:blue style:underlined size:small position:left  "https://www.google.com/","Para mas informacion haga click aqui"
 LINK  color:green style:underlined size:small position:right "#A1","Volver al inicio"
 CONTAINER
-TABLE id:A2 rowxcol:2,2
+TABLE id:A2 rowxcol:(2x2)
 ROW
 TEXT size:medium position:right "Prueba 1"
 TEXT size:medium position:right "Prueba 2"

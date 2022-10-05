@@ -26,6 +26,13 @@ void EndCommentPatternAction() {
 	LogDebug("EndCommentPatternAction.");
 }
 
+void BeginTableSizePatternAction() {
+	LogDebug("BeginTableSizePatternAction.");
+}
+void EndTableSizePatternAction() {
+	LogDebug("EndTableSizePatternAction.");
+}
+
 void BeginStringPatternAction() {
 	LogDebug("BeginStringPatternAction.");
 }

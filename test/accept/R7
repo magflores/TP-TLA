@@ -1,5 +1,5 @@
 START
-TABLE rowxcol:3,3
+TABLE rowxcol:(3x3)
 ROW
 TEXT "Fila 1 Colum 1"
 TEXT "Fila 2 Colum 1"

@@ -14,8 +14,7 @@ TEXT "color: black, red, blue, yellow, green, orange o purple."
 TEXT "position: left, center o right."
 TEXT "style: bold, underlined o italics."
 TEXT "id: cualquier cadena que empiece con una letra minuscula o mayuscula, utilizando numeros o caracteres."
-TEXT "rowxcol: acepta dos numeros separados por una coma,
- el primer numero indica la cantidad de filas y el segundo la cantidad de columnas."
+TEXT "rowxcol: acepta dos numeros separados por una x y entre parentesis. El primer numero indica la cantidad de filas y el segundo la cantidad de columnas."
 
 TITLE size:large "Fuentes"
 TEXT "El lenguaje permite definir una fuente a utilizar en todo el HTML, esto se puede hacer
@@ -67,13 +66,13 @@ LINK color:green position:left "#A1","Link al comienzo de la pagina"
 TITLE "Tablas o grillas"
 TEXT "Pueden utilizarse tablas en el documento HTML por medio del tag “TABLE” y la lista de atributos"
 TEXT "Ejemplo:
-TABLE rowxcol:2,2
+TABLE rowxcol:(2x2)
     ROW
         TEXT “ROW:1 COL:1”
         TEXT “ROW:1 COL:2”
     END ROW
 END TABLE"
-TABLE rowxcol:2,2
+TABLE rowxcol:(2x2)
     ROW
         TEXT "ROW:1 COL:1"
         TEXT "ROW:1 COL:2"

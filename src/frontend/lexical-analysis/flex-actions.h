@@ -26,6 +26,11 @@ void EndCommentPatternAction();
 void BeginStringPatternAction();
 void EndStringPatternAction();
 
+void BeginTableSizePatternAction();
+void EndTableSizePatternAction();
+
+
+
 // Patrones terminales del lenguaje diseñado.
 token StartPatternTag(const char * lexeme);
 token EndPatternTag(const char * lexeme);

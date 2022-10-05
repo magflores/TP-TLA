@@ -79,7 +79,7 @@
 %token <token> POSITION_ATTR
 %token <token> FONT_ATTR
 %token <token> STRING
-// %token <token> SOURCE
+
 %token <token> ENDLINE
 %token <token> ROWXCOL
 
@@ -218,7 +218,7 @@ table_attr: id rowxcol												{ }
 		| rowxcol		 											{ }  
 		;
 
-rowxcol: ROWXCOL COLON NUMBER COMMA NUMBER 							{ }
+rowxcol: ROWXCOL COLON NUMBER X NUMBER 							{ }
 		;
 
 table_content: row_content table_content  							{ } 

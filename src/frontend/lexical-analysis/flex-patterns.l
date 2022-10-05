@@ -16,8 +16,7 @@
 /* Contextos de Flex. */
 %x COMMENT
 %x STRING
-/*%x ID_CONTXT */
-/*%x TABLE */
+%x TABLE_SIZE
 
 /* Patrones reutilizables. */
 crlf			\r\n
@@ -27,22 +26,10 @@ position        (left|center|right)
 font            (Arial|Times|Calibri|Helvetica)
 number          [0-9]+
 id_attr         [A-Za-z][0-9]([A-Za-z]|[0-9])*
-
-/* source          \'.*\' */
-/* {source}                                    { return SourcePatternAttribute(yytext);} */
- 
-/*string          .* */
 endline			\n
 whitespace		[ \f\n\r\t\v]
 
-/*"id:"                                        { BEGIN(ID_CONTXT); BeginIDContxtPatternAction(); }*/
-/*<ID_CONTXT>{id_attr}                         { return IdPatternAttribute(yytext);}*/
-/*<ID_CONTXT>" "                               { EndSIDContxtPatternAction(); BEGIN(INITIAL);}*/
 
-/*"TABLE"                                        { BEGIN(TABLE); BeginTablePatternAction(); }*/
-/*<TABLE>{number}                              { return NumberPatternAttribute(yytext);}*/
-/*<TABLE>{id_attr}                              { return IdPatternAttribute(yytext);}*/
-/*<TABLE>"END"                               { EndTablePatternAction(); BEGIN(INITIAL);}*/
 
 %%
 
@@ -54,6 +41,11 @@ whitespace		[ \f\n\r\t\v]
 "\""                                        { BEGIN(STRING); BeginStringPatternAction(); }
 <STRING>[^\"]*                              { return StringPatternAttribute(yytext);}
 <STRING>"\""                                { EndStringPatternAction(); BEGIN(INITIAL);}
+
+"("                                        { BEGIN(TABLE_SIZE); BeginTableSizePatternAction(); }
+<TABLE_SIZE>"x"                            { return XPatternTag(yytext);}
+<TABLE_SIZE>{number}                       { return NumberPatternAttribute(yytext);}
+<TABLE_SIZE>")"                            { EndTableSizePatternAction(); BEGIN(INITIAL);}
 
 "START"                                     { return StartPatternTag(yytext); }
 "END"                                       { return EndPatternTag(yytext); }
@@ -78,12 +70,10 @@ whitespace		[ \f\n\r\t\v]
 
 ":"                                         { return ColonPatternTag(yytext); } 
 ","                                         { return CommaPatternTag(yytext); } 
-"x"                                         { return XPatternTag(yytext); }
 
 {size}                                      { return SizePatternAttribute(yytext); }
 {color}                                     { return ColorPatternAttribute(yytext); }
 {position}                                  { return PositionPatternAttribute(yytext); }
-{number}                                    { return NumberPatternAttribute(yytext); }
 {font}                                      { return FontPatternAttribute(yytext); }
 {id_attr}                                   { return IdPatternAttribute(yytext); }
 {endline}                                   { EndlinePatternAttribute(yytext); }
