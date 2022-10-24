@@ -31,13 +31,107 @@ extern int yyparse(void);
 
 // Emular tipo "boolean".
 typedef enum {
-
 	false = 0,
 	true = 1
 } boolean;
 
 // El tipo de los tokens emitidos por Flex.
 typedef int token;
+
+typedef enum {
+	COLORVALUE = 0,
+	POSITIONVALUE,
+	BOLDVALUE,
+	ITALICVALUE, 
+	UNDERLINEDVALUE,
+	SIZEVALUE,
+	IDVALUE,
+} atr_type;
+
+typedef enum expr_type {
+	TITLEEXPR = 0,
+	IMGEXPR,
+	LINKEXPR,
+	TABLEEXPR,
+	CONTAINEREXPR,
+	TEXTEXPR,
+	FONTEXPR
+} expr_type;
+
+typedef struct tAttribute
+{
+	atr_type type;
+	char * value;
+	struct tAttribute * next;
+} tAttribute;
+
+typedef struct tAttributes
+{
+	struct tAttribute * first;
+	int size;
+} tAttributes;
+
+typedef struct tTitle{
+	tAttributes * attrs;
+	char * content;
+} tTitle;
+
+typedef struct tText{
+	tAttributes * attrs;
+	char * content;
+} tText;
+
+typedef struct tLink{
+	tAttributes * attrs;
+	char * ref;
+	char * text;
+} tLink;
+
+typedef struct tImage{
+	tAttributes * attrs;
+	char * link;
+} tImage;
+
+typedef struct tRow
+{
+	struct tRow * nextRow;
+	tExprs * content;x
+	int size;
+} tRow;
+
+typedef struct tRows
+{
+	tRow * firstRow;
+	int size;
+} tRows;
+
+typedef struct tTable{
+	tRows * firstRow;
+	int rows;
+	int cols;
+} tTable;
+
+typedef struct tContainer{
+	tAttributes * attrs;
+	tExprs * content;
+	int size;
+} tContainer;
+
+typedef struct tExpr{
+	expr_type type;
+	void * expr;
+	struct tExpr * next;
+} tExpr;
+
+typedef struct tExprs{
+	int size;
+	tExpr * first;
+} tExprs;
+
+typedef struct tProgram{
+	tExprs * initial;
+} tProgram;
+
 
 // Estado global de toda la aplicación.
 typedef struct {
