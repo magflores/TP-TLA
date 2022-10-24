@@ -40,12 +40,12 @@ whitespace		[ \f\n\r\t\v]
 <COMMENT>"*/"								{ EndCommentPatternAction(); BEGIN(INITIAL); }
 
 "\""                                        { BEGIN(STRING); BeginStringPatternAction(); }
-<STRING>[^\"]*                              { return StringPatternAttribute(yytext, yyleng);}
+<STRING>[^\"]*                              { return StringAttributeValue(yytext, yyleng);}
 <STRING>"\""                                { EndStringPatternAction(); BEGIN(INITIAL);}
 
 "("                                        { BEGIN(TABLE_SIZE); return BeginTableSizePatternAction(yytext); }
 <TABLE_SIZE>"x"                            { return XPatternTag(yytext);}
-<TABLE_SIZE>{number}                       { return NumberPatternAttribute(yytext, yyleng);}
+<TABLE_SIZE>{number}                       { return NumberAttributeValue(yytext, yyleng);}
 <TABLE_SIZE>")"                            { BEGIN(INITIAL); return EndTableSizePatternAction(yytext); }
 
 "START"                                     { return StartPatternTag(yytext); }
@@ -59,24 +59,24 @@ whitespace		[ \f\n\r\t\v]
 "TEXT"                                      { return TextPatternTag(yytext); }
 "FONT"                                      { return FontPatternTag(yytext); }
 
-"id"                                        { return IdPatternTag(yytext); }
-"style"                                     { return StylePatternTag(yytext); }
-"bold"                                      { return BoldPatternTag(yytext); }
-"underlined"                                { return UnderlinedPatternTag(yytext); }
-"italics"                                   { return ItalicsPatternTag(yytext); }
-"size"                                      { return SizePatternTag(yytext); }
-"color"                                     { return ColorPatternTag(yytext); }
-"position"                                  { return PositionPatternTag(yytext); }
-"rowxcol"                                   { return TableSizePatternTag(yytext); }
+"id"                                        { return IdAttributeKey(yytext); }
+"style"                                     { return StyleAttributeKey(yytext); }
+"bold"                                      { return BoldAttributeValue(yytext); }
+"underlined"                                { return UnderlinedAttributeValue(yytext); }
+"italics"                                   { return ItalicsAttributeValue(yytext); }
+"size"                                      { return SizeAttributeKey(yytext); }
+"color"                                     { return ColorAttributeKey(yytext); }
+"position"                                  { return PositionAttributeKey(yytext); }
+"rowxcol"                                   { return TableSizeAttributeKey(yytext); }
 
 ":"                                         { return ColonPatternTag(yytext); } 
 ","                                         { return CommaPatternTag(yytext); } 
 
-{size}                                      { return SizePatternAttribute(yytext, yyleng); }
-{color}                                     { return ColorPatternAttribute(yytext, yyleng); }
-{position}                                  { return PositionPatternAttribute(yytext, yyleng); }
-{font}                                      { return FontPatternAttribute(yytext, yyleng); }
-{id_attr}                                   { return IdPatternAttribute(yytext, yyleng); }
+{size}                                      { return SizeAttributeValue(yytext, yyleng); }
+{color}                                     { return ColorAttributeValue(yytext, yyleng); }
+{position}                                  { return PositionAttributeValue(yytext, yyleng); }
+{font}                                      { return FontAttributeValue(yytext, yyleng); }
+{id_attr}                                   { return IdAttributeValue(yytext, yyleng); }
 
 {endline}                                   { EndlinePatternAttribute(yytext, yyleng); }
 {whitespace}								{ IgnoredPatternAction(yytext, yyleng); }

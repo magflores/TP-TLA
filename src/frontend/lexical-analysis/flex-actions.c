@@ -77,44 +77,44 @@ token TablePatternTag(const char * lexeme) {
 }
 
 
-token StylePatternTag(const char * lexeme) {
-	LogDebug("StylePatternTag: '%s'.", lexeme);
+token StyleAttributeKey(const char * lexeme) {
+	LogDebug("StyleAttributeKey: '%s'.", lexeme);
 	yylval.token = STYLE;
 	return STYLE;
 }
 
-token ColorPatternTag(const char * lexeme) {
-	LogDebug("ColorPatternTag: '%s'.", lexeme);
+token ColorAttributeKey(const char * lexeme) {
+	LogDebug("ColorAttributeKey: '%s'.", lexeme);
 	yylval.token = COLOR;
 	return COLOR;
 }
 
-token SizePatternTag(const char * lexeme) {
-	LogDebug("SizePatternTag: '%s'.", lexeme);
+token SizeAttributeKey(const char * lexeme) {
+	LogDebug("SizeAttributeKey: '%s'.", lexeme);
 	yylval.token = SIZE;
 	return SIZE;
 }
 
-token PositionPatternTag(const char * lexeme) {
-	LogDebug("PositionPatternTag: '%s'.", lexeme);
+token PositionAttributeKey(const char * lexeme) {
+	LogDebug("PositionAttributeKey: '%s'.", lexeme);
 	yylval.token = POSITION;
 	return POSITION;
 }
 
-token BoldPatternTag(const char * lexeme) {
-	LogDebug("BoldPatternTag: '%s'.", lexeme);
+token BoldAttributeValue(const char * lexeme) {
+	LogDebug("BoldAttributeValue: '%s'.", lexeme);
 	yylval.token = BOLD;
 	return BOLD;
 }
 
-token UnderlinedPatternTag(const char * lexeme) {
-	LogDebug("UnderlinedPatternTag: '%s'.", lexeme);
+token UnderlinedAttributeValue(const char * lexeme) {
+	LogDebug("UnderlinedAttributeValue: '%s'.", lexeme);
 	yylval.token = UNDERLINED;
 	return UNDERLINED;
 }
 
-token ItalicsPatternTag(const char * lexeme) {
-	LogDebug("ItalicsPatternTag: '%s'.", lexeme);
+token ItalicsAttributeValue(const char * lexeme) {
+	LogDebug("ItalicsAttributeValue: '%s'.", lexeme);
 	yylval.token = ITALICS;
 	return ITALICS;
 }
@@ -137,8 +137,8 @@ token RowPatternTag(const char * lexeme) {
 	return ROW;
 }
 
-token TableSizePatternTag(const char * lexeme) {
-	LogDebug("TableSizePatternTag: '%s'.", lexeme);
+token TableSizeAttributeKey(const char * lexeme) {
+	LogDebug("TableSizeAttributeKey: '%s'.", lexeme);
 	yylval.token = ROWXCOL;
 	return ROWXCOL;
 }
@@ -155,8 +155,8 @@ token FontPatternTag(const char * lexeme) {
 	return FONT;
 }
 
-token IdPatternTag(const char * lexeme) {
-	LogDebug("IdPatternTag: '%s'.", lexeme);
+token IdAttributeKey(const char * lexeme) {
+	LogDebug("IdAttributeKey: '%s'.", lexeme);
 	yylval.token = ID;
 	return ID;
 }
@@ -179,45 +179,45 @@ token XPatternTag(const char * lexeme) {
 	return X;
 }
 
-token IdPatternAttribute(const char * lexeme, const int length) {
-	LogDebug("IdPatternAttribute: '%s' (length = %d).", lexeme, length);
+token IdAttributeValue(const char * lexeme, const int length) {
+	LogDebug("IdAttributeValue: '%s' (length = %d).", lexeme, length);
 	yylval.token = ID_ATTR;
 	return ID_ATTR;
 }
 
-token StringPatternAttribute(const char * lexeme, const int length) {
-	LogDebug("StringPatternAttribute: '%s' (length = %d).", lexeme, length);
+token StringAttributeValue(const char * lexeme, const int length) {
+	LogDebug("StringAttributeValue: '%s' (length = %d).", lexeme, length);
 	yylval.token = STRING;
 	return STRING;
 }
 
 
-token SizePatternAttribute(const char * lexeme, const int length) {
-	LogDebug("SizePatternAttribute: '%s' (length = %d).", lexeme, length);
+token SizeAttributeValue(const char * lexeme, const int length) {
+	LogDebug("SizeAttributeValue: '%s' (length = %d).", lexeme, length);
 	yylval.token = SIZE_ATTR;
 	return SIZE_ATTR;
 }
 
-token ColorPatternAttribute(const char * lexeme, const int length) {
-	LogDebug("ColorPatternAttribute: '%s' (length = %d).", lexeme, length);
+token ColorAttributeValue(const char * lexeme, const int length) {
+	LogDebug("ColorAttributeValue: '%s' (length = %d).", lexeme, length);
 	yylval.token = COLOR_ATTR;
 	return COLOR_ATTR;
 }
 
-token PositionPatternAttribute(const char * lexeme, const int length) {
-	LogDebug("PositionPatternAttribute: '%s' (length = %d).", lexeme, length);
+token PositionAttributeValue(const char * lexeme, const int length) {
+	LogDebug("PositionAttributeValue: '%s' (length = %d).", lexeme, length);
 	yylval.token = POSITION_ATTR;
 	return POSITION_ATTR;
 }
 
-token NumberPatternAttribute(const char * lexeme, const int length) {
-	LogDebug("NumberPatternAttribute: '%s' (length = %d).", lexeme, length);
+token NumberAttributeValue(const char * lexeme, const int length) {
+	LogDebug("NumberAttributeValue: '%s' (length = %d).", lexeme, length);
 	yylval.token = NUMBER;
 	return NUMBER;
 }
 
-token FontPatternAttribute(const char * lexeme, const int length) {
-	LogDebug("FontPatternAttribute: '%s' (length = %d).", lexeme, length);
+token FontAttributeValue(const char * lexeme, const int length) {
+	LogDebug("FontAttributeValue: '%s' (length = %d).", lexeme, length);
 	yylval.token = FONT_ATTR;
 	return FONT_ATTR;
 }

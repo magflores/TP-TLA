@@ -37,33 +37,35 @@ token EndPatternTag(const char * lexeme);
 token ContainerPatternTag(const char * lexeme);
 token TitlePatternTag(const char * lexeme);
 token TablePatternTag(const char * lexeme);
-token StylePatternTag(const char * lexeme);
-token SizePatternTag(const char * lexeme);
-token ColorPatternTag(const char * lexeme);
-token PositionPatternTag(const char * lexeme);
-token BoldPatternTag(const char * lexeme);
-token UnderlinedPatternTag(const char * lexeme);
-token ItalicsPatternTag(const char * lexeme);
 token ImagePatternTag(const char * lexeme);
 token LinkPatternTag(const char * lexeme);
 token RowPatternTag(const char * lexeme);
 token TextPatternTag(const char * lexeme);
 token FontPatternTag(const char * lexeme);
-token IdPatternTag(const char * lexeme);
 token ColonPatternTag(const char * lexeme);
 token CommaPatternTag(const char * lexeme);
 token XPatternTag(const char * lexeme);
-token TableSizePatternTag(const char * lexeme);
+
+token IdAttributeKey(const char * lexeme);
+token StyleAttributeKey(const char * lexeme);
+token SizeAttributeKey(const char * lexeme);
+token ColorAttributeKey(const char * lexeme);
+token PositionAttributeKey(const char * lexeme);
+token BoldAttributeValue(const char * lexeme);
+token UnderlinedAttributeValue(const char * lexeme);
+token ItalicsAttributeValue(const char * lexeme);
+token TableSizeAttributeKey(const char * lexeme);
 
 
-token IdPatternAttribute(const char * lexeme, const int length);
-token StringPatternAttribute(const char * lexeme, const int length);
-token SizePatternAttribute(const char * lexeme, const int length);
-token ColorPatternAttribute(const char * lexeme, const int length);
-token StylePatternAttribute(const char * lexeme, const int length);
-token PositionPatternAttribute(const char * lexeme, const int length);
-token NumberPatternAttribute(const char * lexeme, const int length);
-token FontPatternAttribute(const char * lexeme, const int length);
+token IdAttributeValue(const char * lexeme, const int length);
+token StringAttributeValue(const char * lexeme, const int length);
+token SizeAttributeValue(const char * lexeme, const int length);
+token ColorAttributeValue(const char * lexeme, const int length);
+token StyleAttributeValue(const char * lexeme, const int length);
+token PositionAttributeValue(const char * lexeme, const int length);
+token NumberAttributeValue(const char * lexeme, const int length);
+token FontAttributeValue(const char * lexeme, const int length);
+
 token EndlinePatternAttribute(const char * lexeme, const int length);
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
