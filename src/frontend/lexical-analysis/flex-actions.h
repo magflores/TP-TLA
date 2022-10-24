@@ -26,8 +26,8 @@ void EndCommentPatternAction();
 void BeginStringPatternAction();
 void EndStringPatternAction();
 
-void BeginTableSizePatternAction();
-void EndTableSizePatternAction();
+token BeginTableSizePatternAction(const char * lexeme);
+token EndTableSizePatternAction(const char * lexeme);
 
 
 
@@ -48,6 +48,7 @@ token ImagePatternTag(const char * lexeme);
 token LinkPatternTag(const char * lexeme);
 token RowPatternTag(const char * lexeme);
 token TextPatternTag(const char * lexeme);
+token FontPatternTag(const char * lexeme);
 token IdPatternTag(const char * lexeme);
 token ColonPatternTag(const char * lexeme);
 token CommaPatternTag(const char * lexeme);
@@ -55,16 +56,15 @@ token XPatternTag(const char * lexeme);
 token TableSizePatternTag(const char * lexeme);
 
 
-token IdPatternAttribute(const char * lexeme);
-token StringPatternAttribute(const char * lexeme);
-/* token SourcePatternAttribute(const char * lexeme); */
-token SizePatternAttribute(const char * lexeme);
-token ColorPatternAttribute(const char * lexeme);
-token StylePatternAttribute(const char * lexeme);
-token PositionPatternAttribute(const char * lexeme);
-token NumberPatternAttribute(const char * lexeme);
-token FontPatternAttribute(const char * lexeme);
-token EndlinePatternAttribute(const char * lexeme);
+token IdPatternAttribute(const char * lexeme, const int length);
+token StringPatternAttribute(const char * lexeme, const int length);
+token SizePatternAttribute(const char * lexeme, const int length);
+token ColorPatternAttribute(const char * lexeme, const int length);
+token StylePatternAttribute(const char * lexeme, const int length);
+token PositionPatternAttribute(const char * lexeme, const int length);
+token NumberPatternAttribute(const char * lexeme, const int length);
+token FontPatternAttribute(const char * lexeme, const int length);
+token EndlinePatternAttribute(const char * lexeme, const int length);
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);

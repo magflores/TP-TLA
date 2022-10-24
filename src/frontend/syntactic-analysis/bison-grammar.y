@@ -71,6 +71,8 @@
 
 %token <token> COLON
 %token <token> COMMA
+%token <token> OPEN_PARENTHESIS
+%token <token> CLOSE_PARENTHESIS
 %token <token> X
 
 %token <token> ID_ATTR
@@ -124,6 +126,7 @@ program: START expressions END										{ $$ = ProgramGrammarAction($2); }
 
 expressions: expression expressions 								{ }
 		| expression 												{ }
+		| /*lambda*/												{ }
 		;
 
 expression: title													{ }
@@ -133,7 +136,6 @@ expression: title													{ }
 		| link														{ }
 		| table														{ }
 		| container													{ }
-		| /*lambda*/												{ }
 		;
 
 title: TITLE title_attrs STRING 									{ }
@@ -211,14 +213,15 @@ properties: property COMMA properties 								{ }
 
 property: BOLD 														{ } 
 		| UNDERLINED 												{ } 
-		| ITALICS 													{ } 
+		| ITALICS 													{ }
 		; 	
 
 table_attr: id rowxcol												{ } 
 		| rowxcol		 											{ }  
 		;
 
-rowxcol: ROWXCOL COLON NUMBER X NUMBER 							{ }
+rowxcol: ROWXCOL COLON 
+		 OPEN_PARENTHESIS NUMBER X NUMBER CLOSE_PARENTHESIS			{ }
 		;
 
 table_content: row_content table_content  							{ } 

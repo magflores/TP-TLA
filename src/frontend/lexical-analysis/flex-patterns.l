@@ -21,11 +21,12 @@
 /* Patrones reutilizables. */
 crlf			\r\n
 size            (x-small|small|medium|large|x-large|xx-large)
+/* Son atributos unicos, los que van en formato de lista son los styles */
 color           (black|red|blue|yellow|green|orange|purple)
 position        (left|center|right)
 font            (Arial|Times|Calibri|Helvetica)
 number          [0-9]+
-id_attr         [A-Za-z][0-9]([A-Za-z]|[0-9])*
+id_attr         ([A-Za-z]|[0-9])*
 endline			\n
 whitespace		[ \f\n\r\t\v]
 
@@ -39,13 +40,13 @@ whitespace		[ \f\n\r\t\v]
 <COMMENT>"*/"								{ EndCommentPatternAction(); BEGIN(INITIAL); }
 
 "\""                                        { BEGIN(STRING); BeginStringPatternAction(); }
-<STRING>[^\"]*                              { return StringPatternAttribute(yytext);}
+<STRING>[^\"]*                              { return StringPatternAttribute(yytext, yyleng);}
 <STRING>"\""                                { EndStringPatternAction(); BEGIN(INITIAL);}
 
-"("                                        { BEGIN(TABLE_SIZE); BeginTableSizePatternAction(); }
+"("                                        { BEGIN(TABLE_SIZE); return BeginTableSizePatternAction(yytext); }
 <TABLE_SIZE>"x"                            { return XPatternTag(yytext);}
-<TABLE_SIZE>{number}                       { return NumberPatternAttribute(yytext);}
-<TABLE_SIZE>")"                            { EndTableSizePatternAction(); BEGIN(INITIAL);}
+<TABLE_SIZE>{number}                       { return NumberPatternAttribute(yytext, yyleng);}
+<TABLE_SIZE>")"                            { BEGIN(INITIAL); return EndTableSizePatternAction(yytext); }
 
 "START"                                     { return StartPatternTag(yytext); }
 "END"                                       { return EndPatternTag(yytext); }
@@ -71,13 +72,13 @@ whitespace		[ \f\n\r\t\v]
 ":"                                         { return ColonPatternTag(yytext); } 
 ","                                         { return CommaPatternTag(yytext); } 
 
-{size}                                      { return SizePatternAttribute(yytext); }
-{color}                                     { return ColorPatternAttribute(yytext); }
-{position}                                  { return PositionPatternAttribute(yytext); }
-{font}                                      { return FontPatternAttribute(yytext); }
-{id_attr}                                   { return IdPatternAttribute(yytext); }
-{endline}                                   { EndlinePatternAttribute(yytext); }
+{size}                                      { return SizePatternAttribute(yytext, yyleng); }
+{color}                                     { return ColorPatternAttribute(yytext, yyleng); }
+{position}                                  { return PositionPatternAttribute(yytext, yyleng); }
+{font}                                      { return FontPatternAttribute(yytext, yyleng); }
+{id_attr}                                   { return IdPatternAttribute(yytext, yyleng); }
 
+{endline}                                   { EndlinePatternAttribute(yytext, yyleng); }
 {whitespace}								{ IgnoredPatternAction(yytext, yyleng); }
 .											{ return UnknownPatternAction(yytext, yyleng); }
 
