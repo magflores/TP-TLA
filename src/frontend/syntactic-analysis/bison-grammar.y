@@ -117,44 +117,44 @@
 program: START expressions END										{ ProgramGrammarAction($2); }
 		;
 
-expressions: expression expressions 								{ $$ = ExprsAction($1, $2) }
-		| expression 												{ $$ = ExprAction($1) }
-		| /*lambda*/												{ EmptyExprAction() }
+expressions: expression expressions 								{ $$ = ExprsAction($1, $2); }
+		| expression 												{ $$ = ExprAction($1); }
+		| /*lambda*/												{ EmptyExprAction(); }
 		;
 
-expression: title													{ $$ = TitleExprAction($1)}
-		| font														{ $$ = FontExprAction($1) }
-		| text														{ $$ = TextExprAction($1) }
-		| img														{ $$ = ImgExprAction($1) }
-		| link														{ $$ = LinkExprAction($1) }
-		| table														{ $$ = TableExprAction($1) }
-		| container													{ $$ = ContainerExprAction($1) }
+expression: title													{ $$ = TitleExprAction($1); }
+		| font														{ $$ = FontExprAction($1); }
+		| text														{ $$ = TextExprAction($1); }
+		| img														{ $$ = ImgExprAction($1); }
+		| link														{ $$ = LinkExprAction($1); }
+		| table														{ $$ = TableExprAction($1); }
+		| container													{ $$ = ContainerExprAction($1); }
 		;
 
-title: TITLE title_attrs STRING 									{ $$ = TitleWithAttrsGrammarAction($2, $3) }
-		| TITLE STRING 												{ $$ = TitleWithoutAttrsGrammarAction($2) } 
+title: TITLE title_attrs STRING 									{ $$ = TitleWithAttrsGrammarAction($2, $3); }
+		| TITLE STRING 												{ $$ = TitleWithoutAttrsGrammarAction($2); } 
 		;
 
-font: FONT FONT_ATTR												{ $$ = FontGrammarAction($2) }
+font: FONT FONT_ATTR												{ $$ = FontGrammarAction($2); }
 		;
 
-text: TEXT title_attrs STRING										{ $$ = TextWithAttrsGrammarAction($2, $3) }
-		| TEXT STRING 												{ $$ = TextWithoutAttrsGrammarAction($2) }
+text: TEXT title_attrs STRING										{ $$ = TextWithAttrsGrammarAction($2, $3); }
+		| TEXT STRING 												{ $$ = TextWithoutAttrsGrammarAction($2); }
 		;
 
-img: IMG img_attrs STRING											{ $$ = ImgWithAttrsGrammarAction($2, $3) }
-	 	| IMG STRING												{ $$ = ImgWithoutAttrsGrammarAction($2) }
+img: IMG img_attrs STRING											{ $$ = ImgWithAttrsGrammarAction($2, $3); }
+	 	| IMG STRING												{ $$ = ImgWithoutAttrsGrammarAction($2); }
 		;
 
-link: LINK title_attrs STRING COMMA STRING							{ $$ = LinkWithAttrsGrammarAction($2, $3, $5) }
-		| LINK STRING COMMA STRING									{ $$ = LinkWithoutAttrsGrammarAction($2, $4) }
+link: LINK title_attrs STRING COMMA STRING							{ $$ = LinkWithAttrsGrammarAction($2, $3, $5); }
+		| LINK STRING COMMA STRING									{ $$ = LinkWithoutAttrsGrammarAction($2, $4); }
 		;	
 
-table: TABLE table_attr table_content END TABLE 					{ $$ = TableGrammarAction($2, $3) }
+table: TABLE table_attr table_content END TABLE 					{ $$ = TableGrammarAction($2, $3); }
 		;
 
-container: CONTAINER container_attrs expressions END CONTAINER  	{ $$ = ContainerWithAttrsGrammarAction($2, $3) } 
-		| CONTAINER expressions END CONTAINER						{ $$ = ContainerWithoutAttrsGrammarAction($3) }
+container: CONTAINER container_attrs expressions END CONTAINER  	{ $$ = ContainerWithAttrsGrammarAction($2, $3); } 
+		| CONTAINER expressions END CONTAINER						{ $$ = ContainerWithoutAttrsGrammarAction($3); }
 		;
 
 title_attrs: title_attr title_attrs									{  }

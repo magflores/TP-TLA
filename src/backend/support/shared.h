@@ -124,15 +124,15 @@ typedef struct tRows
 	int size;
 } tRows;
 
-typedef struct tTableAttrs{
-	tRowxColAttr * rowxcol;
-	char * ID;
-} tTableAttrs;
-
 typedef struct tRowxColAttr{
 	int rows;
 	int cols;
 } tRowxColAttr;
+
+typedef struct tTableAttrs{
+	tRowxColAttr * rowxcol;
+	char * ID;
+} tTableAttrs;
 
 typedef struct tTable{
 	tTableAttrs * attrs;

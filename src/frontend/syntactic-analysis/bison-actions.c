@@ -103,7 +103,7 @@ tExpr * TextExprAction(tText * text){
 	return exp;
 }
 
-tExpr * ImgExpressionAction(tImage * img){
+tExpr * ImgExprAction(tImage * img){
 	tExpr * exp = malloc(sizeof(tExpr));
 	if(exp == NULL)
 		return NULL;
