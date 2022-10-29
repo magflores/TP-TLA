@@ -28,8 +28,12 @@ void yyerror(const char * string) {
 * indica que efectivamente el programa de entrada se pudo generar con esta
 * gramática, o lo que es lo mismo, que el programa pertenece al lenguaje.
 */
-int ProgramGrammarAction(const int value) {
-	LogDebug("\tProgramGrammarAction(%d)", value);
+void ProgramGrammarAction(tExprs * exprs) {
+	LogDebug("Reconozco patrón. ProgramGrammarAction()");
+	tProgram * value = malloc(sizeof(tProgram));
+	if(value == NULL)
+		return;
+	value->initial = exprs;
 	/*
 	* "state" es una variable global que almacena el estado del compilador,
 	* cuyo campo "succeed" indica si la compilación fue o no exitosa, la cual
@@ -44,45 +48,231 @@ int ProgramGrammarAction(const int value) {
 	* variable es un simple entero, en lugar de un nodo.
 	*/
 	state.result = value;
-	return value;
 }
 
-int AdditionExpressionGrammarAction(const int leftValue, const int rightValue) {
-	LogDebug("\tAdditionExpressionGrammarAction(%d, %d)", leftValue, rightValue);
-	return Add(leftValue, rightValue);
+tExprs * ExprAction(tExpr * exp){
+	tExprs * exps = malloc(sizeof(tExprs));
+	if(exps == NULL)
+		return NULL;
+	exp->next = NULL;
+	exps->first = exp;
+	exps->size = 1;
+	return exps;
 }
 
-int SubtractionExpressionGrammarAction(const int leftValue, const int rightValue) {
-	LogDebug("\tSubtractionExpressionGrammarAction(%d, %d)", leftValue, rightValue);
-	return Subtract(leftValue, rightValue);
+tExprs * ExprsAction(tExprs * exps, tExpr * exp){
+	tExpr * aux = exps->first;
+	while(aux->next != NULL)
+		aux = aux->next;
+	aux->next = exp;
+	exps->size++;
+	return exps;
 }
 
-int MultiplicationExpressionGrammarAction(const int leftValue, const int rightValue) {
-	LogDebug("\tMultiplicationExpressionGrammarAction(%d, %d)", leftValue, rightValue);
-	return Multiply(leftValue, rightValue);
+void EmptyExprAction(){
+	return;
 }
 
-int DivisionExpressionGrammarAction(const int leftValue, const int rightValue) {
-	LogDebug("\tDivisionExpressionGrammarAction(%d, %d)", leftValue, rightValue);
-	return Divide(leftValue, rightValue);
+tExpr * TitleExprAction(tTitle * title){
+	tExpr * exp = malloc(sizeof(tExpr));
+	if(exp == NULL)
+		return NULL;
+	exp->type = TITLEEXPR;
+	exp->expr = title;
+	exp->next = NULL;
+	return exp;
 }
 
-int FactorExpressionGrammarAction(const int value) {
-	LogDebug("\tFactorExpressionGrammarAction(%d)", value);
-	return value;
+tExpr *  FontExprAction(tFont * font) {
+	tExpr * exp = malloc(sizeof(tExpr));
+	if(exp == NULL)
+		return NULL;
+	exp->type = FONTEXPR;
+	exp->expr = font;
+	exp->next = NULL;
+	return exp;
 }
 
-int ExpressionFactorGrammarAction(const int value) {
-	LogDebug("\tExpressionFactorGrammarAction(%d)", value);
-	return value;
+tExpr * TextExprAction(tText * text){
+	tExpr * exp = malloc(sizeof(tExpr));
+	if(exp == NULL)
+		return NULL;
+	exp->type = TEXTEXPR;
+	exp->expr = text;
+	exp->next = NULL;
+	return exp;
 }
 
-int ConstantFactorGrammarAction(const int value) {
-	LogDebug("\tConstantFactorGrammarAction(%d)", value);
-	return value;
+tExpr * ImgExpressionAction(tImage * img){
+	tExpr * exp = malloc(sizeof(tExpr));
+	if(exp == NULL)
+		return NULL;
+	exp->type = IMGEXPR;
+	exp->expr = img;
+	exp->next = NULL;
+	return exp;
 }
 
-int IntegerConstantGrammarAction(const int value) {
-	LogDebug("\tIntegerConstantGrammarAction(%d)", value);
-	return value;
+tExpr * LinkExprAction(tLink * link){
+	tExpr * exp = malloc(sizeof(tExpr));
+	if(exp == NULL)
+		return NULL;
+	exp->type = LINKEXPR;
+	exp->expr = link;
+	exp->next = NULL;
+	return exp;
+}
+
+tExpr * TableExprAction(tTable * table){
+	tExpr * exp = malloc(sizeof(tExpr));
+	if(exp == NULL)
+		return NULL;
+	exp->type = TABLEEXPR;
+	exp->expr = table;
+	exp->next = NULL;
+	return exp;
+}
+
+tExpr * ContainerExprAction(tContainer * div){
+	tExpr * exp = malloc(sizeof(tExpr));
+	if(exp == NULL)
+		return NULL;
+	exp->type = CONTAINEREXPR;
+	exp->expr = div;
+	exp->next = NULL;
+	return exp;
+}
+
+tTitle * TitleWithoutAttrsGrammarAction(char * content){
+	tTitle * title = malloc(sizeof(tTitle));
+	if(title == NULL){
+		return NULL;
+	}
+	title->content = malloc(sizeof(char) * (strlen(content) + 1));
+	strcpy(title->content, content);
+	title->attrs = NULL;
+	return title;
+}
+
+tTitle * TitleWithAttrsGrammarAction(tAttributes * attrs, char * content){
+	tTitle * title = malloc(sizeof(tTitle));
+	if(title == NULL){
+		return NULL;
+	}
+	title->content = malloc(sizeof(char) * (strlen(content) + 1));
+	strcpy(title->content, content);
+	title->attrs = attrs;
+	return title;
+}
+
+tFont * FontGrammarAction(char * content){
+	tFont * font = malloc(sizeof(tFont));
+	if(font == NULL){
+		return NULL;
+	}
+	font->content = malloc(sizeof(char) * (strlen(content) + 1));
+	strcpy(font->content, content);
+	return font;
+}
+
+tText * TextWithoutAttrsGrammarAction(char * content){
+	tText* text = malloc(sizeof(tText));
+	if(text == NULL){
+		return NULL;
+	}
+	text->content = malloc(sizeof(char) * (strlen(content) + 1));
+	strcpy(text->content, content);
+	text->attrs = NULL;
+	return text;
+}
+
+tText * TextWithAttrsGrammarAction(tAttributes * attrs, char * content){
+	tText * text = malloc(sizeof(tText));
+	if(text == NULL){
+		return NULL;
+	}
+	text->content = malloc(sizeof(char) * (strlen(content) + 1));
+	strcpy(text->content, content);
+	text->attrs = attrs;
+	return text;
+}
+
+tImage * ImgWithAttrsGrammarAction(tAttributes * attrs, char * link){
+	tImage * img = malloc(sizeof(tImage));
+	if(img == NULL)
+		return NULL; 
+	img->link = malloc(sizeof(char) * (strlen(link) + 1));
+	strcpy(img->link, link);
+	img->attrs = attrs;
+	return img;
+}
+
+tImage * ImgWithoutAttrsGrammarAction(char * link){
+	tImage * img = malloc(sizeof(tImage));
+	if(img == NULL)
+		return NULL;
+	img->link = malloc(sizeof(char) * (strlen(link) + 1));
+	strcpy(img->link, link);
+	img->attrs = NULL;
+	return img;
+}
+
+tLink * LinkWithAttrsGrammarAction(tAttributes * attrs, char * ref, char * text){
+	tLink * link = malloc(sizeof(link));
+	if(link == NULL){
+		return NULL;
+	}
+
+	link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
+	link->text = malloc(sizeof(char)*(strlen(text) + 1));
+	strncpy(link->ref, ref + 5, strlen(ref) - 7);
+	strcpy(link->text, text);
+	link->attrs = attrs;
+	return link;
+}
+
+tLink * LinkWithoutAttrsGrammarAction(char * ref, char * text){
+	tLink * link = malloc(sizeof(link));
+	if(link == NULL){
+		return NULL;
+	}
+
+	link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
+	link->text = malloc(sizeof(char)*(strlen(text) + 1));
+	strncpy(link->ref, ref + 5, strlen(ref) - 6);
+	strcpy(link->text, text);
+	link->attrs = NULL;
+	return link;
+}
+
+tTable * TableGrammarAction(tTableAttrs * attrs, tRows * rows){
+	tTable * table = malloc(sizeof(table));
+	if(table == NULL){
+		return NULL;
+	}
+	table->attrs = attrs;
+	table->firstRow = rows;
+	return table;
+}
+
+tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs){
+	tContainer * container = malloc(sizeof(container));
+	if(container == NULL){
+		return NULL;
+	}
+	container->attrs = attrs;
+	container->content = exprs;
+	container->size = 1; //????
+	return container;
+}
+
+tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs){
+	tContainer * container = malloc(sizeof(container));
+	if(container == NULL){
+		return NULL;
+	}
+	container->attrs = NULL;
+	container->content = exprs;
+	container->size = 1; //????
+	return container;
 }

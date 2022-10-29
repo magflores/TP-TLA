@@ -58,6 +58,21 @@ typedef enum expr_type {
 	FONTEXPR
 } expr_type;
 
+typedef struct tExpr{
+	expr_type type;
+	void * expr;
+	struct tExpr * next;
+} tExpr;
+
+typedef struct tExprs{
+	int size;
+	tExpr * first;
+} tExprs;
+
+typedef struct tProgram{
+	tExprs * initial;
+} tProgram;
+
 typedef struct tAttribute
 {
 	atr_type type;
@@ -81,6 +96,10 @@ typedef struct tText{
 	char * content;
 } tText;
 
+typedef struct tFont{
+	char * content;
+} tFont;
+
 typedef struct tLink{
 	tAttributes * attrs;
 	char * ref;
@@ -95,7 +114,7 @@ typedef struct tImage{
 typedef struct tRow
 {
 	struct tRow * nextRow;
-	tExprs * content;x
+	tExprs * content;
 	int size;
 } tRow;
 
@@ -105,10 +124,19 @@ typedef struct tRows
 	int size;
 } tRows;
 
-typedef struct tTable{
-	tRows * firstRow;
+typedef struct tTableAttrs{
+	tRowxColAttr * rowxcol;
+	char * ID;
+} tTableAttrs;
+
+typedef struct tRowxColAttr{
 	int rows;
 	int cols;
+} tRowxColAttr;
+
+typedef struct tTable{
+	tTableAttrs * attrs;
+	tRows * firstRow;
 } tTable;
 
 typedef struct tContainer{
@@ -116,21 +144,6 @@ typedef struct tContainer{
 	tExprs * content;
 	int size;
 } tContainer;
-
-typedef struct tExpr{
-	expr_type type;
-	void * expr;
-	struct tExpr * next;
-} tExpr;
-
-typedef struct tExprs{
-	int size;
-	tExpr * first;
-} tExprs;
-
-typedef struct tProgram{
-	tExprs * initial;
-} tProgram;
 
 
 // Estado global de toda la aplicación.
@@ -140,7 +153,7 @@ typedef struct {
 	boolean succeed;
 
 	// Indica el resultado de la compilación (para la calculadora).
-	int result;
+	tProgram * result;
 
 	// El nodo raíz del AST (se usará cuando se implemente el backend).
 	Program * program;

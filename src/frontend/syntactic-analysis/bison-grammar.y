@@ -6,34 +6,27 @@
 
 // Tipos de dato utilizados en las variables semánticas ($$, $1, $2, etc.).
 %union {
-	// No-terminales (backend).
-	/*
-	Program program;
-	Expressions expressions;
-	Expression expression;
-	...
-	*/
 
-	// No-terminales (frontend).
-	int program;
-	int expressions;
-	int expression;
-	int title;
-	int font;
-	int text; 
-	int img;
-	int link;
-	int table;
-	int container;
-	int title_attrs;
-	int title_attr;
-	int img_attrs;
-	int img_attr;
-	int container_attrs;
-	int container_attr;
-	int table_attr;
-	int table_content;
-	int row_content;
+	// No-terminales.
+	tProgram * program;
+	tExprs * expressions;
+	tExpr * expression;
+	tTitle * title;
+	tImage * img;
+	tLink * link;
+	tTable * table;
+	tFont *  font;
+	tText * text; 
+	tContainer * container;
+	tAttributes * title_attrs;
+	tAttribute * title_attr;
+	tAttributes * img_attrs;
+	tAttribute * img_attr;
+	tAttributes * container_attrs;
+	tAttribute * container_attr;
+	tAttribute * table_attr;
+	tRows * table_content;
+	tRow * row_content;
 
 	int id;
 	int size;
@@ -121,50 +114,50 @@
 
 %%
 
-program: START expressions END										{ $$ = ProgramGrammarAction($2); }
+program: START expressions END										{ ProgramGrammarAction($2); }
 		;
 
-expressions: expression expressions 								{ }
-		| expression 												{ }
-		| /*lambda*/												{ }
+expressions: expression expressions 								{ $$ = ExprsAction($1, $2) }
+		| expression 												{ $$ = ExprAction($1) }
+		| /*lambda*/												{ EmptyExprAction() }
 		;
 
-expression: title													{ }
-		| font														{ }
-		| text														{ }
-		| img														{ }
-		| link														{ }
-		| table														{ }
-		| container													{ }
+expression: title													{ $$ = TitleExprAction($1)}
+		| font														{ $$ = FontExprAction($1) }
+		| text														{ $$ = TextExprAction($1) }
+		| img														{ $$ = ImgExprAction($1) }
+		| link														{ $$ = LinkExprAction($1) }
+		| table														{ $$ = TableExprAction($1) }
+		| container													{ $$ = ContainerExprAction($1) }
 		;
 
-title: TITLE title_attrs STRING 									{ }
-		| TITLE STRING 												{ } 
+title: TITLE title_attrs STRING 									{ $$ = TitleWithAttrsGrammarAction($2, $3) }
+		| TITLE STRING 												{ $$ = TitleWithoutAttrsGrammarAction($2) } 
 		;
 
-font: FONT FONT_ATTR												{ }
+font: FONT FONT_ATTR												{ $$ = FontGrammarAction($2) }
 		;
 
-text: TEXT title_attrs STRING										{ }
-		| TEXT STRING 												{ }
+text: TEXT title_attrs STRING										{ $$ = TextWithAttrsGrammarAction($2, $3) }
+		| TEXT STRING 												{ $$ = TextWithoutAttrsGrammarAction($2) }
 		;
 
-img: IMG img_attrs STRING											{ }
-	 	| IMG STRING												{ }
+img: IMG img_attrs STRING											{ $$ = ImgWithAttrsGrammarAction($2, $3) }
+	 	| IMG STRING												{ $$ = ImgWithoutAttrsGrammarAction($2) }
 		;
 
-link: LINK title_attrs STRING COMMA STRING							{ }
-		| LINK STRING COMMA STRING									{ }
+link: LINK title_attrs STRING COMMA STRING							{ $$ = LinkWithAttrsGrammarAction($2, $3, $5) }
+		| LINK STRING COMMA STRING									{ $$ = LinkWithoutAttrsGrammarAction($2, $4) }
 		;	
 
-table: TABLE table_attr table_content END TABLE 					{ }
+table: TABLE table_attr table_content END TABLE 					{ $$ = TableGrammarAction($2, $3) }
 		;
 
-container: CONTAINER container_attrs expressions END CONTAINER  	{ } 
-		| CONTAINER expressions END CONTAINER						{ }
+container: CONTAINER container_attrs expressions END CONTAINER  	{ $$ = ContainerWithAttrsGrammarAction($2, $3) } 
+		| CONTAINER expressions END CONTAINER						{ $$ = ContainerWithoutAttrsGrammarAction($3) }
 		;
 
-title_attrs: title_attr title_attrs									{ }
+title_attrs: title_attr title_attrs									{  }
 		| title_attr												{ }
 		;
 

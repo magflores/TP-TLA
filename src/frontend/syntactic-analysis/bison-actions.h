@@ -12,20 +12,49 @@
  */
 
 // Programa.
-int ProgramGrammarAction(const int value);
+void ProgramGrammarAction(tExprs * value);
 
-// Expresión.
-int AdditionExpressionGrammarAction(const int leftValue, const int rightValue);
-int SubtractionExpressionGrammarAction(const int leftValue, const int rightValue);
-int MultiplicationExpressionGrammarAction(const int leftValue, const int rightValue);
-int DivisionExpressionGrammarAction(const int leftValue, const int rightValue);
-int FactorExpressionGrammarAction(const int value);
+tExprs * ExprAction(tExpr * exp);
 
-// Factores.
-int ExpressionFactorGrammarAction(const int value);
-int ConstantFactorGrammarAction(const int value);
+tExprs * ExprsAction(tExprs * exps, tExpr * exp);
 
-// Constantes.
-int IntegerConstantGrammarAction(const int value);
+void EmptyExprAction();
 
+tExpr * TitleExprAction(tTitle * title);
+
+tExpr *  FontExprAction(tFont * font);
+
+tExpr * TextExprAction(tText * text);
+
+tExpr * ImgExpressionAction(tImage * img);
+
+tExpr * LinkExprAction(tLink * link);
+
+tExpr * TableExprAction(tTable * table);
+
+tExpr * ContainerExprAction(tContainer * div);
+
+tTitle * TitleWithoutAttrsGrammarAction(char * content);
+
+tTitle * TitleWithAttrsGrammarAction(tAttributes * attrs, char * content);
+
+tFont * FontGrammarAction(char * content);
+
+tText * TextWithoutAttrsGrammarAction(char * content);
+
+tText * TextWithAttrsGrammarAction(tAttributes * attrs, char * content);
+
+tImage * ImgWithAttrsGrammarAction(tAttributes * attrs, char * link);
+
+tImage * ImgWithoutAttrsGrammarAction(char * link);
+
+tLink * LinkWithAttrsGrammarAction(tAttributes * attrs, char * ref, char * text);
+
+tLink * LinkWithoutAttrsGrammarAction(char * ref, char * text);
+
+tTable * TableGrammarAction(tTableAttrs * attrs, tRows * rows);
+
+tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs);
+
+tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs);
 #endif
