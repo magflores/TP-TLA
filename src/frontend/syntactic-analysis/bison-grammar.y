@@ -157,71 +157,71 @@ container: CONTAINER container_attrs expressions END CONTAINER  	{ $$ = Containe
 		| CONTAINER expressions END CONTAINER						{ $$ = ContainerWithoutAttrsGrammarAction($3); }
 		;
 
-title_attrs: title_attr title_attrs									{  }
-		| title_attr												{ }
+title_attrs: title_attr title_attrs									{ $$ = AttrsAction($1, $2); }
+		| title_attr												{ $$ = AttrAction($1); }
 		;
 
-title_attr: id														{ }
-		| size 														{ } 
-		| color 													{ } 
-		| position 													{ }
-		| style 													{ }
+title_attr: id														{ $$ = IdAttrPatternAction($1); }
+		| size 														{ $$ = SizeAttrPatternAction($1); } 
+		| color 													{ $$ = ColorAttrPatternAction($1); } 
+		| position 													{ $$ = PositionAttrPatternAction($1); }
+		| style 													{ $$ = StyleAttrPatternAction($1); }
 		;
 
-img_attrs: img_attr img_attrs										{ }
-		| img_attr													{ }
+img_attrs: img_attr img_attrs										{ $$ = AttrsAction($1, $2); }
+		| img_attr													{ $$ = AttrAction($1); }
 		;
 
-img_attr: id														{ }
-		| size 														{ } 
-		| position 													{ }
+img_attr: id														{ $$ = IdAttrPatternAction($1); }
+		| size 														{ $$ = SizeAttrPatternAction($1); } 
+		| position 													{ $$ = PositionAttrPatternAction($1); }
 		;
 
-container_attrs: container_attr container_attrs						{ }
-		| container_attr											{ }
+container_attrs: container_attr container_attrs						{ $$ = AttrsAction($1, $2); }
+		| container_attr											{ $$ = AttrAction($1); }
 		;
 
-container_attr: id													{ }
-		| position 													{ }
+container_attr: id													{ $$ = IdAttrPatternAction($1); }
+		| position 													{ $$ = PositionAttrPatternAction($1); }
 		;
 
-id: ID COLON ID_ATTR												{ }
+id: ID COLON ID_ATTR												{ $$ = IdAttrAction($3); }
 		;
 
-size: SIZE COLON SIZE_ATTR											{ }
+size: SIZE COLON SIZE_ATTR											{ $$ = SizeAttrAction($3); }
 		;
 
-color: COLOR COLON COLOR_ATTR 										{ }
+color: COLOR COLON COLOR_ATTR 										{ $$ = ColorAtrrAction($3); }
 		;
 
-position: POSITION COLON POSITION_ATTR								{ }
+position: POSITION COLON POSITION_ATTR								{ $$ = PositionAttrAction($3); }
 		;
 
-style: STYLE COLON properties 										{ }
+style: STYLE COLON properties 										{ $$ = PropertiesAttrPaternAction($3); }
 		;
 
-properties: property COMMA properties 								{ }
-		| property 													{ }
+properties: property COMMA properties 								{ $$ = PropertiesListAction($1, $3); }
+		| property 													{ $$ = PropertyAttrAction($1); }
 		;
 
-property: BOLD 														{ } 
-		| UNDERLINED 												{ } 
-		| ITALICS 													{ }
+property: BOLD 														{ $$ = BoldAttrAction($1); } 
+		| UNDERLINED 												{ $$ = UnderlinedAttrAction($1); } 
+		| ITALICS 													{ $$ = ItalicsAttrAction($1); }
 		; 	
 
-table_attr: id rowxcol												{ } 
-		| rowxcol		 											{ }  
+table_attr: id rowxcol												{ $$ = IdAndRowxColAttrPaternAction($1, $2); } 
+		| rowxcol		 											{ $$ = RowxColAttrPatternAction($1); }  
 		;
 
 rowxcol: ROWXCOL COLON 
-		 OPEN_PARENTHESIS NUMBER X NUMBER CLOSE_PARENTHESIS			{ }
+		 OPEN_PARENTHESIS NUMBER X NUMBER CLOSE_PARENTHESIS			{ $$ = RowxColAttrAction($4, $6); }
 		;
 
-table_content: row_content table_content  							{ } 
-		| row_content  												{ } 
+table_content: row_content table_content  							{ $$ = TableAndRowContentAction($1, $2); } 
+		| row_content  												{ $$ = RowContentAction($1); } 
 		;
 
-row_content: ROW expressions END ROW 							 	{ } 
+row_content: ROW expressions END ROW 							 	{ $$ = RowExpressionsAction($2); } 
 		;
 
 %%

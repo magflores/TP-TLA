@@ -131,7 +131,7 @@ typedef struct tRowxColAttr{
 
 typedef struct tTableAttrs{
 	tRowxColAttr * rowxcol;
-	char * ID;
+	tAttribute * ID;
 } tTableAttrs;
 
 typedef struct tTable{
