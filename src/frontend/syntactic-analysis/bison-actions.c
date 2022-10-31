@@ -262,7 +262,7 @@ tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs
 	}
 	container->attrs = attrs;
 	container->content = exprs;
-	container->size = 1; //????
+	container->size++; //????
 	return container;
 }
 
@@ -273,22 +273,21 @@ tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs){
 	}
 	container->attrs = NULL;
 	container->content = exprs;
-	container->size = 1; //????
+	container->size++; //????
 	return container;
 }
 
-tAttribute * AttrAction(tAttribute * attr){
-	tAttribute * aux = malloc(sizeof(tAttribute));
+tAttributes * AttrAction(tAttribute * attr){
+	tAttributes * aux = malloc(sizeof(tAttributes));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->type = attr->type;
-	aux->next = attr->next;
-	aux->value = attr->value;
+	aux->first = attr;
+	aux->size++;
 	return aux;
 }
 
-tAttributes * AttrsAction(tAttributes * attrs, tAttribute * attr){
+tAttributes * AttrsAction(tAttribute * attr, tAttributes * attrs){
 	tAttribute * aux = attrs->first;
 	while(aux->next != NULL)
 		aux = aux->next;
@@ -376,7 +375,7 @@ tAttributes * PropertyAttrAction(tAttribute * property){
 		return NULL;
 	}
 	aux->first = property;
-	aux->size = 1;
+	aux->size++;
 	return aux;
 }
 
@@ -474,7 +473,7 @@ tTableAttrs * IdAndRowxColAttrPaternAction(tAttribute * id, tRowxColAttr * rowxc
 	return aux;
 }
 
-tTableAttrs * IdAndRowxColAttrPaternAction(tRowxColAttr * rowxcol){
+tTableAttrs * RowxColAttrPatternAction(tRowxColAttr * rowxcol){
 	tTableAttrs * aux = malloc(sizeof(tTableAttrs));
 	if(aux == NULL){
 		return NULL;
@@ -503,14 +502,13 @@ tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content){
 	return table_content;
 }
 
-tRow * RowContentAction(tRow * row_content){
-	tRow * aux = malloc(sizeof(tRow));
+tRows * RowContentAction(tRow * row_content){
+	tRows * aux = malloc(sizeof(tRows));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->content = row_content->content;
-	aux->nextRow = row_content->nextRow;
-	aux->size = row_content->size;
+	aux->firstRow = row_content;
+	aux->size++;
 	return aux;
 }
 

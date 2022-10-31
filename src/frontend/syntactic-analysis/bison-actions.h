@@ -2,7 +2,7 @@
 #define BISON_ACTIONS_HEADER
 
 #include "../../backend/support/shared.h"
-#include "../../backend/semantic-analysis/abstract-syntax-tree.h"
+// #include "../../backend/semantic-analysis/abstract-syntax-tree.h"
 
 /**
  * Se definen las acciones a ejecutar sobre cada regla de producción de la
@@ -16,7 +16,7 @@ void ProgramGrammarAction(tExprs * value);
 
 tExprs * ExprAction(tExpr * exp);
 
-tExprs * ExprsAction(tExprs * exp, tExpr * exps);
+tExprs * ExprsAction(tExpr * exp, tExprs * exps);
 
 void EmptyExprAction();
 
@@ -26,7 +26,7 @@ tExpr *  FontExprAction(tFont * font);
 
 tExpr * TextExprAction(tText * text);
 
-tExpr * ImgExpressionAction(tImage * img);
+tExpr * ImgExprAction(tImage * img);
 
 tExpr * LinkExprAction(tLink * link);
 
@@ -58,9 +58,9 @@ tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs
 
 tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs);
 
-tAttribute * AttrAction(tAttribute * attr);
+tAttributes * AttrAction(tAttribute * attr);
 
-tAttributes * AttrsAction(tAttributes * attrs, tAttribute * attr);
+tAttributes * AttrsAction(tAttribute * attr, tAttributes * attrs);
 
 tAttribute * IdAttrPatternAction(tAttribute * id);
 
@@ -94,13 +94,13 @@ tAttribute * ItalicsAttrAction(char * Italics);
 
 tTableAttrs * IdAndRowxColAttrPaternAction(tAttribute * id, tRowxColAttr * rowxcol);
 
-tTableAttrs * IdAndRowxColAttrPaternAction(tRowxColAttr * rowxcol);
+tTableAttrs * RowxColAttrPatternAction(tRowxColAttr * rowxcol);
 
 tRowxColAttr * RowxColAttrAction(int cols, int rows);
 
 tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content);
 
-tRow * RowContentAction(tRow * row_content);
+tRows * RowContentAction(tRow * row_content);
 
 tRow * RowExpressionsAction(tExprs * content);
 #endif

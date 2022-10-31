@@ -24,22 +24,23 @@
 	tAttribute * img_attr;
 	tAttributes * container_attrs;
 	tAttribute * container_attr;
-	tAttribute * table_attr;
+	tTableAttrs * table_attr;
 	tRows * table_content;
 	tRow * row_content;
 
-	int id;
-	int size;
-	int color;
-	int position;
-	int style;
-	int rowxcol;
+	tAttribute * id;
+	tAttribute * size;
+	tAttribute * color;
+	tAttribute * position;
+	tAttributes * style;
+	tRowxColAttr * rowxcol;
 
-	int properties;
-	int property;
+	tAttributes * properties;
+	tAttribute * property;
 
 	// Terminales.
 	token token;
+	char * token_string;
 }
 
 // IDs y tipos de los tokens terminales generados desde Flex.
@@ -53,9 +54,6 @@
 %token <token> ROW
 %token <token> TEXT
 %token <token> STYLE
-%token <token> BOLD
-%token <token> UNDERLINED
-%token <token> ITALICS
 %token <token> ID
 %token <token> SIZE
 %token <token> COLOR
@@ -68,17 +66,20 @@
 %token <token> CLOSE_PARENTHESIS
 %token <token> X
 
-%token <token> ID_ATTR
-%token <token> SIZE_ATTR
-%token <token> COLOR_ATTR
-%token <token> POSITION_ATTR
-%token <token> FONT_ATTR
-%token <token> STRING
+%token <token_string> ID_ATTR
+%token <token_string> SIZE_ATTR
+%token <token_string> COLOR_ATTR
+%token <token_string> POSITION_ATTR
+%token <token_string> FONT_ATTR
+%token <token_string> STRING
+%token <token_string> BOLD
+%token <token_string> UNDERLINED
+%token <token_string> ITALICS
 
 %token <token> ENDLINE
 %token <token> ROWXCOL
 
-%token <token> NUMBER
+%token <int> NUMBER
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <program> program
@@ -191,7 +192,7 @@ id: ID COLON ID_ATTR												{ $$ = IdAttrAction($3); }
 size: SIZE COLON SIZE_ATTR											{ $$ = SizeAttrAction($3); }
 		;
 
-color: COLOR COLON COLOR_ATTR 										{ $$ = ColorAtrrAction($3); }
+color: COLOR COLON COLOR_ATTR 										{ $$ = ColorAttrAction($3); }
 		;
 
 position: POSITION COLON POSITION_ATTR								{ $$ = PositionAttrAction($3); }
@@ -213,8 +214,7 @@ table_attr: id rowxcol												{ $$ = IdAndRowxColAttrPaternAction($1, $2); }
 		| rowxcol		 											{ $$ = RowxColAttrPatternAction($1); }  
 		;
 
-rowxcol: ROWXCOL COLON 
-		 OPEN_PARENTHESIS NUMBER X NUMBER CLOSE_PARENTHESIS			{ $$ = RowxColAttrAction($4, $6); }
+rowxcol: ROWXCOL COLON OPEN_PARENTHESIS NUMBER X NUMBER CLOSE_PARENTHESIS			{ $$ = RowxColAttrAction($4, $6); }
 		;
 
 table_content: row_content table_content  							{ $$ = TableAndRowContentAction($1, $2); } 
