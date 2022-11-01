@@ -12,5 +12,7 @@ void addHTML(tExpr * result);
 void addTitle(tTitle * title);
 void addText(tText * text);
 void addLink(tLink * link);
+void addImage(tImage* image);
+void addContainer(tContainer * container);
 
 #endif
