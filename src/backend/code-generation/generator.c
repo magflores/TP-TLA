@@ -5,6 +5,8 @@
  * Implementación de "generator.h".
  */
 
+FILE * file;
+
 void Generator(tProgram * result) {
 	LogInfo("El resultado de la expresion computada es: ");
 
@@ -69,26 +71,47 @@ void addHTML(tExpr * result) {
 	}
 }
 
-//TODO: MODULARIZAR??
+int getTitleSize(tAttributes * attrs) {
+	tAttribute * currAttr = attrs->first;
+	while(currAttr->type != SIZEVALUE){
+		currAttr = currAttr->next;
+	}
+	if(strcmp(currAttr->value, "x-small")){
+		return 6;
+	} 
+	if (strcmp(currAttr->value, "small")){
+		return 5;
+	}
+	if (strcmp(currAttr->value, "medium")){
+		return 4;
+	}
+	if (strcmp(currAttr->value, "large")){
+		return 3;
+	}
+	if (strcmp(currAttr->value, "x-large")){
+		return 2;
+	}
+	if (strcmp(currAttr->value, "xx-large")){
+		return 1;
+	}
+	return 3;
+}
 
 void addTitle(tTitle * title) {
 	int bold = 0, italic = 0, underlined = 0;
-
-	int size = 6;
-
-	//TODO: COMO MANEJAR EL SIZE --> TENEMOS QUE MAPEAR NUESTRAS PALABRAS RESERVADAS A UN NUMERO DE HTML (1-6) --> ENUM??
-	//TODO: REVISAR BIEN QUE NUESTRAS PARALABRAS RESERVADAS COINCIDAN PARA HTML
-
-	fprintf(file, "<h%d", size);
+	int size = 3;
 
 	if (title->attrs != NULL) {
-
-		if (title->attrs->IDVALUE != NULL)
-			fprintf(file, " id=\"%s\"", title->attrs->IDVALUE);
 		
 		tAttribute * currAttr = title->attrs->first;
+		size = getTitleSize(title->attrs);
+		fprintf(file, "<h%d", size);
+
 		while (currAttr != NULL){
 			switch (currAttr->type){
+				case IDVALUE:
+					fprintf(file, " id=\"%s\"", currAttr->value);
+					break;
 				case COLORVALUE:
 					fprintf(file, " color=%s", currAttr->value);
 					break;
@@ -130,27 +153,71 @@ void addTitle(tTitle * title) {
 	fprintf(file, "</h%d>\n", size);
 }
 
+int getFontSize(tAttributes * attrs) {
+	tAttribute * currAttr = attrs->first;
+	while(currAttr->type != SIZEVALUE){
+		currAttr = currAttr->next;
+	}
+	if(strcmp(currAttr->value, "x-small")){
+		return 10;
+	} 
+	if (strcmp(currAttr->value, "small")){
+		return 20;
+	}
+	if (strcmp(currAttr->value, "medium")){
+		return 30;
+	}
+	if (strcmp(currAttr->value, "large")){
+		return 40;
+	}
+	if (strcmp(currAttr->value, "x-large")){
+		return 50;
+	}
+	if (strcmp(currAttr->value, "xx-large")){
+		return 60;
+	}
+	return 30;
+}
+
 void addText(tText * text){
 	int bold = 0, italic = 0, underlined = 0;
 
 	//TODO: COMO MANEJAR EL SIZE --> TENEMOS QUE MAPEAR NUESTRAS PALABRAS RESERVADAS A UN NUMERO NUMERO DE FONT --> ENUM??
-	//TODO: REVISAR BIEN QUE NUESTRAS PARALABRAS RESERVADAS COINCIDAN PARA HTML
 
 	fprintf(file, "<p");
 
+	int size = 30;
+
 	if(text->attrs != NULL) {
-		if (text->attrs->IDVALUE != NULL)
-			fprintf(file, " id=\"%s\"", title->attrs->IDVALUE);
 
 		tAttribute * current= text->attrs->first;
+		size = getFontSize(text->attrs);
+		
+		//TODO: NO ESTA BIEN PERO PUEDE SER POR ACA Y SINO ES CON UN ARCHIVO CSS
+		if(current != NULL){
+			if(current->type == POSITIONVALUE || current->type == SIZEVALUE){
+				fprintf(file, " style=\"");
+				if(current->type == POSITIONVALUE){
+					fprintf(file, " text-align:%s;", current->value);
+				}
+				if(current->type == SIZEVALUE){
+					fprintf(file, " font-size:%spx;", size);
+				}
+				fprintf(file, " \"");
+			}
+		}
+
 		while(current != NULL){
 			switch (current->type){
+				case IDVALUE:
+					fprintf(file, " id=\"%s\"", current->value);
+					break;
 				case COLORVALUE:
 					fprintf(file, " color=\"%s\"", current->value);
 					break;
-				case POSITIONVALUE:
-					fprintf(file, " style=\"text-align:%s;\"", current->value);
-					break;
+				// case POSITIONVALUE:
+				// 	fprintf(file, " style=\"text-align:%s;\"", current->value);
+				// 	break;
 				case BOLDVALUE:
 					bold = 1;
 					break;
@@ -161,6 +228,7 @@ void addText(tText * text){
 					underlined = 1;
 					break;
 			}
+			
 			current = current->next;
 		}
 	}
@@ -189,7 +257,6 @@ void addLink(tLink * link) {
 	int bold = 0, italic = 0, underlined = 0;
 
 	//TODO: COMO MANEJAR EL SIZE --> TENEMOS QUE MAPEAR NUESTRAS PALABRAS RESERVADAS A UN NUMERO NUMERO DE FONT --> ENUM??
-	//TODO: REVISAR BIEN QUE NUESTRAS PARALABRAS RESERVADAS COINCIDAN PARA HTML
 
 	fprintf(file, "<a");
 	fprintf(file, " href=\"%s\"", link->ref);
@@ -239,22 +306,67 @@ void addLink(tLink * link) {
 	fprintf(file, "</a>\n");
 }
 
+int getImgSize(tAttributes * attrs) {
+	tAttribute * currAttr = attrs->first;
+	while(currAttr->type != SIZEVALUE){
+		currAttr = currAttr->next;
+	}
+	if(strcmp(currAttr->value, "x-small")){
+		return 100;
+	} 
+	if (strcmp(currAttr->value, "small")){
+		return 200;
+	}
+	if (strcmp(currAttr->value, "medium")){
+		return 300;
+	}
+	if (strcmp(currAttr->value, "large")){
+		return 400;
+	}
+	if (strcmp(currAttr->value, "x-large")){
+		return 500;
+	}
+	if (strcmp(currAttr->value, "xx-large")){
+		return 600;
+	}
+	return 300;
+}
+
 void addImage(tImage* image){
 
 	//TODO: COMO MANEJAR EL SIZE --> TENEMOS QUE MAPEAR NUESTRAS PALABRAS RESERVADAS A UNA WIDTH O HIGHT --> ENUM??
-	//TODO: REVISAR BIEN QUE NUESTRAS PARALABRAS RESERVADAS COINCIDAN PARA HTML
-
+	int size[2] = {300, 300};
 	fprintf(file, "<img");
-	fprintf(file, " %s", image->link);
+	fprintf(file, " src=%s", image->link);
 
-	if(image->idref != NULL){
-		fprintf(file, " %s", image->attrs->IDVALUE);
+	if(image->attrs != NULL){
+		
+		//TODO: REVISAR
+		size[0] = getImgSize(image->attrs);
+		size[1] = size[0];
+
+		tAttribute * current= image->attrs->first;
+		
+
+		while(current != NULL){
+			switch (current->type){
+				case IDVALUE:
+					fprintf(file, " id=\"%s\"", current->value);
+					break;
+				case POSITIONVALUE:
+					fprintf(file, " style=\"text-align:%s;\"", current->value);
+					break;
+				case SIZEVALUE:
+					fprintf(file, " height=\"%d\" width=\"%d\"", size[0], size[1]);
+					break;
+			}
+			current = current->next;
+		}
 	}
 	
-	//PONEMOS UN TEXTO ALTERNATIVO??
-	fprintf(file, " alt=%s", 'IMAGEN');
+	fprintf(file, " alt=%s", "IMAGEN");
 
-	fprintf(file, ">\n");
+	fprintf(file, "/>\n");
 }
 
 void addContainer(tContainer * container){
@@ -267,4 +379,5 @@ void addContainer(tContainer * container){
 
 //TODO: FUNCIONES PARA CONSTRUIR TABLAS
 //TODO: BUSCAR COMO AGREGAR UNA FONT PARA TODO EL HTML O SI HAY Q AGREGARLO PARA TAG DE TEXTO POR DEFECTO
+
 //TODO: TENEMOS QUE LIBERAR LA MEMORIA QUE ALOCAMOS
