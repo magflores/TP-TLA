@@ -14,5 +14,11 @@ void addText(tText * text);
 void addLink(tLink * link);
 void addImage(tImage* image);
 void addContainer(tContainer * container);
+void addTable(tTable * table);
+void addFont(tFont * font);
+
+int getTitleSize(tAttributes * attrs);
+int getFontSize(tAttributes * attrs);
+int getImgSize(tAttributes * attrs);
 
 #endif

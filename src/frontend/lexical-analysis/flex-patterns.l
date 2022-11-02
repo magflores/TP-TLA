@@ -24,7 +24,7 @@ size            (x-small|small|medium|large|x-large|xx-large)
 /* Son atributos unicos, los que van en formato de lista son los styles */
 color           (black|red|blue|yellow|green|orange|purple)
 position        (left|center|right)
-font            (Arial|Times|Calibri|Helvetica)
+font            (Arial|Verdana|Cambria|Impact)
 number          [0-9]+
 id_attr         ([A-Za-z]|[0-9])*
 endline			\n
