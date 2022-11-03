@@ -17,7 +17,7 @@ void Generator(tProgram *result)
 	if (result == NULL || result->initial == NULL)
 	{
 		LogInfo("El resultado de la compilacion es nulo.");
-		return NULL;
+		return;
 	}
 
 	// Abriendo HTML tags
@@ -30,7 +30,7 @@ void Generator(tProgram *result)
 
 	// Cerrando archivo
 	fclose(file);
-	return NULL;
+	return;
 }
 
 void WebPage(tExprs *expressions)
@@ -149,6 +149,11 @@ void addTitle(tTitle *title)
 			currAttr = currAttr->next;
 		}
 	}
+	else
+	{
+		fprintf(file, "<h%d", size);
+	}
+
 	fprintf(file, ">");
 	if (bold == 1)
 		fprintf(file, "<b>");
@@ -182,11 +187,11 @@ int getFontSize(tAttributes *attrs)
 	}
 	if (strcmp(currAttr->value, "small"))
 	{
-		return 20;
+		return 14;
 	}
 	if (strcmp(currAttr->value, "medium"))
 	{
-		return 30;
+		return 25;
 	}
 	if (strcmp(currAttr->value, "large"))
 	{
@@ -198,44 +203,68 @@ int getFontSize(tAttributes *attrs)
 	}
 	if (strcmp(currAttr->value, "xx-large"))
 	{
-		return 60;
+		return 64;
 	}
-	return 30;
+	return 25;
+}
+
+/*
+	recorrer la lista de attrs buscando position o size
+	una vez que se encuentra alguno de los dos
+	abrir tag style e imprimir el contenido del encontrado
+	y seguir recorriendo la lista hasta encontrar el que falta e imprimir el contenido
+	Finalmente cerrar el tag style
+*/
+void addStyle(tAttributes * attrs) {
+	tAttribute *currAttr = attrs->first;
+	int size = getFontSize(attrs);
+
+	while (currAttr != NULL)
+	{ 
+		if (currAttr->type != POSITIONVALUE || currAttr->type != SIZEVALUE) {
+			currAttr = currAttr->next;
+		}
+		if (currAttr->type == POSITIONVALUE)
+		{
+			fprintf(file, " style=\"");
+			fprintf(file, " text-align:%s;", currAttr->value);
+			while(currAttr->type != SIZEVALUE) {
+				currAttr = currAttr->next;
+			}
+			if (currAttr->type == SIZEVALUE)
+			{
+				fprintf(file, " font-size:%dpt;", size);
+			}
+			fprintf(file, " \"");
+		}
+		else if (currAttr->type == SIZEVALUE)
+		{
+			fprintf(file, " style=\"");
+			fprintf(file, " font-size:%dpt;", size);
+			while(currAttr->type != SIZEVALUE) {
+				currAttr = currAttr->next;
+			}
+			if (currAttr->type == POSITIONVALUE)
+			{
+				fprintf(file, " text-align:%s;", currAttr->value);
+			}
+			fprintf(file, " \"");
+		}
+	}
+
 }
 
 void addText(tText *text)
 {
 	int bold = 0, italic = 0, underlined = 0;
-
-	// TODO: COMO MANEJAR EL SIZE --> TENEMOS QUE MAPEAR NUESTRAS PALABRAS RESERVADAS A UN NUMERO NUMERO DE FONT --> ENUM??
+	int style = 0;
 
 	fprintf(file, "<p");
 
-	int size = 30;
-
 	if (text->attrs != NULL)
 	{
-
+		addStyle(text->attrs);
 		tAttribute *current = text->attrs->first;
-		size = getFontSize(text->attrs);
-
-		// TODO: NO ESTA BIEN PERO PUEDE SER POR ACA Y SINO ES CON UN ARCHIVO CSS
-		if (current != NULL)
-		{
-			if (current->type == POSITIONVALUE || current->type == SIZEVALUE)
-			{
-				fprintf(file, " style=\"");
-				if (current->type == POSITIONVALUE)
-				{
-					fprintf(file, " text-align:%s;", current->value);
-				}
-				if (current->type == SIZEVALUE)
-				{
-					fprintf(file, " font-size:%spx;", size);
-				}
-				fprintf(file, " \"");
-			}
-		}
 
 		while (current != NULL)
 		{
@@ -247,9 +276,6 @@ void addText(tText *text)
 			case COLORVALUE:
 				fprintf(file, " color=\"%s\"", current->value);
 				break;
-			// case POSITIONVALUE:
-			// 	fprintf(file, " style=\"text-align:%s;\"", current->value);
-			// 	break;
 			case BOLDVALUE:
 				bold = 1;
 				break;
@@ -260,10 +286,10 @@ void addText(tText *text)
 				underlined = 1;
 				break;
 			}
-
 			current = current->next;
 		}
 	}
+
 	fprintf(file, ">");
 	if (bold == 1)
 		fprintf(file, "<b>");
@@ -288,23 +314,20 @@ void addLink(tLink *link)
 {
 	int bold = 0, italic = 0, underlined = 0;
 
-	// TODO: COMO MANEJAR EL SIZE --> TENEMOS QUE MAPEAR NUESTRAS PALABRAS RESERVADAS A UN NUMERO NUMERO DE FONT --> ENUM??
-
 	fprintf(file, "<a");
 	fprintf(file, " href=\"%s\"", link->ref);
 
 	if (link->attrs != NULL)
 	{
+		addStyle(link->attrs);
 		tAttribute *current = link->attrs->first;
+		
 		while (current != NULL)
 		{
 			switch (current->type)
 			{
 			case COLORVALUE:
 				fprintf(file, " color=%s", current->value);
-				break;
-			case POSITIONVALUE:
-				fprintf(file, " style=\"text-align:%s;\"", current->value);
 				break;
 			case BOLDVALUE:
 				bold = 1;
@@ -383,7 +406,7 @@ void addImage(tImage *image)
 	if (image->attrs != NULL)
 	{
 
-		// TODO: REVISAR
+		// TODO: REVISAR --> USAR SOLO WIDTH?
 		size[0] = getImgSize(image->attrs);
 		size[1] = size[0];
 
@@ -408,7 +431,7 @@ void addImage(tImage *image)
 	}
 
 	fprintf(file, " src=%s", image->link);
-	fprintf(file, " alt=%s", "IMAGEN");
+	fprintf(file, " alt=%s", image->link);
 
 	fprintf(file, "/>\n");
 }
@@ -440,6 +463,25 @@ void addContainer(tContainer *container)
 	fprintf(file, "</div>\n");
 }
 
+void addRowContent(tExprs *rowContent, int cols)
+{
+	tExpr *auxExpr = rowContent->first;
+	for (int col = 0; col < cols; col++)
+	{
+		if (auxExpr != NULL)
+		{
+			fprintf(file, "\n\t<td>");
+			addHTML(auxExpr);
+		}
+		else
+		{
+			fprintf(file, "\n\t<td>");
+		}
+		fprintf(file, "</td>\n");
+	}
+	auxExpr = auxExpr->next;
+}
+
 void addTable(tTable *table)
 {
 	fprintf(file, "<table style=\"border:1px solid black;\"");
@@ -451,19 +493,9 @@ void addTable(tTable *table)
 		fprintf(file, "<tr>");
 		if (auxRow != NULL)
 		{
-			for (int col = 0; col < table->attrs->rowxcol->cols; col++)
-			{
-				if (auxRow->content != NULL)
-				{
-					fprintf(file, "\n\t<td>");
-					WebPage(auxRow->content);
-				}else {
-					fprintf(file, "\n\t<td>");
-				}
-				fprintf(file, "</td>\n");
-			}
-			auxRow = auxRow->nextRow;
+			rowContent(auxRow->content, table->attrs->rowxcol->cols);
 		}
+		auxRow = auxRow->nextRow;
 		fprintf(file, "</tr>\n");
 	}
 	fprintf(file, "</table>\n");

@@ -19,11 +19,11 @@
 	tText * text; 
 	tContainer * container;
 	tAttributes * title_attrs;
-	tAttribute * title_attr;
+	tAttributes * title_attr;
 	tAttributes * img_attrs;
-	tAttribute * img_attr;
+	tAttributes * img_attr;
 	tAttributes * container_attrs;
-	tAttribute * container_attr;
+	tAttributes * container_attr;
 	tTableAttrs * table_attr;
 	tRows * table_content;
 	tRow * row_content;
@@ -116,11 +116,11 @@
 %%
 
 program: START expressions END										{ ProgramGrammarAction($2); }
+		| START /*lambda*/ END												{ EmptyExprAction(); }
 		;
 
 expressions: expression expressions 								{ $$ = ExprsAction($1, $2); }
 		| expression 												{ $$ = ExprAction($1); }
-		| /*lambda*/												{ EmptyExprAction(); }
 		;
 
 expression: title													{ $$ = TitleExprAction($1); }
@@ -155,7 +155,7 @@ table: TABLE table_attr table_content END TABLE 					{ $$ = TableGrammarAction($
 		;
 
 container: CONTAINER container_attrs expressions END CONTAINER  	{ $$ = ContainerWithAttrsGrammarAction($2, $3); } 
-		| CONTAINER expressions END CONTAINER						{ $$ = ContainerWithoutAttrsGrammarAction($3); }
+		| CONTAINER expressions END CONTAINER						{ $$ = ContainerWithoutAttrsGrammarAction($2); }
 		;
 
 title_attrs: title_attr title_attrs									{ $$ = AttrsAction($1, $2); }

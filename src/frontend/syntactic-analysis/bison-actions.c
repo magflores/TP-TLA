@@ -51,6 +51,7 @@ void ProgramGrammarAction(tExprs * exprs) {
 }
 
 tExprs * ExprAction(tExpr * exp){
+	LogDebug("ExprAction()");
 	tExprs * exps = malloc(sizeof(tExprs));
 	if(exps == NULL)
 		return NULL;
@@ -61,6 +62,7 @@ tExprs * ExprAction(tExpr * exp){
 }
 
 tExprs * ExprsAction(tExpr * exp, tExprs * exps){
+	LogDebug("ExprsAction()");
 	tExpr * aux = exps->first;
 	while(aux->next != NULL)
 		aux = aux->next;
@@ -70,10 +72,12 @@ tExprs * ExprsAction(tExpr * exp, tExprs * exps){
 }
 
 void EmptyExprAction(){
+	LogDebug("EmptyExprAction()");
 	return;
 }
 
 tExpr * TitleExprAction(tTitle * title){
+	LogDebug("TitleExprAction()");
 	tExpr * exp = malloc(sizeof(tExpr));
 	if(exp == NULL)
 		return NULL;
@@ -84,6 +88,7 @@ tExpr * TitleExprAction(tTitle * title){
 }
 
 tExpr *  FontExprAction(tFont * font) {
+	LogDebug("FontExprAction()");
 	tExpr * exp = malloc(sizeof(tExpr));
 	if(exp == NULL)
 		return NULL;
@@ -94,6 +99,7 @@ tExpr *  FontExprAction(tFont * font) {
 }
 
 tExpr * TextExprAction(tText * text){
+	LogDebug("TextExprAction()");
 	tExpr * exp = malloc(sizeof(tExpr));
 	if(exp == NULL)
 		return NULL;
@@ -104,6 +110,7 @@ tExpr * TextExprAction(tText * text){
 }
 
 tExpr * ImgExprAction(tImage * img){
+	LogDebug("ImgExprAction()");
 	tExpr * exp = malloc(sizeof(tExpr));
 	if(exp == NULL)
 		return NULL;
@@ -114,6 +121,7 @@ tExpr * ImgExprAction(tImage * img){
 }
 
 tExpr * LinkExprAction(tLink * link){
+	LogDebug("LinkExprAction()");
 	tExpr * exp = malloc(sizeof(tExpr));
 	if(exp == NULL)
 		return NULL;
@@ -124,6 +132,7 @@ tExpr * LinkExprAction(tLink * link){
 }
 
 tExpr * TableExprAction(tTable * table){
+	LogDebug("TableExprAction()");
 	tExpr * exp = malloc(sizeof(tExpr));
 	if(exp == NULL)
 		return NULL;
@@ -134,6 +143,7 @@ tExpr * TableExprAction(tTable * table){
 }
 
 tExpr * ContainerExprAction(tContainer * div){
+	LogDebug("ContainerExprAction()");
 	tExpr * exp = malloc(sizeof(tExpr));
 	if(exp == NULL)
 		return NULL;
@@ -144,6 +154,7 @@ tExpr * ContainerExprAction(tContainer * div){
 }
 
 tTitle * TitleWithoutAttrsGrammarAction(char * content){
+	LogDebug("TitleWithoutAttrsGrammarAction()");
 	tTitle * title = malloc(sizeof(tTitle));
 	if(title == NULL){
 		return NULL;
@@ -155,6 +166,7 @@ tTitle * TitleWithoutAttrsGrammarAction(char * content){
 }
 
 tTitle * TitleWithAttrsGrammarAction(tAttributes * attrs, char * content){
+	LogDebug("TitleWithAttrsGrammarAction()");
 	tTitle * title = malloc(sizeof(tTitle));
 	if(title == NULL){
 		return NULL;
@@ -166,6 +178,7 @@ tTitle * TitleWithAttrsGrammarAction(tAttributes * attrs, char * content){
 }
 
 tFont * FontGrammarAction(char * content){
+	LogDebug("FontGrammarAction()");
 	tFont * font = malloc(sizeof(tFont));
 	if(font == NULL){
 		return NULL;
@@ -176,6 +189,7 @@ tFont * FontGrammarAction(char * content){
 }
 
 tText * TextWithoutAttrsGrammarAction(char * content){
+	LogDebug("TextWithoutAttrsGrammarAction()");
 	tText* text = malloc(sizeof(tText));
 	if(text == NULL){
 		return NULL;
@@ -187,6 +201,7 @@ tText * TextWithoutAttrsGrammarAction(char * content){
 }
 
 tText * TextWithAttrsGrammarAction(tAttributes * attrs, char * content){
+	LogDebug("TextWithAttrsGrammarAction()");
 	tText * text = malloc(sizeof(tText));
 	if(text == NULL){
 		return NULL;
@@ -198,6 +213,7 @@ tText * TextWithAttrsGrammarAction(tAttributes * attrs, char * content){
 }
 
 tImage * ImgWithAttrsGrammarAction(tAttributes * attrs, char * link){
+	LogDebug("ImgWithAttrsGrammarAction()");
 	tImage * img = malloc(sizeof(tImage));
 	if(img == NULL)
 		return NULL; 
@@ -208,6 +224,7 @@ tImage * ImgWithAttrsGrammarAction(tAttributes * attrs, char * link){
 }
 
 tImage * ImgWithoutAttrsGrammarAction(char * link){
+	LogDebug("ImgWithoutAttrsGrammarAction()");
 	tImage * img = malloc(sizeof(tImage));
 	if(img == NULL)
 		return NULL;
@@ -218,7 +235,8 @@ tImage * ImgWithoutAttrsGrammarAction(char * link){
 }
 
 tLink * LinkWithAttrsGrammarAction(tAttributes * attrs, char * ref, char * text){
-	tLink * link = malloc(sizeof(link));
+	LogDebug("LinkWithAttrsGrammarAction()");
+	tLink * link = malloc(sizeof(tLink));
 	if(link == NULL){
 		return NULL;
 	}
@@ -232,7 +250,8 @@ tLink * LinkWithAttrsGrammarAction(tAttributes * attrs, char * ref, char * text)
 }
 
 tLink * LinkWithoutAttrsGrammarAction(char * ref, char * text){
-	tLink * link = malloc(sizeof(link));
+	LogDebug("LinkWithoutAttrsGrammarAction()");
+	tLink * link = malloc(sizeof(tLink));
 	if(link == NULL){
 		return NULL;
 	}
@@ -246,7 +265,8 @@ tLink * LinkWithoutAttrsGrammarAction(char * ref, char * text){
 }
 
 tTable * TableGrammarAction(tTableAttrs * attrs, tRows * rows){
-	tTable * table = malloc(sizeof(table));
+	LogDebug("TableGrammarAction()");
+	tTable * table = malloc(sizeof(tTable));
 	if(table == NULL){
 		return NULL;
 	}
@@ -256,7 +276,8 @@ tTable * TableGrammarAction(tTableAttrs * attrs, tRows * rows){
 }
 
 tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs){
-	tContainer * container = malloc(sizeof(container));
+	LogDebug("ContainerWithAttrsGrammarAction()");
+	tContainer * container = malloc(sizeof(tContainer));
 	if(container == NULL){
 		return NULL;
 	}
@@ -267,7 +288,8 @@ tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs
 }
 
 tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs){
-	tContainer * container = malloc(sizeof(container));
+	LogDebug("ContainerWithoutAttrsGrammarAction()");
+	tContainer * container = malloc(sizeof(tContainer));
 	if(container == NULL){
 		return NULL;
 	}
@@ -277,71 +299,90 @@ tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs){
 	return container;
 }
 
-tAttributes * AttrAction(tAttribute * attr){
+tAttributes * AttrAction(tAttributes * attr){
+	LogDebug("AttrAction()");
 	tAttributes * aux = malloc(sizeof(tAttributes));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->first = attr;
+	aux->first = attr->first;
 	aux->size++;
 	return aux;
 }
 
-tAttributes * AttrsAction(tAttribute * attr, tAttributes * attrs){
+tAttributes * AttrsAction(tAttributes * attr, tAttributes * attrs){
+	LogDebug("AttrsAction()");
 	tAttribute * aux = attrs->first;
 	while(aux->next != NULL)
 		aux = aux->next;
-	aux->next = attr;
+	aux->next = attr->first;
 	attrs->size++;
 	return attrs;
 }
 
-tAttribute * IdAttrPatternAction(tAttribute * id){
-	tAttribute * aux = malloc(sizeof(tAttribute));
-	if(aux == NULL){
+tAttributes * IdAttrPatternAction(tAttribute * id){
+	LogDebug("IdAttrPatternAction()");
+	tAttribute * AttrAux = malloc(sizeof(tAttribute));
+	tAttributes * AttrsAux = malloc(sizeof(tAttributes));
+	if(AttrAux == NULL || AttrsAux == NULL){
 		return NULL;
 	}
-	aux->type = id->type;
-	aux->next = id->next;
-	aux->value = id->value;
-	return aux;
+	AttrAux->type = id->type;
+	AttrAux->next = id->next;
+	AttrAux->value = id->value;
+	AttrsAux->first = AttrAux;
+	AttrsAux->size++;
+	return AttrsAux;
 }
 
-tAttribute * SizeAttrPatternAction(tAttribute * size){
+tAttributes * SizeAttrPatternAction(tAttribute * size){
+	LogDebug("SizeAttrPatternAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
-	if(aux == NULL){
+	tAttributes * AttrsAux = malloc(sizeof(tAttributes));
+	if(aux == NULL || AttrsAux == NULL){
 		return NULL;
 	}
 	aux->type = size->type;
 	aux->next = size->next;
 	aux->value = size->value;
-	return aux;
+	AttrsAux->first = aux;
+	AttrsAux->size++;
+	return AttrsAux;
 }
 
-tAttribute * ColorAttrPatternAction(tAttribute * color){
+tAttributes * ColorAttrPatternAction(tAttribute * color){
+	LogDebug("ColorAttrPatternAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
-	if(aux == NULL){
+	tAttributes * AttrsAux = malloc(sizeof(tAttributes));
+	if(aux == NULL || AttrsAux == NULL){
 		return NULL;
 	}
 	aux->type = color->type;
 	aux->next = color->next;
 	aux->value = color->value;
-	return aux;
+	AttrsAux->first = aux;
+	AttrsAux->size++;
+	return AttrsAux;
 }
 
-tAttribute * PositionAttrPatternAction(tAttribute * position){
+tAttributes * PositionAttrPatternAction(tAttribute * position){
+	LogDebug("PositionAttrPatternAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
-	if(aux == NULL){
+	tAttributes * AttrsAux = malloc(sizeof(tAttributes));
+	if(aux == NULL || AttrsAux == NULL){
 		return NULL;
 	}
 	aux->type = position->type;
 	aux->next = position->next;
 	aux->value = position->value;
-	return aux;
+	AttrsAux->first = aux;
+	AttrsAux->size++;
+	return AttrsAux;
 }
 
 tAttributes * StyleAttrPatternAction(tAttributes * style){
-	tAttributes * aux = malloc(sizeof(tAttribute));
+	LogDebug("StyleAttrPatternAction()");
+	tAttributes * aux = malloc(sizeof(tAttributes));
 	if(aux == NULL){
 		return NULL;
 	}
@@ -351,7 +392,8 @@ tAttributes * StyleAttrPatternAction(tAttributes * style){
 }
 
 tAttributes * PropertiesAttrPaternAction(tAttributes * properties){
-	tAttributes * aux = malloc(sizeof(tAttribute));
+	LogDebug("PropertiesAttrPaternAction()");
+	tAttributes * aux = malloc(sizeof(tAttributes));
 	if(aux == NULL){
 		return NULL;
 	}
@@ -361,6 +403,7 @@ tAttributes * PropertiesAttrPaternAction(tAttributes * properties){
 }
 
 tAttributes * PropertiesListAction(tAttribute * property, tAttributes * properties){
+	LogDebug("PropertiesListAction()");
 	tAttribute * aux = properties->first;
 	while(aux->next != NULL)
 		aux = aux->next;
@@ -370,7 +413,8 @@ tAttributes * PropertiesListAction(tAttribute * property, tAttributes * properti
 }
 
 tAttributes * PropertyAttrAction(tAttribute * property){
-	tAttributes * aux = malloc(sizeof(tAttribute));
+	LogDebug("PropertyAttrAction()");
+	tAttributes * aux = malloc(sizeof(tAttributes));
 	if(aux == NULL){
 		return NULL;
 	}
@@ -380,6 +424,7 @@ tAttributes * PropertyAttrAction(tAttribute * property){
 }
 
 tAttribute * IdAttrAction(char * ID){
+	LogDebug("IdAttrAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
@@ -392,6 +437,7 @@ tAttribute * IdAttrAction(char * ID){
 }
 
 tAttribute * SizeAttrAction(char * Size){
+	LogDebug("SizeAttrAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
@@ -404,6 +450,7 @@ tAttribute * SizeAttrAction(char * Size){
 }
 
 tAttribute * ColorAttrAction(char * Color){
+	LogDebug("ColorAttrAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
@@ -416,6 +463,7 @@ tAttribute * ColorAttrAction(char * Color){
 }
 
 tAttribute * PositionAttrAction(char * Position){
+	LogDebug("PositionAttrAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
@@ -428,6 +476,7 @@ tAttribute * PositionAttrAction(char * Position){
 }
 
 tAttribute * BoldAttrAction(char * Bold){
+	LogDebug("BoldAttrAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
@@ -440,6 +489,7 @@ tAttribute * BoldAttrAction(char * Bold){
 }
 
 tAttribute * UnderlinedAttrAction(char * Underlined){
+	LogDebug("UnderlinedAttrAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
@@ -452,6 +502,7 @@ tAttribute * UnderlinedAttrAction(char * Underlined){
 }
 
 tAttribute * ItalicsAttrAction(char * Italics){
+	LogDebug("ItalicsAttrAction()");
 	tAttribute * aux = malloc(sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
@@ -464,6 +515,7 @@ tAttribute * ItalicsAttrAction(char * Italics){
 }
 
 tTableAttrs * IdAndRowxColAttrPaternAction(tAttribute * id, tRowxColAttr * rowxcol){
+	LogDebug("IdAndRowxColAttrPaternAction()");
 	tTableAttrs * aux = malloc(sizeof(tTableAttrs));
 	if(aux == NULL){
 		return NULL;
@@ -474,6 +526,7 @@ tTableAttrs * IdAndRowxColAttrPaternAction(tAttribute * id, tRowxColAttr * rowxc
 }
 
 tTableAttrs * RowxColAttrPatternAction(tRowxColAttr * rowxcol){
+	LogDebug("RowxColAttrPatternAction()");
 	tTableAttrs * aux = malloc(sizeof(tTableAttrs));
 	if(aux == NULL){
 		return NULL;
@@ -484,6 +537,7 @@ tTableAttrs * RowxColAttrPatternAction(tRowxColAttr * rowxcol){
 }
 
 tRowxColAttr * RowxColAttrAction(int cols, int rows){
+	LogDebug("RowxColAttrAction()");
 	tRowxColAttr * aux = malloc(sizeof(tRowxColAttr));
 	if(aux == NULL){
 		return NULL;
@@ -494,6 +548,7 @@ tRowxColAttr * RowxColAttrAction(int cols, int rows){
 }
 
 tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content){
+	LogDebug("TableAndRowContentAction()");
 	tRow * aux = table_content->firstRow;
 	while(aux->nextRow != NULL)
 		aux = aux->nextRow;
@@ -503,6 +558,7 @@ tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content){
 }
 
 tRows * RowContentAction(tRow * row_content){
+	LogDebug("RowContentAction()");
 	tRows * aux = malloc(sizeof(tRows));
 	if(aux == NULL){
 		return NULL;
@@ -513,6 +569,7 @@ tRows * RowContentAction(tRow * row_content){
 }
 
 tRow * RowExpressionsAction(tExprs * content){
+	LogDebug("RowExpressionsAction()");
 	tRow * aux = malloc(sizeof(tRow));
 	if(aux == NULL){
 		return NULL;

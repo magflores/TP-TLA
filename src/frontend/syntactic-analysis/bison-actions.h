@@ -59,17 +59,17 @@ tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs
 
 tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs);
 
-tAttributes * AttrAction(tAttribute * attr);
+tAttributes * AttrAction(tAttributes * attr);
 
-tAttributes * AttrsAction(tAttribute * attr, tAttributes * attrs);
+tAttributes * AttrsAction(tAttributes * attr, tAttributes * attrs);
 
-tAttribute * IdAttrPatternAction(tAttribute * id);
+tAttributes * IdAttrPatternAction(tAttribute * id);
 
-tAttribute * SizeAttrPatternAction(tAttribute * size);
+tAttributes * SizeAttrPatternAction(tAttribute * size);
 
-tAttribute * ColorAttrPatternAction(tAttribute * color);
+tAttributes * ColorAttrPatternAction(tAttribute * color);
 
-tAttribute * PositionAttrPatternAction(tAttribute * position);
+tAttributes * PositionAttrPatternAction(tAttribute * position);
 
 tAttributes * StyleAttrPatternAction(tAttributes * style);
 
