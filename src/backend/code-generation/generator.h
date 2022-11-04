@@ -23,4 +23,8 @@ int getTitleSize(tAttributes * attrs);
 int getFontSize(tAttributes * attrs);
 int getImgSize(tAttributes * attrs);
 
+void freeMemory(tExpr * expr);
+void freeExpression(tExpr * expr);
+void freeAttributes(tAttribute * attrs);
+
 #endif

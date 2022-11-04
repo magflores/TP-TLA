@@ -30,6 +30,9 @@ void Generator(tProgram *result)
 
 	// Cerrando archivo
 	fclose(file);
+
+	freeMemory(result->initial);
+
 	return;
 }
 
@@ -511,4 +514,119 @@ void addFont(tFont *font)
 	}
 }
 
-// TODO: TENEMOS QUE LIBERAR LA MEMORIA QUE ALOCAMOS
+//TODO: REVISAR LIBERACION DE MEMORIA
+
+void freeMemory(tExpr * expr) {
+	if(expr == NULL){
+		printf("error");
+		return;
+	}
+	else if(expr->next->next == NULL){
+		freeExpression(expr->next);
+		tExpr * prev = expr->next;
+		expr->next = NULL;
+		free(prev);
+		return;
+	}
+	else{
+		freeMemory(expr->next);
+		freeExpression(expr->next);
+		tExpr * prev = expr->next;
+		expr->next = NULL;
+		free(prev);
+		return;
+	}
+}
+
+void freeExpression(tExpr * expr) {
+	switch(expr->type){
+		case TITLEEXPR:
+		{
+			tTitle * aux = (tTitle *) expr->expr;
+			free(aux->content);
+			freeAttributes(aux->attrs);
+			free(aux->attrs);
+			free(aux);
+			free(expr);
+			return;
+		}
+		case IMGEXPR:
+		{
+			tImage * aux = (tImage *) expr->expr;
+			free(aux->link);
+			freeAttributes(aux->attrs);
+			free(aux->attrs);
+			free(aux);
+			free(expr);
+			return;
+		}
+		case LINKEXPR:
+		{
+			tLink * aux = (tLink *) expr->expr;
+			free(aux->ref);
+			free(aux->text);
+			freeAttributes(aux->attrs);
+			free(aux->attrs);
+			free(aux);
+			free(expr);
+			return;
+		}
+		case TABLEEXPR:
+		{
+			tTable * aux = (tTable *) expr->expr;
+			//TODO: FREE TABLE CONTENT
+			free(aux);
+			free(expr);
+			return;
+		}
+		case CONTAINEREXPR:
+		{
+			tContainer * aux = (tContainer *) expr->expr;
+			freeAttributes(aux->attrs);
+			freeMemory(aux->content->first);
+			free(aux->content);
+			free(aux);
+			free(expr);
+			return;
+		}
+		case TEXTEXPR:
+		{
+			tText * aux = (tText *) expr->expr;
+			freeAttributes(aux->attrs);
+			free(aux->content);
+			free(aux->attrs);
+			free(aux);
+			free(expr);
+			return;
+		}
+		case FONTEXPR:
+			tFont * aux = (tFont *) expr->expr;
+			free(aux);
+			free(expr);	
+			return;
+		default:
+			free(expr);
+			break;
+	}
+}
+
+void freeAttributes(tAttribute * attrs) {
+	if(attrs == NULL) {
+		return;
+	}
+	else if(attrs->next->next == NULL){
+		free(attrs->next->value);
+		tAttribute * prev = attrs->next;
+		attrs->next = NULL;
+		free(prev);
+		return;
+	}
+	else{
+		freeAttributes(attrs->next);
+		free(attrs->next->value);
+		tAttribute * prev = attrs->next;
+		attrs->next = NULL;
+		free(prev);
+		return;
+	}
+}
