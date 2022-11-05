@@ -231,7 +231,7 @@ void addStyle(tAttributes * attrs) {
 		{
 			fprintf(file, " style=\"");
 			fprintf(file, " text-align:%s;", currAttr->value);
-			while(currAttr->type != SIZEVALUE) {
+			while(currAttr->type != SIZEVALUE && currAttr != NULL) {
 				currAttr = currAttr->next;
 			}
 			if (currAttr->type == SIZEVALUE)
@@ -244,7 +244,7 @@ void addStyle(tAttributes * attrs) {
 		{
 			fprintf(file, " style=\"");
 			fprintf(file, " font-size:%dpt;", size);
-			while(currAttr->type != SIZEVALUE) {
+			while(currAttr->type != POSITIONVALUE && currAttr != NULL) {
 				currAttr = currAttr->next;
 			}
 			if (currAttr->type == POSITIONVALUE)
