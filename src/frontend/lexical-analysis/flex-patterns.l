@@ -19,18 +19,15 @@
 %x TABLE_SIZE
 
 /* Patrones reutilizables. */
-crlf			\r\n
+crlf			[\r\n]
 size            (x-small|small|medium|large|x-large|xx-large)
-/* Son atributos unicos, los que van en formato de lista son los styles */
 color           (black|red|blue|yellow|green|orange|purple)
 position        (left|center|right)
 font            (Arial|Verdana|Cambria|Impact)
-number          [0-9]+
+digit           [0-9]
 id_attr         ([A-Za-z]|[0-9])*
-endline			\n
+endline			[\n]
 whitespace		[ \f\n\r\t\v]
-
-
 
 %%
 
@@ -43,34 +40,34 @@ whitespace		[ \f\n\r\t\v]
 <STRING>[^\"]*                              { return StringAttributeValue(yytext, yyleng);}
 <STRING>"\""                                { EndStringPatternAction(); BEGIN(INITIAL);}
 
-"("                                        { BEGIN(TABLE_SIZE); return BeginTableSizePatternAction(yytext); }
-<TABLE_SIZE>"x"                            { return XPatternTag(yytext);}
-<TABLE_SIZE>{number}                       { return NumberAttributeValue(yytext, yyleng);}
-<TABLE_SIZE>")"                            { BEGIN(INITIAL); return EndTableSizePatternAction(yytext); }
+"("                                        { BEGIN(TABLE_SIZE); return BeginTableSizePatternAction(); }
+<TABLE_SIZE>"x"                            { return XPatternTag();}
+<TABLE_SIZE>{digit}+                       { return NumberAttributeValue(yytext, yyleng);}
+<TABLE_SIZE>")"                            { BEGIN(INITIAL); return EndTableSizePatternAction(); }
 
-"START"                                     { return StartPatternTag(yytext); }
-"END"                                       { return EndPatternTag(yytext); }
-"CONTAINER"                                 { return ContainerPatternTag(yytext); }
-"TITLE"                                     { return TitlePatternTag(yytext); }
-"TABLE"                                     { return TablePatternTag(yytext); }
-"IMG"                                       { return ImagePatternTag(yytext); }
-"LINK"                                      { return LinkPatternTag(yytext); }
-"ROW"                                       { return RowPatternTag(yytext); }
-"TEXT"                                      { return TextPatternTag(yytext); }
-"FONT"                                      { return FontPatternTag(yytext); }
+"START"                                     { return StartPatternTag(); }
+"END"                                       { return EndPatternTag(); }
+"CONTAINER"                                 { return ContainerPatternTag(); }
+"TITLE"                                     { return TitlePatternTag(); }
+"TABLE"                                     { return TablePatternTag(); }
+"IMG"                                       { return ImagePatternTag(); }
+"LINK"                                      { return LinkPatternTag(); }
+"ROW"                                       { return RowPatternTag(); }
+"TEXT"                                      { return TextPatternTag(); }
+"FONT"                                      { return FontPatternTag(); }
 
-"id"                                        { return IdAttributeKey(yytext); }
-"style"                                     { return StyleAttributeKey(yytext); }
-"bold"                                      { return BoldAttributeValue(yytext); }
-"underlined"                                { return UnderlinedAttributeValue(yytext); }
-"italics"                                   { return ItalicsAttributeValue(yytext); }
-"size"                                      { return SizeAttributeKey(yytext); }
-"color"                                     { return ColorAttributeKey(yytext); }
-"position"                                  { return PositionAttributeKey(yytext); }
-"rowxcol"                                   { return TableSizeAttributeKey(yytext); }
+"id"                                        { return IdAttributeKey(); }
+"style"                                     { return StyleAttributeKey(); }
+"bold"                                      { return BoldAttributeValue(); }
+"underlined"                                { return UnderlinedAttributeValue(); }
+"italics"                                   { return ItalicsAttributeValue(); }
+"size"                                      { return SizeAttributeKey(); }
+"color"                                     { return ColorAttributeKey(); }
+"position"                                  { return PositionAttributeKey(); }
+"rowxcol"                                   { return TableSizeAttributeKey(); }
 
-":"                                         { return ColonPatternTag(yytext); } 
-","                                         { return CommaPatternTag(yytext); } 
+":"                                         { return ColonPatternTag(); } 
+","                                         { return CommaPatternTag(); } 
 
 {size}                                      { return SizeAttributeValue(yytext, yyleng); }
 {color}                                     { return ColorAttributeValue(yytext, yyleng); }

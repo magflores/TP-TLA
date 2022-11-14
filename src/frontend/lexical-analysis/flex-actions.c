@@ -26,12 +26,12 @@ void EndCommentPatternAction() {
 	LogDebug("EndCommentPatternAction.");
 }
 
-token BeginTableSizePatternAction(const char * lexeme) {
+token BeginTableSizePatternAction() {
 	LogDebug("BeginTableSizePatternAction.");
 	yylval.token = OPEN_PARENTHESIS;
 	return OPEN_PARENTHESIS;
 }
-token EndTableSizePatternAction(const char * lexeme) {
+token EndTableSizePatternAction() {
 	LogDebug("EndTableSizePatternAction.");
 	yylval.token = CLOSE_PARENTHESIS;
 	return CLOSE_PARENTHESIS;
@@ -46,135 +46,135 @@ void EndStringPatternAction() {
 }
 
 // Patrones terminales del lenguaje diseñado.
-token StartPatternTag(const char * lexeme) {
-	LogDebug("StartOperatorPatternTag: '%s'.", lexeme);
+token StartPatternTag() {
+	LogDebug("StartOperatorPatternTag.");
 	yylval.token = START;
 	return START;
 }
 
-token EndPatternTag(const char * lexeme) {
-	LogDebug("EndPatternTag: '%s'.", lexeme);
+token EndPatternTag() {
+	LogDebug("EndPatternTag.");
 	yylval.token = END;
 	return END;
 }
 
-token ContainerPatternTag(const char * lexeme) {
-	LogDebug("ContainerPatternTag: '%s'.", lexeme);
+token ContainerPatternTag() {
+	LogDebug("ContainerPatternTag.");
 	yylval.token = CONTAINER;
 	return CONTAINER;
 }
 
-token TitlePatternTag(const char * lexeme) {
-	LogDebug("TitlePatternTag: '%s'.", lexeme);
+token TitlePatternTag() {
+	LogDebug("TitlePatternTag.");
 	yylval.token = TITLE;
 	return TITLE;
 }
 
-token TablePatternTag(const char * lexeme) {
-	LogDebug("TablePatternTag: '%s'.", lexeme);
+token TablePatternTag() {
+	LogDebug("TablePatternTag.");
 	yylval.token = TABLE;
 	return TABLE;
 }
 
 
-token StyleAttributeKey(const char * lexeme) {
-	LogDebug("StyleAttributeKey: '%s'.", lexeme);
+token StyleAttributeKey() {
+	LogDebug("StyleAttributeKey.");
 	yylval.token = STYLE;
 	return STYLE;
 }
 
-token ColorAttributeKey(const char * lexeme) {
-	LogDebug("ColorAttributeKey: '%s'.", lexeme);
+token ColorAttributeKey() {
+	LogDebug("ColorAttributeKey.");
 	yylval.token = COLOR;
 	return COLOR;
 }
 
-token SizeAttributeKey(const char * lexeme) {
-	LogDebug("SizeAttributeKey: '%s'.", lexeme);
+token SizeAttributeKey() {
+	LogDebug("SizeAttributeKey.");
 	yylval.token = SIZE;
 	return SIZE;
 }
 
-token PositionAttributeKey(const char * lexeme) {
-	LogDebug("PositionAttributeKey: '%s'.", lexeme);
+token PositionAttributeKey() {
+	LogDebug("PositionAttributeKey.");
 	yylval.token = POSITION;
 	return POSITION;
 }
 
-token BoldAttributeValue(const char * lexeme) {
-	LogDebug("BoldAttributeValue: '%s'.", lexeme);
+token BoldAttributeValue() {
+	LogDebug("BoldAttributeValue.");
 	yylval.token = BOLD;
 	return BOLD;
 }
 
-token UnderlinedAttributeValue(const char * lexeme) {
-	LogDebug("UnderlinedAttributeValue: '%s'.", lexeme);
+token UnderlinedAttributeValue() {
+	LogDebug("UnderlinedAttributeValue.");
 	yylval.token = UNDERLINED;
 	return UNDERLINED;
 }
 
-token ItalicsAttributeValue(const char * lexeme) {
-	LogDebug("ItalicsAttributeValue: '%s'.", lexeme);
+token ItalicsAttributeValue() {
+	LogDebug("ItalicsAttributeValue.");
 	yylval.token = ITALICS;
 	return ITALICS;
 }
 
-token ImagePatternTag(const char * lexeme) {
-	LogDebug("ImagePatternTag: '%s'.", lexeme);
+token ImagePatternTag() {
+	LogDebug("ImagePatternTag.");
 	yylval.token = IMG;
 	return IMG;
 }
 
-token LinkPatternTag(const char * lexeme) {
-	LogDebug("LinkPatternTag: '%s'.", lexeme);
+token LinkPatternTag() {
+	LogDebug("LinkPatternTag.");
 	yylval.token = LINK;
 	return LINK;
 }
 
-token RowPatternTag(const char * lexeme) {
-	LogDebug("RowPatternTag: '%s'.", lexeme);
+token RowPatternTag() {
+	LogDebug("RowPatternTag.");
 	yylval.token = ROW;
 	return ROW;
 }
 
-token TableSizeAttributeKey(const char * lexeme) {
-	LogDebug("TableSizeAttributeKey: '%s'.", lexeme);
+token TableSizeAttributeKey() {
+	LogDebug("TableSizeAttributeKey.");
 	yylval.token = ROWXCOL;
 	return ROWXCOL;
 }
 
-token TextPatternTag(const char * lexeme) {
-	LogDebug("TextPatternTag: '%s'.", lexeme);
+token TextPatternTag() {
+	LogDebug("TextPatternTag.");
 	yylval.token = TEXT;
 	return TEXT;
 }
 
-token FontPatternTag(const char * lexeme) {
-	LogDebug("FontPatternTag: '%s'.", lexeme);
+token FontPatternTag() {
+	LogDebug("FontPatternTag.");
 	yylval.token = FONT;
 	return FONT;
 }
 
-token IdAttributeKey(const char * lexeme) {
-	LogDebug("IdAttributeKey: '%s'.", lexeme);
+token IdAttributeKey() {
+	LogDebug("IdAttributeKey.");
 	yylval.token = ID;
 	return ID;
 }
 
-token ColonPatternTag(const char * lexeme) {
-	LogDebug("ColonPatternTag: '%s'.", lexeme);
+token ColonPatternTag() {
+	LogDebug("ColonPatternTag.");
 	yylval.token = COLON;
 	return COLON;
 }
 
-token CommaPatternTag(const char * lexeme) {
-	LogDebug("CommaPatternTag: '%s'.", lexeme);
+token CommaPatternTag() {
+	LogDebug("CommaPatternTag.");
 	yylval.token = COMMA;
 	return COMMA;
 }
 
-token XPatternTag(const char * lexeme) {
-	LogDebug("XPatternTag: '%s'.", lexeme);
+token XPatternTag() {
+	LogDebug("XPatternTag.");
 	yylval.token = X;
 	return X;
 }

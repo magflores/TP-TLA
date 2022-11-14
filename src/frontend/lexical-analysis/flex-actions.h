@@ -26,35 +26,35 @@ void EndCommentPatternAction();
 void BeginStringPatternAction();
 void EndStringPatternAction();
 
-token BeginTableSizePatternAction(const char * lexeme);
-token EndTableSizePatternAction(const char * lexeme);
+token BeginTableSizePatternAction();
+token EndTableSizePatternAction();
 
 
 
 // Patrones terminales del lenguaje diseñado.
-token StartPatternTag(const char * lexeme);
-token EndPatternTag(const char * lexeme);
-token ContainerPatternTag(const char * lexeme);
-token TitlePatternTag(const char * lexeme);
-token TablePatternTag(const char * lexeme);
-token ImagePatternTag(const char * lexeme);
-token LinkPatternTag(const char * lexeme);
-token RowPatternTag(const char * lexeme);
-token TextPatternTag(const char * lexeme);
-token FontPatternTag(const char * lexeme);
-token ColonPatternTag(const char * lexeme);
-token CommaPatternTag(const char * lexeme);
-token XPatternTag(const char * lexeme);
+token StartPatternTag();
+token EndPatternTag();
+token ContainerPatternTag();
+token TitlePatternTag();
+token TablePatternTag();
+token ImagePatternTag();
+token LinkPatternTag();
+token RowPatternTag();
+token TextPatternTag();
+token FontPatternTag();
+token ColonPatternTag();
+token CommaPatternTag();
+token XPatternTag();
 
-token IdAttributeKey(const char * lexeme);
-token StyleAttributeKey(const char * lexeme);
-token SizeAttributeKey(const char * lexeme);
-token ColorAttributeKey(const char * lexeme);
-token PositionAttributeKey(const char * lexeme);
-token BoldAttributeValue(const char * lexeme);
-token UnderlinedAttributeValue(const char * lexeme);
-token ItalicsAttributeValue(const char * lexeme);
-token TableSizeAttributeKey(const char * lexeme);
+token IdAttributeKey();
+token StyleAttributeKey();
+token SizeAttributeKey();
+token ColorAttributeKey();
+token PositionAttributeKey();
+token BoldAttributeValue();
+token UnderlinedAttributeValue();
+token ItalicsAttributeValue();
+token TableSizeAttributeKey();
 
 
 token IdAttributeValue(const char * lexeme, const int length);
