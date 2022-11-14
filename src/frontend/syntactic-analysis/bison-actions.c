@@ -28,11 +28,12 @@ void yyerror(const char * string) {
 * indica que efectivamente el programa de entrada se pudo generar con esta
 * gramática, o lo que es lo mismo, que el programa pertenece al lenguaje.
 */
-void ProgramGrammarAction(tExprs * exprs) {
+tProgram ProgramGrammarAction(tExprs * exprs) {
 	LogDebug("Reconozco patrón. ProgramGrammarAction()");
 	tProgram * value = malloc(sizeof(tProgram));
 	if(value == NULL)
-		return;
+		/* FIXME: QUE DEVOLVEMOS SI NO PUEDE SER VOID?? */
+		return NULL;
 	value->initial = exprs;
 	/*
 	* "state" es una variable global que almacena el estado del compilador,
@@ -48,6 +49,9 @@ void ProgramGrammarAction(tExprs * exprs) {
 	* variable es un simple entero, en lugar de un nodo.
 	*/
 	state.result = value;
+
+	/* FIXME: QUE DEVOLVEMOS SI NO PUEDE SER VOID?? */
+	return value;
 }
 
 tExprs * ExprAction(tExpr * exp){
@@ -71,9 +75,11 @@ tExprs * ExprsAction(tExpr * exp, tExprs * exps){
 	return exps;
 }
 
-void EmptyExprAction(){
+tProgram EmptyExprAction(){
 	LogDebug("EmptyExprAction()");
-	return;
+
+	/* FIXME: QUE DEVOLVEMOS SI NO PUEDE SER VOID?? */	
+	return NULL;
 }
 
 tExpr * TitleExprAction(tTitle * title){

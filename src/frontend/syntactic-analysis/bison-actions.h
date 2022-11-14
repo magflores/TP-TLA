@@ -13,13 +13,13 @@
  */
 
 // Programa.
-void ProgramGrammarAction(tExprs * value);
+tProgram ProgramGrammarAction(tExprs * value);
 
 tExprs * ExprAction(tExpr * exp);
 
 tExprs * ExprsAction(tExpr * exp, tExprs * exps);
 
-void EmptyExprAction();
+tProgram EmptyExprAction();
 
 tExpr * TitleExprAction(tTitle * title);
 
@@ -97,7 +97,7 @@ tTableAttrs * IdAndRowxColAttrPaternAction(tAttribute * id, tRowxColAttr * rowxc
 
 tTableAttrs * RowxColAttrPatternAction(tRowxColAttr * rowxcol);
 
-tRowxColAttr * RowxColAttrAction(int cols, int rows);
+tRowxColAttr * RowxColAttrAction(int cols, int rows); //FIXME: PUEDE SER QUE NO LE LLEGUEN int?
 
 tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content);
 

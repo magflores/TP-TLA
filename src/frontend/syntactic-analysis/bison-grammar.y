@@ -115,8 +115,8 @@
 
 %%
 
-program: START expressions END										{ ProgramGrammarAction($2); }
-		| START /*lambda*/ END												{ EmptyExprAction(); }
+program: START expressions END										{ $$ = ProgramGrammarAction($2); }
+		| START /*lambda*/ END										{ $$ = EmptyExprAction(); }
 		;
 
 expressions: expression expressions 								{ $$ = ExprsAction($1, $2); }

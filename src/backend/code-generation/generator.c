@@ -516,7 +516,7 @@ void addFont(tFont *font)
 
 //TODO: REVISAR LIBERACION DE MEMORIA
 
-void freeMemory(tExpr * expr) {
+void freeMemory(tExprs * expr) {
 	if(expr == NULL){
 		printf("error");
 		return;
@@ -610,7 +610,7 @@ void freeExpression(tExpr * expr) {
 	}
 }
 
-void freeAttributes(tAttribute * attrs) {
+void freeAttributes(tAttributes * attrs) {
 	if(attrs == NULL) {
 		return;
 	}

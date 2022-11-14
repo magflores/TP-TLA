@@ -174,7 +174,7 @@ token CommaPatternTag() {
 }
 
 token XPatternTag() {
-	LogDebug("XPatternTag.");
+	LogDebug("XPatternTag");
 	yylval.token = X;
 	return X;
 }
