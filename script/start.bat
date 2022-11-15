@@ -1,1 +1,1 @@
-@type %1 | bin\Debug\Compiler.exe %2
+@type %1 | bin\Debug\Compiler.exe 

@@ -15,7 +15,7 @@ const int main(const int argumentCount, const char ** arguments) {
 	state.succeed = false;
 	state.output = "webpage";
 	if(argumentCount > 1){
-		state.output = arguments[1];
+		state.output = (char *) arguments[1];
 	}
 	
 

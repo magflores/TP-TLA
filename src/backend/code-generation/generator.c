@@ -29,7 +29,6 @@ void Generator(tProgram *result)
 		free(result);
 		return;
 	}
-	
 
 	// Abriendo HTML tags
 	fprintf(file, "<!DOCTYPE html>\n<html>\n\t<head>\n\t<meta charset=\"utf-8\">\n</head>\n<body>\n");
@@ -42,8 +41,10 @@ void Generator(tProgram *result)
 	// Cerrando archivo
 	fclose(file);
 
-	freeMemory(result->initial);
-	free(result);
+	// freeMemory(result->initial->first);
+	// freeExpression(result->initial->first);
+	// free(result->initial);
+	// free(result);
 
 	return;
 }
@@ -66,25 +67,25 @@ void addHTML(tExpr *result)
 	switch (current->type)
 	{
 	case TITLEEXPR:
-		addTitle(current->expr);
+		addTitle((tTitle *)current->expr);
 		break;
 	case TEXTEXPR:
-		addText(current->expr);
+		addText((tText *)current->expr);
 		break;
 	case LINKEXPR:
-		addLink(current->expr);
+		addLink((tLink *)current->expr);
 		break;
 	case IMGEXPR:
-		addImage(current->expr);
+		addImage((tImage *)current->expr);
 		break;
 	case TABLEEXPR:
-		addTable(current->expr);
+		addTable((tTable *)current->expr);
 		break;
 	case CONTAINEREXPR:
-		addContainer(current->expr);
+		addContainer((tContainer *)current->expr);
 		break;
 	case FONTEXPR:
-		addFont(current->expr);
+		addFont((tFont *)current->expr);
 		break;
 	default:
 		fprintf(file, "\nNone matched\n");
@@ -421,7 +422,6 @@ void addImage(tImage *image)
 	if (image->attrs != NULL)
 	{
 
-		// TODO: REVISAR --> USAR SOLO WIDTH?
 		size[0] = getImgSize(image->attrs);
 		size[1] = size[0];
 
@@ -526,119 +526,147 @@ void addFont(tFont *font)
 	}
 }
 
-//TODO: REVISAR LIBERACION DE MEMORIA
 
-void freeMemory(tExprs * expr) {
+void freeMemory(tExpr * expr) {
 	if(expr == NULL){
-		printf("error");
 		return;
 	}
-	// else if(expr->next->next == NULL){
-	// 	freeExpression(expr->next);
-	// 	tExpr * prev = expr->next;
-	// 	expr->next = NULL;
-	// 	free(prev);
-	// 	return;
-	// }
-	// else{
-	// 	// freeMemory(expr->next);
-	// 	// freeExpression(expr->next);
-	// 	// tExpr * prev = expr->next;
-	// 	// expr->next = NULL;
-	// 	// free(prev);
-	// 	return;
-	// }
+	else if(expr->next->next == NULL){
+		freeExpression(expr->next);
+		tExpr * prev = expr->next;
+		expr->next = NULL;
+		free(prev);
+		return;
+	}
+	else{
+		freeMemory(expr->next);
+		freeExpression(expr->next);
+		tExpr * prev = expr->next;
+		expr->next = NULL;
+		free(prev);
+		return;
+	}
 }
 
-void freeExpression(tExpr * expr) {
-	switch(expr->type){
+void freeExpression(tExpr * expression) {
+	switch(expression->type){
 		case TITLEEXPR:
 		{
-			tTitle * aux = (tTitle *) expr->expr;
+			tTitle * aux = (tTitle *) expression->expr;
 			free(aux->content);
-			freeAttributes(aux->attrs);
+			freeAttributes(aux->attrs->first);
 			free(aux->attrs);
 			free(aux);
-			free(expr);
+			free(expression);
 			return;
 		}
 		case IMGEXPR:
 		{
-			tImage * aux = (tImage *) expr->expr;
+			tImage * aux = (tImage *) expression->expr;
 			free(aux->link);
-			freeAttributes(aux->attrs);
+			freeAttributes(aux->attrs->first);
 			free(aux->attrs);
 			free(aux);
-			free(expr);
+			free(expression);
 			return;
 		}
 		case LINKEXPR:
 		{
-			tLink * aux = (tLink *) expr->expr;
+			tLink * aux = (tLink *) expression->expr;
 			free(aux->ref);
 			free(aux->text);
-			freeAttributes(aux->attrs);
+			freeAttributes(aux->attrs->first);
 			free(aux->attrs);
 			free(aux);
-			free(expr);
+			free(expression);
 			return;
 		}
 		case TABLEEXPR:
 		{
-			tTable * aux = (tTable *) expr->expr;
-			//TODO: FREE TABLE CONTENT
+			tTable * aux = (tTable *) expression->expr;
+			freeAttributes(aux->attrs->ID); 
+			free(aux->attrs->rowxcol);
+			free(aux->attrs);
+
+			freeRows(aux->firstRow->firstRow);
+			free(aux->firstRow);
 			free(aux);
-			free(expr);
+			free(expression);
 			return;
 		}
 		case CONTAINEREXPR:
 		{
-			tContainer * aux = (tContainer *) expr->expr;
-			freeAttributes(aux->attrs);
+			tContainer * aux = (tContainer *) expression->expr;
+			freeAttributes(aux->attrs->first);
 			freeExpression(aux->content->first);
 			free(aux->content);
 			free(aux);
-			free(expr);
+			free(expression);
 			return;
 		}
 		case TEXTEXPR:
 		{
-			tText * aux = (tText *) expr->expr;
-			freeAttributes(aux->attrs);
+			tText * aux = (tText *) expression->expr;
+			freeAttributes(aux->attrs->first);
 			free(aux->content);
 			free(aux->attrs);
 			free(aux);
-			free(expr);
+			free(expression);
 			return;
 		}
 		case FONTEXPR:
-			tFont * aux = (tFont *) expr->expr;
+			tFont * aux = (tFont *) expression->expr;
+			free(aux->content);
 			free(aux);
-			free(expr);	
+			free(expression);	
 			return;
 		default:
-			free(expr);
+			free(expression);
 			break;
 	}
 }
 
-void freeAttributes(tAttributes * attrs) {
-	if(attrs == NULL) {
+void freeAttributes(tAttribute * attr) {
+	if(attr == NULL) {
 		return;
 	}
-	// else if(attrs->next->next == NULL){
-	// 	free(attrs->next->value);
-	// 	tAttribute * prev = attrs->next;
-	// 	attrs->next = NULL;
-	// 	free(prev);
-	// 	return;
-	// }
-	// else{
-	// 	freeAttributes(attrs->next);
-	// 	free(attrs->next->value);
-	// 	tAttribute * prev = attrs->next;
-	// 	attrs->next = NULL;
-	// 	free(prev);
-	// 	return;
-	// }
+	else if(attr->next->next == NULL){
+		free(attr->next->value);
+		tAttribute * prev = attr->next;
+		attr->next = NULL;
+		free(prev);
+		return;
+	}
+	else{
+		freeAttributes(attr->next);
+		free(attr->next->value);
+		tAttribute * prev = attr->next;
+		attr->next = NULL;
+		free(prev);
+		return;
+	}
+}
+
+void freeRows(tRow * row) { 
+	if(row == NULL){
+		return;
+	}
+	else if (row->nextRow->nextRow == NULL)
+	{
+		freeExpression(row->nextRow->content->first);
+		free(row->nextRow->content);
+		tRow * aux = row->nextRow;
+		row->content = NULL;
+		free(aux);
+		return;
+	} else {
+		freeRows(row->nextRow);
+		freeExpression(row->nextRow->content->first);
+		free(row->nextRow->content);
+		tRow * aux = row->nextRow;
+		row->content = NULL;
+		free(aux);
+		return;
+	}
+	
 }
