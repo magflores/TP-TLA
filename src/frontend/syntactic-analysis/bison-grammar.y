@@ -19,24 +19,17 @@
 	tText * text; 
 	tContainer * container;
 	tAttributes * title_attrs;
-	tAttributes * title_attr;
+	tAttribute * title_attr;
 	tAttributes * img_attrs;
-	tAttributes * img_attr;
+	tAttribute * img_attr;
 	tAttributes * container_attrs;
-	tAttributes * container_attr;
+	tAttribute * container_attr;
 	tTableAttrs * table_attr;
 	tRows * table_content;
 	tRow * row_content;
 
 	tAttribute * id;
-	tAttribute * size;
-	tAttribute * color;
-	tAttribute * position;
-	tAttributes * style;
 	tRowxColAttr * rowxcol;
-
-	tAttributes * properties;
-	tAttribute * property;
 
 	// Terminales.
 	token token;
@@ -103,12 +96,6 @@
 %type <table_content> table_content
 %type <row_content> row_content
 %type <id> id
-%type <size> size
-%type <color> color
-%type <position> position
-%type <style> style
-%type <properties> properties
-%type <property> property
 %type <rowxcol> rowxcol
 
 // El símbolo inicial de la gramatica.
@@ -163,53 +150,34 @@ title_attrs: title_attr title_attrs									{ $$ = AttrsAction($1, $2); }
 		| title_attr												{ $$ = AttrAction($1); }
 		;
 
-title_attr: id														{ $$ = IdAttrPatternAction($1); }
-		| size 														{ $$ = SizeAttrPatternAction($1); } 
-		| color 													{ $$ = ColorAttrPatternAction($1); } 
-		| position 													{ $$ = PositionAttrPatternAction($1); }
-		| style 													{ $$ = StyleAttrPatternAction($1); }
+title_attr: ID COLON ID_ATTR										{ $$ = IdAttrAction($3); }
+		| SIZE COLON SIZE_ATTR										{ $$ = SizeAttrAction($3); }
+		| COLOR COLON COLOR_ATTR 									{ $$ = ColorAttrAction($3); }
+		| POSITION COLON POSITION_ATTR								{ $$ = PositionAttrAction($3); }
+		| BOLD 														{ $$ = BoldAttrAction($1); } 
+		| UNDERLINED 												{ $$ = UnderlinedAttrAction($1); } 
+		| ITALICS 													{ $$ = ItalicsAttrAction($1); }
 		;
 
 img_attrs: img_attr img_attrs										{ $$ = AttrsAction($1, $2); }
 		| img_attr													{ $$ = AttrAction($1); }
 		;
 
-img_attr: id														{ $$ = IdAttrPatternAction($1); }
-		| size 														{ $$ = SizeAttrPatternAction($1); } 
-		| position 													{ $$ = PositionAttrPatternAction($1); }
+img_attr: ID COLON ID_ATTR											{ $$ = IdAttrAction($3); }
+		| SIZE COLON SIZE_ATTR										{ $$ = SizeAttrAction($3); } 
+		| POSITION COLON POSITION_ATTR								{ $$ = PositionAttrAction($3); }
 		;
 
 container_attrs: container_attr container_attrs						{ $$ = AttrsAction($1, $2); }
 		| container_attr											{ $$ = AttrAction($1); }
 		;
 
-container_attr: id													{ $$ = IdAttrPatternAction($1); }
-		| position 													{ $$ = PositionAttrPatternAction($1); }
+container_attr: ID COLON ID_ATTR									{ $$ = IdAttrAction($3); }
+		| POSITION COLON POSITION_ATTR								{ $$ = PositionAttrAction($3); }
 		;
 
 id: ID COLON ID_ATTR												{ $$ = IdAttrAction($3); }
-		;
-
-size: SIZE COLON SIZE_ATTR											{ $$ = SizeAttrAction($3); }
-		;
-
-color: COLOR COLON COLOR_ATTR 										{ $$ = ColorAttrAction($3); }
-		;
-
-position: POSITION COLON POSITION_ATTR								{ $$ = PositionAttrAction($3); }
-		;
-
-style: STYLE COLON properties 										{ $$ = PropertiesAttrPaternAction($3); }
-		;
-
-properties: property COMMA properties 								{ $$ = PropertiesListAction($1, $3); }
-		| property 													{ $$ = PropertyAttrAction($1); }
-		;
-
-property: BOLD 														{ $$ = BoldAttrAction($1); } 
-		| UNDERLINED 												{ $$ = UnderlinedAttrAction($1); } 
-		| ITALICS 													{ $$ = ItalicsAttrAction($1); }
-		; 	
+		;	
 
 table_attr: id rowxcol												{ $$ = IdAndRowxColAttrPaternAction($1, $2); } 
 		| rowxcol		 											{ $$ = RowxColAttrPatternAction($1); }  

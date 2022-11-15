@@ -1,10 +1,10 @@
 START
 FONT Arial
-TITLE id:A1  size:large color:red position:center style:bold,underlined "Hola mundo!"
+TITLE id:A1  size:large color:red position:center bold underlined "Hola mundo!"
 TEXT size:medium position:right "Este es un mensaje de prueba"
 IMG size:x-large position:center "https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png"
-LINK  color:blue style:underlined size:small position:left  "https://www.google.com/","Para mas informacion haga click aqui"
-LINK  color:green style:underlined size:small position:right "#A1","Volver al inicio"
+LINK  color:blue underlined size:small position:left  "https://www.google.com/","Para mas informacion haga click aqui"
+LINK  color:green underlined size:small position:right "#A1","Volver al inicio"
 CONTAINER
 TABLE id:A2 rowxcol:(2x2)
 ROW

@@ -49,7 +49,6 @@ token CommaPatternTag();
 token XPatternTag();
 
 token IdAttributeKey();
-token StyleAttributeKey();
 token SizeAttributeKey();
 token ColorAttributeKey();
 token PositionAttributeKey();
@@ -63,7 +62,6 @@ token IdAttributeValue(const char * lexeme, const int length);
 token StringAttributeValue(const char * lexeme, const int length);
 token SizeAttributeValue(const char * lexeme, const int length);
 token ColorAttributeValue(const char * lexeme, const int length);
-token StyleAttributeValue(const char * lexeme, const int length);
 token PositionAttributeValue(const char * lexeme, const int length);
 token NumberAttributeValue(const char * lexeme, const int length);
 token FontAttributeValue(const char * lexeme, const int length);

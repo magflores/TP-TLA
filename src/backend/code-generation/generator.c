@@ -136,7 +136,7 @@ void addTitle(tTitle *title)
 	{
 
 		tAttribute *currAttr = title->attrs->first;
-		size = getTitleSize(title->attrs);
+		//size = getTitleSize(title->attrs);
 		fprintf(file, "<h%d", size);
 
 		while (currAttr != NULL)
@@ -272,6 +272,7 @@ void addStyle(tAttributes * attrs) {
 
 void addText(tText *text)
 {
+	LogDebug("addText()");
 	int bold = 0, italic = 0, underlined = 0;
 	int style = 0;
 
@@ -279,7 +280,7 @@ void addText(tText *text)
 
 	if (text->attrs != NULL)
 	{
-		addStyle(text->attrs);
+		//addStyle(text->attrs);
 		tAttribute *current = text->attrs->first;
 
 		while (current != NULL)
@@ -335,7 +336,7 @@ void addLink(tLink *link)
 
 	if (link->attrs != NULL)
 	{
-		addStyle(link->attrs);
+		//addStyle(link->attrs);
 		tAttribute *current = link->attrs->first;
 		
 		while (current != NULL)
@@ -516,11 +517,12 @@ void addTable(tTable *table)
 	fprintf(file, "</table>\n");
 }
 
-void addFont(tFont *font)
+void addFont(tFont * font)
 {
 	if (font != NULL && font->content != NULL)
 	{
 		fprintf(file, "<style>\n");
+		//LogDebug("Font Content: %s", font->content);
 		fprintf(file, "body { font-family: '%s'; }", font->content);
 		fprintf(file, "</style>\n");
 	}

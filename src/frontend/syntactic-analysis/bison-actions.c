@@ -45,7 +45,6 @@ tProgram * ProgramGrammarAction(tExprs * exprs) {
 	* variable es un simple entero, en lugar de un nodo.
 	*/
 	state.result = value;
-
 	return value;
 }
 
@@ -160,6 +159,17 @@ tExpr * ContainerExprAction(tContainer * div){
 	return exp;
 }
 
+tFont * FontGrammarAction(char * content) {
+	LogDebug("FontGrammarAction()");
+	tFont * font = malloc(sizeof(tFont));
+	if(font == NULL){
+		return NULL;
+	}
+	font->content = malloc(sizeof(char) * (strlen(content) + 1));
+	strcpy(font->content, content);
+	return font;
+}
+
 tTitle * TitleWithoutAttrsGrammarAction(char * content){
 	LogDebug("TitleWithoutAttrsGrammarAction()");
 	tTitle * title = malloc(sizeof(tTitle));
@@ -170,29 +180,6 @@ tTitle * TitleWithoutAttrsGrammarAction(char * content){
 	strcpy(title->content, content);
 	title->attrs = NULL;
 	return title;
-}
-
-tTitle * TitleWithAttrsGrammarAction(tAttributes * attrs, char * content){
-	LogDebug("TitleWithAttrsGrammarAction()");
-	tTitle * title = malloc(sizeof(tTitle));
-	if(title == NULL){
-		return NULL;
-	}
-	title->content = malloc(sizeof(char) * (strlen(content) + 1));
-	strcpy(title->content, content);
-	title->attrs = attrs;
-	return title;
-}
-
-tFont * FontGrammarAction(char * content){
-	LogDebug("FontGrammarAction()");
-	tFont * font = malloc(sizeof(tFont));
-	if(font == NULL){
-		return NULL;
-	}
-	font->content = malloc(sizeof(char) * (strlen(content) + 1));
-	strcpy(font->content, content);
-	return font;
 }
 
 tText * TextWithoutAttrsGrammarAction(char * content){
@@ -207,15 +194,75 @@ tText * TextWithoutAttrsGrammarAction(char * content){
 	return text;
 }
 
+tImage * ImgWithoutAttrsGrammarAction(char * link){
+	LogDebug("ImgWithoutAttrsGrammarAction()");
+	tImage * img = malloc(sizeof(tImage));
+	if(img == NULL)
+		return NULL;
+	img->link = malloc(sizeof(char) * (strlen(link) + 1));
+	strcpy(img->link, link);
+	img->attrs = NULL;
+	return img;
+}
+
+tLink * LinkWithoutAttrsGrammarAction(char * ref, char * text){
+	LogDebug("LinkWithoutAttrsGrammarAction()");
+	tLink * link = malloc(sizeof(tLink));
+	if(link == NULL){
+		return NULL;
+	}
+
+	link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
+	link->text = malloc(sizeof(char)*(strlen(text) + 1));
+	strncpy(link->ref, ref + 5, strlen(ref) - 6);
+	strcpy(link->text, text);
+	link->attrs = NULL;
+	return link;
+}
+
+tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs){
+	LogDebug("ContainerWithoutAttrsGrammarAction()");
+	tContainer * container = malloc(sizeof(tContainer));
+	if(container == NULL){
+		return NULL;
+	}
+	container->attrs = NULL;
+	container->content = exprs;
+	container->size++;
+	return container;
+}
+
+//ACA HAY ATTRS
+tTitle * TitleWithAttrsGrammarAction(tAttributes * attrs, char * content){
+	LogDebug("TitleWithAttrsGrammarAction()");
+	tTitle * title = malloc(sizeof(tTitle));
+	if(title == NULL){
+		return NULL;
+	}
+	title->content = malloc(sizeof(char) * (strlen(content) + 1));
+	strcpy(title->content, content);
+	title->attrs = attrs;
+	return title;
+}
+
 tText * TextWithAttrsGrammarAction(tAttributes * attrs, char * content){
 	LogDebug("TextWithAttrsGrammarAction()");
 	tText * text = malloc(sizeof(tText));
 	if(text == NULL){
 		return NULL;
 	}
+	if (attrs != NULL)
+	{
+		LogDebug("Si");
+	}
+	if(attrs->first->type == COLORVALUE){
+		LogDebug("Si 2");
+	}
+	
 	text->content = malloc(sizeof(char) * (strlen(content) + 1));
 	strcpy(text->content, content);
 	text->attrs = attrs;
+
 	return text;
 }
 
@@ -227,17 +274,6 @@ tImage * ImgWithAttrsGrammarAction(tAttributes * attrs, char * link){
 	img->link = malloc(sizeof(char) * (strlen(link) + 1));
 	strcpy(img->link, link);
 	img->attrs = attrs;
-	return img;
-}
-
-tImage * ImgWithoutAttrsGrammarAction(char * link){
-	LogDebug("ImgWithoutAttrsGrammarAction()");
-	tImage * img = malloc(sizeof(tImage));
-	if(img == NULL)
-		return NULL;
-	img->link = malloc(sizeof(char) * (strlen(link) + 1));
-	strcpy(img->link, link);
-	img->attrs = NULL;
 	return img;
 }
 
@@ -256,32 +292,6 @@ tLink * LinkWithAttrsGrammarAction(tAttributes * attrs, char * ref, char * text)
 	return link;
 }
 
-tLink * LinkWithoutAttrsGrammarAction(char * ref, char * text){
-	LogDebug("LinkWithoutAttrsGrammarAction()");
-	tLink * link = malloc(sizeof(tLink));
-	if(link == NULL){
-		return NULL;
-	}
-
-	link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
-	link->text = malloc(sizeof(char)*(strlen(text) + 1));
-	strncpy(link->ref, ref + 5, strlen(ref) - 6);
-	strcpy(link->text, text);
-	link->attrs = NULL;
-	return link;
-}
-
-tTable * TableGrammarAction(tTableAttrs * attrs, tRows * rows){
-	LogDebug("TableGrammarAction()");
-	tTable * table = malloc(sizeof(tTable));
-	if(table == NULL){
-		return NULL;
-	}
-	table->attrs = attrs;
-	table->firstRow = rows;
-	return table;
-}
-
 tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs){
 	LogDebug("ContainerWithAttrsGrammarAction()");
 	tContainer * container = malloc(sizeof(tContainer));
@@ -290,39 +300,33 @@ tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs
 	}
 	container->attrs = attrs;
 	container->content = exprs;
-	container->size++; //????
+	container->size++;
 	return container;
 }
 
-tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs){
-	LogDebug("ContainerWithoutAttrsGrammarAction()");
-	tContainer * container = malloc(sizeof(tContainer));
-	if(container == NULL){
+tAttributes * AttrAction(tAttribute * attr){
+	LogDebug("ATTRAACTION()");
+	if(attr == NULL){
+		LogDebug("Error with attr parameter");
 		return NULL;
 	}
-	container->attrs = NULL;
-	container->content = exprs;
-	container->size++; //????
-	return container;
-}
-
-tAttributes * AttrAction(tAttributes * attr){
-	LogDebug("AttrAction()");
 	tAttributes * aux = malloc(sizeof(tAttributes));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->first = attr->first;
-	aux->size++;
+	aux->first = attr;
+	aux->size = 1;
 	return aux;
 }
 
-tAttributes * AttrsAction(tAttributes * attr, tAttributes * attrs){
-	LogDebug("AttrsAction()");
-	tAttribute * aux = attrs->first;
-	while(aux->next != NULL)
-		aux = aux->next;
-	aux->next = attr->first;
+tAttributes * AttrsAction(tAttribute * attr, tAttributes * attrs){
+	LogDebug("ATTRSACTION()");
+	if(attr == NULL || attrs == NULL){
+		LogDebug("Error with parameters on AttrsAction");
+		return NULL;
+	}
+	attr->next = attrs->first;
+	attrs->first = attr;
 	attrs->size++;
 	return attrs;
 }
@@ -340,94 +344,6 @@ tAttributes * IdAttrPatternAction(tAttribute * id){
 	AttrsAux->first = AttrAux;
 	AttrsAux->size++;
 	return AttrsAux;
-}
-
-tAttributes * SizeAttrPatternAction(tAttribute * size){
-	LogDebug("SizeAttrPatternAction()");
-	tAttribute * aux = malloc(sizeof(tAttribute));
-	tAttributes * AttrsAux = malloc(sizeof(tAttributes));
-	if(aux == NULL || AttrsAux == NULL){
-		return NULL;
-	}
-	aux->type = size->type;
-	aux->next = size->next;
-	aux->value = size->value;
-	AttrsAux->first = aux;
-	AttrsAux->size++;
-	return AttrsAux;
-}
-
-tAttributes * ColorAttrPatternAction(tAttribute * color){
-	LogDebug("ColorAttrPatternAction()");
-	tAttribute * aux = malloc(sizeof(tAttribute));
-	tAttributes * AttrsAux = malloc(sizeof(tAttributes));
-	if(aux == NULL || AttrsAux == NULL){
-		return NULL;
-	}
-	aux->type = color->type;
-	aux->next = color->next;
-	aux->value = color->value;
-	AttrsAux->first = aux;
-	AttrsAux->size++;
-	return AttrsAux;
-}
-
-tAttributes * PositionAttrPatternAction(tAttribute * position){
-	LogDebug("PositionAttrPatternAction()");
-	tAttribute * aux = malloc(sizeof(tAttribute));
-	tAttributes * AttrsAux = malloc(sizeof(tAttributes));
-	if(aux == NULL || AttrsAux == NULL){
-		return NULL;
-	}
-	aux->type = position->type;
-	aux->next = position->next;
-	aux->value = position->value;
-	AttrsAux->first = aux;
-	AttrsAux->size++;
-	return AttrsAux;
-}
-
-tAttributes * StyleAttrPatternAction(tAttributes * style){
-	LogDebug("StyleAttrPatternAction()");
-	tAttributes * aux = malloc(sizeof(tAttributes));
-	if(aux == NULL){
-		return NULL;
-	}
-	aux->first = style->first;
-	aux->size = style->size;
-	return aux;
-}
-
-tAttributes * PropertiesAttrPaternAction(tAttributes * properties){
-	LogDebug("PropertiesAttrPaternAction()");
-	tAttributes * aux = malloc(sizeof(tAttributes));
-	if(aux == NULL){
-		return NULL;
-	}
-	aux->first = properties->first;
-	aux->size = properties->size;
-	return aux;
-}
-
-tAttributes * PropertiesListAction(tAttribute * property, tAttributes * properties){
-	LogDebug("PropertiesListAction()");
-	tAttribute * aux = properties->first;
-	while(aux->next != NULL)
-		aux = aux->next;
-	aux->next = property;
-	properties->size++;
-	return properties;
-}
-
-tAttributes * PropertyAttrAction(tAttribute * property){
-	LogDebug("PropertyAttrAction()");
-	tAttributes * aux = malloc(sizeof(tAttributes));
-	if(aux == NULL){
-		return NULL;
-	}
-	aux->first = property;
-	aux->size++;
-	return aux;
 }
 
 tAttribute * IdAttrAction(char * ID){
@@ -463,8 +379,8 @@ tAttribute * ColorAttrAction(char * Color){
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Color) - 3));
-	strncpy(aux->value, Color + 4, strlen(Color) - 5);
+	aux->value = malloc(sizeof(char) * (strlen(Color) + 1));
+	strcpy(aux->value, Color);
 	aux->type = COLORVALUE;
 	aux->next = NULL;
 	return aux;
@@ -520,6 +436,19 @@ tAttribute * ItalicsAttrAction(char * Italics){
 	aux->type = ITALICVALUE;
 	aux->next = NULL;
 	return aux;
+}
+
+
+//ACA SON COSAS DE TABLE
+tTable * TableGrammarAction(tTableAttrs * attrs, tRows * rows){
+	LogDebug("TableGrammarAction()");
+	tTable * table = malloc(sizeof(tTable));
+	if(table == NULL){
+		return NULL;
+	}
+	table->attrs = attrs;
+	table->firstRow = rows;
+	return table;
 }
 
 tTableAttrs * IdAndRowxColAttrPaternAction(tAttribute * id, tRowxColAttr * rowxcol){

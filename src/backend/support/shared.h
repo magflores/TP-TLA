@@ -45,7 +45,7 @@ typedef enum {
 	ITALICVALUE, 
 	UNDERLINEDVALUE,
 	SIZEVALUE,
-	IDVALUE,
+	IDVALUE
 } atr_type;
 
 typedef enum expr_type {
@@ -153,10 +153,8 @@ typedef struct {
 	boolean succeed;
 
 	// Indica el resultado de la compilación (para la calculadora).
-	tProgram * result;
-
 	// El nodo raíz del AST (se usará cuando se implemente el backend).
-	Program * program;
+	tProgram * result;
 
 	char * output;
 

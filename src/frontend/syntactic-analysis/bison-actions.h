@@ -2,6 +2,7 @@
 #define BISON_ACTIONS_HEADER
 
 #include "../../backend/support/shared.h"
+#include "../../backend/support/logger.h"
 // #include "../../backend/semantic-analysis/abstract-syntax-tree.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -61,25 +62,11 @@ tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs
 
 tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs);
 
-tAttributes * AttrAction(tAttributes * attr);
+tAttributes * AttrAction(tAttribute * attr);
 
-tAttributes * AttrsAction(tAttributes * attr, tAttributes * attrs);
+tAttributes * AttrsAction(tAttribute * attr, tAttributes * attrs);
 
 tAttributes * IdAttrPatternAction(tAttribute * id);
-
-tAttributes * SizeAttrPatternAction(tAttribute * size);
-
-tAttributes * ColorAttrPatternAction(tAttribute * color);
-
-tAttributes * PositionAttrPatternAction(tAttribute * position);
-
-tAttributes * StyleAttrPatternAction(tAttributes * style);
-
-tAttributes * PropertiesAttrPaternAction(tAttributes * properties);
-
-tAttributes * PropertiesListAction(tAttribute * property, tAttributes * properties);
-
-tAttributes * PropertyAttrAction(tAttribute * property);
 
 tAttribute * IdAttrAction(char * ID);
 
@@ -106,4 +93,5 @@ tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content);
 tRows * RowContentAction(tRow * row_content);
 
 tRow * RowExpressionsAction(tExprs * content);
+
 #endif

@@ -75,13 +75,6 @@ token TablePatternTag() {
 	return TABLE;
 }
 
-
-token StyleAttributeKey() {
-	LogDebug("StyleAttributeKey.");
-	yylval.token = STYLE;
-	return STYLE;
-}
-
 token ColorAttributeKey() {
 	LogDebug("ColorAttributeKey.");
 	yylval.token = COLOR;

@@ -57,7 +57,6 @@ whitespace		[ \f\n\r\t\v]
 "FONT"                                      { return FontPatternTag(); }
 
 "id"                                        { return IdAttributeKey(); }
-"style"                                     { return StyleAttributeKey(); }
 "bold"                                      { return BoldAttributeValue(); }
 "underlined"                                { return UnderlinedAttributeValue(); }
 "italics"                                   { return ItalicsAttributeValue(); }
