@@ -61,7 +61,6 @@ TEXT "Modo de uso: LINK attributes_list “#ID”,“content”"
 TEXT "Ejemplo: LINK color:green position:left “#A1”,“Link al comienzo de la pagina”"
 LINK color:green position:left "#A1","Link al comienzo de la pagina"
 
-/* Hay que terminar la tabla y el container*/
 TITLE "Tablas o grillas"
 TEXT "Pueden utilizarse tablas en el documento HTML por medio del tag “TABLE” y la lista de atributos"
 TEXT "Ejemplo:

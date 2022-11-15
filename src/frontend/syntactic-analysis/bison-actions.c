@@ -438,8 +438,7 @@ tAttribute * ItalicsAttrAction(char * Italics){
 	return aux;
 }
 
-
-//ACA SON COSAS DE TABLE
+//TABLE
 tTable * TableGrammarAction(tTableAttrs * attrs, tRows * rows){
 	LogDebug("TableGrammarAction()");
 	tTable * table = malloc(sizeof(tTable));

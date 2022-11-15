@@ -93,7 +93,7 @@ void addHTML(tExpr *result)
 	}
 }
 
-int getTitleSize(tAttributes *attrs)
+int getTitleSize(tAttributes * attrs)
 {
 	tAttribute *currAttr = attrs->first;
 	while (currAttr->type != SIZEVALUE)
@@ -136,7 +136,10 @@ void addTitle(tTitle *title)
 	{
 
 		tAttribute *currAttr = title->attrs->first;
-		//size = getTitleSize(title->attrs);
+
+		//tAttributes * aux = title->attrs;
+		//size = getTitleSize(aux);
+
 		fprintf(file, "<h%d", size);
 
 		while (currAttr != NULL)
@@ -233,7 +236,8 @@ int getFontSize(tAttributes *attrs)
 */
 void addStyle(tAttributes * attrs) {
 	tAttribute *currAttr = attrs->first;
-	int size = getFontSize(attrs);
+	tAttributes * aux = attrs;
+	int size = getFontSize(aux);
 
 	while (currAttr != NULL)
 	{ 
@@ -274,13 +278,13 @@ void addText(tText *text)
 {
 	LogDebug("addText()");
 	int bold = 0, italic = 0, underlined = 0;
-	int style = 0;
 
 	fprintf(file, "<p");
 
 	if (text->attrs != NULL)
 	{
-		//addStyle(text->attrs);
+		// tAttributes * aux = text->attrs;
+		// addStyle(aux);
 		tAttribute *current = text->attrs->first;
 
 		while (current != NULL)
@@ -336,7 +340,8 @@ void addLink(tLink *link)
 
 	if (link->attrs != NULL)
 	{
-		//addStyle(link->attrs);
+		// tAttributes * aux = link->attrs;
+		// addStyle(aux);
 		tAttribute *current = link->attrs->first;
 		
 		while (current != NULL)
@@ -423,8 +428,8 @@ void addImage(tImage *image)
 	if (image->attrs != NULL)
 	{
 
-		size[0] = getImgSize(image->attrs);
-		size[1] = size[0];
+		//size[0] = getImgSize(image->attrs);
+		//size[1] = size[0];
 
 		tAttribute *current = image->attrs->first;
 
@@ -501,7 +506,9 @@ void addRowContent(tExprs *rowContent, int cols)
 void addTable(tTable *table)
 {
 	fprintf(file, "<table style=\"border:1px solid black;\"");
-	fprintf(file, " id=\"%s\"", table->attrs->ID->value);
+	if(table->attrs->ID != NULL){
+		fprintf(file, " id=\"%s\"", table->attrs->ID->value);
+	}
 	fprintf(file, ">\n");
 	tRow *auxRow = table->firstRow->firstRow;
 	for (int row = 0; row < table->attrs->rowxcol->rows; row++)
@@ -522,7 +529,6 @@ void addFont(tFont * font)
 	if (font != NULL && font->content != NULL)
 	{
 		fprintf(file, "<style>\n");
-		//LogDebug("Font Content: %s", font->content);
 		fprintf(file, "body { font-family: '%s'; }", font->content);
 		fprintf(file, "</style>\n");
 	}

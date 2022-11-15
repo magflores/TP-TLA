@@ -2,7 +2,7 @@ START
 CONTAINER
 TITLE "Tabla de prueba"
   CONTAINER 
-  TABLE id:A2 rowxcol:(2x2)
+  TABLE id:A1 rowxcol:(2x2)
     ROW
       TEXT "Prueba 1"
       TEXT "Prueba 2"
