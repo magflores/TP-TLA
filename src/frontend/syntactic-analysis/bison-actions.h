@@ -13,13 +13,13 @@
  */
 
 // Programa.
-tProgram ProgramGrammarAction(tExprs * value);
+tProgram * ProgramGrammarAction(tExprs * value);
 
 tExprs * ExprAction(tExpr * exp);
 
 tExprs * ExprsAction(tExpr * exp, tExprs * exps);
 
-tProgram EmptyExprAction();
+tProgram * EmptyExprAction();
 
 tExpr * TitleExprAction(tTitle * title);
 

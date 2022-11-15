@@ -41,6 +41,7 @@
 	// Terminales.
 	token token;
 	char * token_string;
+	signed int number;
 }
 
 // IDs y tipos de los tokens terminales generados desde Flex.
@@ -79,7 +80,7 @@
 %token <token> ENDLINE
 %token <token> ROWXCOL
 
-%token <int> NUMBER
+%token <number> NUMBER
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <program> program

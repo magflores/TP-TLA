@@ -1,4 +1,3 @@
-#include "../../backend/domain-specific/calculator.h"
 #include "../../backend/support/logger.h"
 #include "bison-actions.h"
 #include <stdio.h>
@@ -28,12 +27,11 @@ void yyerror(const char * string) {
 * indica que efectivamente el programa de entrada se pudo generar con esta
 * gramática, o lo que es lo mismo, que el programa pertenece al lenguaje.
 */
-tProgram ProgramGrammarAction(tExprs * exprs) {
+tProgram * ProgramGrammarAction(tExprs * exprs) {
 	LogDebug("Reconozco patrón. ProgramGrammarAction()");
 	tProgram * value = malloc(sizeof(tProgram));
 	if(value == NULL)
-		/* FIXME: QUE DEVOLVEMOS SI NO PUEDE SER VOID?? */
-		return NULL;
+		return value;
 	value->initial = exprs;
 	/*
 	* "state" es una variable global que almacena el estado del compilador,
@@ -50,7 +48,6 @@ tProgram ProgramGrammarAction(tExprs * exprs) {
 	*/
 	state.result = value;
 
-	/* FIXME: QUE DEVOLVEMOS SI NO PUEDE SER VOID?? */
 	return value;
 }
 
@@ -75,11 +72,17 @@ tExprs * ExprsAction(tExpr * exp, tExprs * exps){
 	return exps;
 }
 
-tProgram EmptyExprAction(){
+tProgram * EmptyExprAction(){
 	LogDebug("EmptyExprAction()");
-
-	/* FIXME: QUE DEVOLVEMOS SI NO PUEDE SER VOID?? */	
-	return NULL;
+	tProgram * value = malloc(sizeof(tProgram));
+	if (value == NULL)
+	{
+		return value;
+	}
+	value->initial = NULL;
+	state.succeed = true;
+	state.result = value;	
+	return value;
 }
 
 tExpr * TitleExprAction(tTitle * title){

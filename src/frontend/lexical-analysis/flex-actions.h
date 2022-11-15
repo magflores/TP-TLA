@@ -3,6 +3,8 @@
 
 #include "../../backend/support/shared.h"
 #include "../syntactic-analysis/bison-parser.h"
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * Se definen las acciones a ejecutar sobre cada patrón hallado mediante el

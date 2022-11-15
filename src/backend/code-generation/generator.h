@@ -2,6 +2,7 @@
 #define GENERATOR_HEADER
 
 #include <string.h>
+#include <stdlib.h>
 #include "../support/shared.h"
 
 #define BLOCK 200
@@ -23,8 +24,8 @@ int getTitleSize(tAttributes * attrs);
 int getFontSize(tAttributes * attrs);
 int getImgSize(tAttributes * attrs);
 
-void freeMemory(tExpr * expr);
+void freeMemory(tExprs * expr);
 void freeExpression(tExpr * expr);
-void freeAttributes(tAttribute * attrs);
+void freeAttributes(tAttributes * attrs);
 
 #endif

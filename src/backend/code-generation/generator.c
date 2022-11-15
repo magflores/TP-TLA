@@ -12,13 +12,22 @@ void Generator(tProgram *result)
 	LogInfo("El resultado de la expresion computada es: ");
 
 	// Creando archivo
-	file = fopen("webpage.html", "w+");
+	file = fopen("webpage.html", "w+");	
 
-	if (result == NULL || result->initial == NULL)
+	if (result == NULL )
 	{
 		LogInfo("El resultado de la compilacion es nulo.");
 		return;
 	}
+
+	if (result->initial == NULL)
+	{
+		fprintf(file, "<!DOCTYPE html>\n<html>\n\t<head>\n\t<meta charset=\"utf-8\">\n</head>\n<body>\n</body>\n</html>\n\n");
+		fclose(file);
+		free(result);
+		return;
+	}
+	
 
 	// Abriendo HTML tags
 	fprintf(file, "<!DOCTYPE html>\n<html>\n\t<head>\n\t<meta charset=\"utf-8\">\n</head>\n<body>\n");
@@ -32,6 +41,7 @@ void Generator(tProgram *result)
 	fclose(file);
 
 	freeMemory(result->initial);
+	free(result);
 
 	return;
 }
@@ -496,7 +506,7 @@ void addTable(tTable *table)
 		fprintf(file, "<tr>");
 		if (auxRow != NULL)
 		{
-			rowContent(auxRow->content, table->attrs->rowxcol->cols);
+			addRowContent(auxRow->content, table->attrs->rowxcol->cols);
 		}
 		auxRow = auxRow->nextRow;
 		fprintf(file, "</tr>\n");
@@ -521,21 +531,21 @@ void freeMemory(tExprs * expr) {
 		printf("error");
 		return;
 	}
-	else if(expr->next->next == NULL){
-		freeExpression(expr->next);
-		tExpr * prev = expr->next;
-		expr->next = NULL;
-		free(prev);
-		return;
-	}
-	else{
-		freeMemory(expr->next);
-		freeExpression(expr->next);
-		tExpr * prev = expr->next;
-		expr->next = NULL;
-		free(prev);
-		return;
-	}
+	// else if(expr->next->next == NULL){
+	// 	freeExpression(expr->next);
+	// 	tExpr * prev = expr->next;
+	// 	expr->next = NULL;
+	// 	free(prev);
+	// 	return;
+	// }
+	// else{
+	// 	// freeMemory(expr->next);
+	// 	// freeExpression(expr->next);
+	// 	// tExpr * prev = expr->next;
+	// 	// expr->next = NULL;
+	// 	// free(prev);
+	// 	return;
+	// }
 }
 
 void freeExpression(tExpr * expr) {
@@ -583,7 +593,7 @@ void freeExpression(tExpr * expr) {
 		{
 			tContainer * aux = (tContainer *) expr->expr;
 			freeAttributes(aux->attrs);
-			freeMemory(aux->content->first);
+			freeExpression(aux->content->first);
 			free(aux->content);
 			free(aux);
 			free(expr);
@@ -614,19 +624,19 @@ void freeAttributes(tAttributes * attrs) {
 	if(attrs == NULL) {
 		return;
 	}
-	else if(attrs->next->next == NULL){
-		free(attrs->next->value);
-		tAttribute * prev = attrs->next;
-		attrs->next = NULL;
-		free(prev);
-		return;
-	}
-	else{
-		freeAttributes(attrs->next);
-		free(attrs->next->value);
-		tAttribute * prev = attrs->next;
-		attrs->next = NULL;
-		free(prev);
-		return;
-	}
+	// else if(attrs->next->next == NULL){
+	// 	free(attrs->next->value);
+	// 	tAttribute * prev = attrs->next;
+	// 	attrs->next = NULL;
+	// 	free(prev);
+	// 	return;
+	// }
+	// else{
+	// 	freeAttributes(attrs->next);
+	// 	free(attrs->next->value);
+	// 	tAttribute * prev = attrs->next;
+	// 	attrs->next = NULL;
+	// 	free(prev);
+	// 	return;
+	// }
 }

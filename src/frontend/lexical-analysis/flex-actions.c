@@ -1,6 +1,5 @@
 #include "../../backend/support/logger.h"
 #include "flex-actions.h"
-#include <stdlib.h>
 
 /**
  * Implementación de "flexnTags.h".
@@ -181,44 +180,65 @@ token XPatternTag() {
 
 token IdAttributeValue(const char * lexeme, const int length) {
 	LogDebug("IdAttributeValue: '%s' (length = %d).", lexeme, length);
-	yylval.token = ID_ATTR;
+	char * text = (char *) calloc(length + 1, sizeof(char));
+	strncpy(text, lexeme, length);
+	yylval.token_string = text;
+	free(text);
 	return ID_ATTR;
 }
 
 token StringAttributeValue(const char * lexeme, const int length) {
 	LogDebug("StringAttributeValue: '%s' (length = %d).", lexeme, length);
-	yylval.token = STRING;
+	char * text = (char *) calloc(length + 1, sizeof(char));
+	strncpy(text, lexeme, length);
+	yylval.token_string = text;
+	free(text);
 	return STRING;
 }
 
 
 token SizeAttributeValue(const char * lexeme, const int length) {
 	LogDebug("SizeAttributeValue: '%s' (length = %d).", lexeme, length);
-	yylval.token = SIZE_ATTR;
+	char * text = (char *) calloc(length + 1, sizeof(char));
+	strncpy(text, lexeme, length);
+	yylval.token_string = text;
+	free(text);
 	return SIZE_ATTR;
 }
 
 token ColorAttributeValue(const char * lexeme, const int length) {
 	LogDebug("ColorAttributeValue: '%s' (length = %d).", lexeme, length);
-	yylval.token = COLOR_ATTR;
+	char * text = (char *) calloc(length + 1, sizeof(char));
+	strncpy(text, lexeme, length);
+	yylval.token_string = text;
+	free(text);
 	return COLOR_ATTR;
 }
 
 token PositionAttributeValue(const char * lexeme, const int length) {
 	LogDebug("PositionAttributeValue: '%s' (length = %d).", lexeme, length);
-	yylval.token = POSITION_ATTR;
+	char * text = (char *) calloc(length + 1, sizeof(char));
+	strncpy(text, lexeme, length);
+	yylval.token_string = text;
+	free(text);
 	return POSITION_ATTR;
 }
 
 token NumberAttributeValue(const char * lexeme, const int length) {
 	LogDebug("NumberAttributeValue: '%s' (length = %d).", lexeme, length);
-	yylval.token = NUMBER;
+	char * text = (char *) calloc(length + 1, sizeof(char));
+	strncpy(text, lexeme, length);
+	yylval.number = atoi(text);
+	free(text);
 	return NUMBER;
 }
 
 token FontAttributeValue(const char * lexeme, const int length) {
 	LogDebug("FontAttributeValue: '%s' (length = %d).", lexeme, length);
-	yylval.token = FONT_ATTR;
+	char * text = (char *) calloc(length + 1, sizeof(char));
+	strncpy(text, lexeme, length);
+	yylval.token_string = text;
+	free(text);
 	return FONT_ATTR;
 }
 
