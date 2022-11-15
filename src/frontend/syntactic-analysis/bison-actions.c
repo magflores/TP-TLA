@@ -1,7 +1,5 @@
 #include "../../backend/support/logger.h"
 #include "bison-actions.h"
-#include <stdio.h>
-#include <string.h>
 
 /**
  * Implementación de "bison-grammar.h".
@@ -58,7 +56,7 @@ tExprs * ExprAction(tExpr * exp){
 		return NULL;
 	exp->next = NULL;
 	exps->first = exp;
-	exps->size = 1;
+	exps->size++;
 	return exps;
 }
 
@@ -434,6 +432,7 @@ tAttributes * PropertyAttrAction(tAttribute * property){
 
 tAttribute * IdAttrAction(char * ID){
 	LogDebug("IdAttrAction()");
+
 	tAttribute * aux = malloc(sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
@@ -490,8 +489,8 @@ tAttribute * BoldAttrAction(char * Bold){
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Bold) - 3));
-	strncpy(aux->value, Bold + 4, strlen(Bold) - 5);
+	aux->value = malloc(sizeof(char) * (strlen(Bold) + 1));
+	strcpy(aux->value, Bold);
 	aux->type = BOLDVALUE;
 	aux->next = NULL;
 	return aux;
@@ -503,8 +502,8 @@ tAttribute * UnderlinedAttrAction(char * Underlined){
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Underlined) - 3));
-	strncpy(aux->value, Underlined + 4, strlen(Underlined) - 5);
+	aux->value = malloc(sizeof(char) * (strlen(Underlined) + 1));
+	strcpy(aux->value, Underlined);
 	aux->type = UNDERLINEDVALUE;
 	aux->next = NULL;
 	return aux;
@@ -516,8 +515,8 @@ tAttribute * ItalicsAttrAction(char * Italics){
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Italics) - 3));
-	strncpy(aux->value, Italics + 4, strlen(Italics) - 5);
+	aux->value = malloc(sizeof(char) * (strlen(Italics) + 1));
+	strcpy(aux->value, Italics);
 	aux->type = ITALICVALUE;
 	aux->next = NULL;
 	return aux;

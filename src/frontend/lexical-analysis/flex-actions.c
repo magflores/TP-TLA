@@ -102,19 +102,31 @@ token PositionAttributeKey() {
 
 token BoldAttributeValue() {
 	LogDebug("BoldAttributeValue.");
-	yylval.token = BOLD;
+	int length = strlen("bold") + 1;
+	char * text = (char *) calloc(length, sizeof(char));
+	strncpy(text, "bold", length);
+	yylval.token_string = text;
+	free(text);
 	return BOLD;
 }
 
 token UnderlinedAttributeValue() {
 	LogDebug("UnderlinedAttributeValue.");
-	yylval.token = UNDERLINED;
+	int length = strlen("underlined") + 1;
+	char * text = (char *) calloc(length, sizeof(char));
+	strncpy(text, "underlined", length);
+	yylval.token_string = text;
+	free(text);
 	return UNDERLINED;
 }
 
 token ItalicsAttributeValue() {
 	LogDebug("ItalicsAttributeValue.");
-	yylval.token = ITALICS;
+	int length = strlen("italics") + 1;
+	char * text = (char *) calloc(length, sizeof(char));
+	strncpy(text, "italics", length);
+	yylval.token_string = text;
+	free(text);
 	return ITALICS;
 }
 

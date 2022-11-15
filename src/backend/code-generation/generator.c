@@ -10,9 +10,11 @@ FILE *file;
 void Generator(tProgram *result)
 {
 	LogInfo("El resultado de la expresion computada es: ");
+	
+	const char * file_name = strcat(state.output, ".html");
 
 	// Creando archivo
-	file = fopen("webpage.html", "w+");	
+	file = fopen(file_name, "w+");	
 
 	if (result == NULL )
 	{

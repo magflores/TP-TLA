@@ -13,6 +13,11 @@ const int main(const int argumentCount, const char ** arguments) {
 	state.program = NULL;
 	state.result = 0;
 	state.succeed = false;
+	state.output = "webpage";
+	if(argumentCount > 1){
+		state.output = arguments[1];
+	}
+	
 
 	// Mostrar parámetros recibidos por consola.
 	for (int i = 0; i < argumentCount; ++i) {
