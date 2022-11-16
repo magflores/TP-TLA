@@ -90,7 +90,7 @@
 %type <title_attr> title_attr 
 %type <img_attrs> img_attrs
 %type <img_attr> img_attr
-%type <container_attr> container_attrs
+%type <container_attrs> container_attrs
 %type <container_attr> container_attr
 %type <table_attr> table_attr  
 %type <table_content> table_content
