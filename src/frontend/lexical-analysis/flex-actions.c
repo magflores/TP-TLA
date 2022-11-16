@@ -197,7 +197,7 @@ token StringAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.token_string = text;
-	free(text);
+	// free(text);
 	return STRING;
 }
 

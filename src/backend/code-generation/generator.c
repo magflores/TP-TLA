@@ -96,9 +96,12 @@ void addHTML(tExpr *result)
 int getTitleSize(tAttributes * attrs)
 {
 	tAttribute *currAttr = attrs->first;
-	while (currAttr->type != SIZEVALUE)
+	while (currAttr != NULL)
 	{
-		currAttr = currAttr->next;
+		if (currAttr->type != SIZEVALUE)
+		{
+			currAttr = currAttr->next;
+		}
 	}
 	if (strcmp(currAttr->value, "x-small"))
 	{
@@ -134,11 +137,9 @@ void addTitle(tTitle *title)
 
 	if (title->attrs != NULL)
 	{
+		size = getTitleSize(title->attrs);
 
 		tAttribute *currAttr = title->attrs->first;
-
-		//tAttributes * aux = title->attrs;
-		//size = getTitleSize(aux);
 
 		fprintf(file, "<h%d", size);
 
@@ -196,9 +197,12 @@ void addTitle(tTitle *title)
 int getFontSize(tAttributes *attrs)
 {
 	tAttribute *currAttr = attrs->first;
-	while (currAttr->type != SIZEVALUE)
+	while (currAttr != NULL)
 	{
-		currAttr = currAttr->next;
+		if (currAttr->type != SIZEVALUE)
+		{
+			currAttr = currAttr->next;
+		}
 	}
 	if (strcmp(currAttr->value, "x-small"))
 	{
@@ -235,9 +239,9 @@ int getFontSize(tAttributes *attrs)
 	Finalmente cerrar el tag style
 */
 void addStyle(tAttributes * attrs) {
+	int size = getFontSize(attrs);
+
 	tAttribute *currAttr = attrs->first;
-	tAttributes * aux = attrs;
-	int size = getFontSize(aux);
 
 	while (currAttr != NULL)
 	{ 
@@ -248,8 +252,9 @@ void addStyle(tAttributes * attrs) {
 		{
 			fprintf(file, " style=\"");
 			fprintf(file, " text-align:%s;", currAttr->value);
-			while(currAttr->type != SIZEVALUE && currAttr != NULL) {
-				currAttr = currAttr->next;
+			while(currAttr != NULL) {
+				if(currAttr->type != SIZEVALUE)
+					currAttr = currAttr->next;
 			}
 			if (currAttr->type == SIZEVALUE)
 			{
@@ -261,8 +266,9 @@ void addStyle(tAttributes * attrs) {
 		{
 			fprintf(file, " style=\"");
 			fprintf(file, " font-size:%dpt;", size);
-			while(currAttr->type != POSITIONVALUE && currAttr != NULL) {
-				currAttr = currAttr->next;
+			while(currAttr != NULL) {
+				if(currAttr->type != POSITIONVALUE)
+					currAttr = currAttr->next;
 			}
 			if (currAttr->type == POSITIONVALUE)
 			{
@@ -283,8 +289,8 @@ void addText(tText *text)
 
 	if (text->attrs != NULL)
 	{
-		// tAttributes * aux = text->attrs;
-		// addStyle(aux);
+		// addStyle(text->attrs);
+
 		tAttribute *current = text->attrs->first;
 
 		while (current != NULL)
@@ -340,8 +346,8 @@ void addLink(tLink *link)
 
 	if (link->attrs != NULL)
 	{
-		// tAttributes * aux = link->attrs;
-		// addStyle(aux);
+		// addStyle(link->attrs);
+
 		tAttribute *current = link->attrs->first;
 		
 		while (current != NULL)
@@ -388,9 +394,11 @@ void addLink(tLink *link)
 int getImgSize(tAttributes *attrs)
 {
 	tAttribute *currAttr = attrs->first;
-	while (currAttr->type != SIZEVALUE)
+	
+	while (currAttr != NULL)
 	{
-		currAttr = currAttr->next;
+		if(currAttr->type != SIZEVALUE)
+			currAttr = currAttr->next;
 	}
 	if (strcmp(currAttr->value, "x-small"))
 	{
