@@ -1,6 +1,8 @@
 #include "../../backend/support/logger.h"
 #include "bison-actions.h"
 
+#define BLOCK 1
+
 /**
  * Implementación de "bison-grammar.h".
  */
@@ -27,7 +29,7 @@ void yyerror(const char * string) {
 */
 tProgram * ProgramGrammarAction(tExprs * exprs) {
 	LogDebug("Reconozco patrón. ProgramGrammarAction()");
-	tProgram * value = malloc(sizeof(tProgram));
+	tProgram * value = calloc(BLOCK, sizeof(tProgram));
 	if(value == NULL)
 		return value;
 	value->initial = exprs;
@@ -50,7 +52,7 @@ tProgram * ProgramGrammarAction(tExprs * exprs) {
 
 tExprs * ExprAction(tExpr * exp){
 	LogDebug("ExprAction()");
-	tExprs * exps = malloc(sizeof(tExprs));
+	tExprs * exps = calloc(BLOCK, sizeof(tExprs));
 	if(exps == NULL)
 		return NULL;
 	exp->next = NULL;
@@ -71,7 +73,7 @@ tExprs * ExprsAction(tExpr * exp, tExprs * exps){
 
 tProgram * EmptyExprAction(){
 	LogDebug("EmptyExprAction()");
-	tProgram * value = malloc(sizeof(tProgram));
+	tProgram * value = calloc(BLOCK, sizeof(tExprs));
 	if (value == NULL)
 	{
 		return value;
@@ -84,7 +86,7 @@ tProgram * EmptyExprAction(){
 
 tExpr * TitleExprAction(tTitle * title){
 	LogDebug("TitleExprAction()");
-	tExpr * exp = malloc(sizeof(tExpr));
+	tExpr * exp = calloc(BLOCK, sizeof(tExprs));
 	if(exp == NULL)
 		return NULL;
 	exp->type = TITLEEXPR;
@@ -95,7 +97,7 @@ tExpr * TitleExprAction(tTitle * title){
 
 tExpr *  FontExprAction(tFont * font) {
 	LogDebug("FontExprAction()");
-	tExpr * exp = malloc(sizeof(tExpr));
+	tExpr * exp = calloc(BLOCK, sizeof(tExprs));
 	if(exp == NULL)
 		return NULL;
 	exp->type = FONTEXPR;
@@ -106,7 +108,7 @@ tExpr *  FontExprAction(tFont * font) {
 
 tExpr * TextExprAction(tText * text){
 	LogDebug("TextExprAction()");
-	tExpr * exp = malloc(sizeof(tExpr));
+	tExpr * exp = calloc(BLOCK, sizeof(tExprs));
 	if(exp == NULL)
 		return NULL;
 	exp->type = TEXTEXPR;
@@ -117,7 +119,7 @@ tExpr * TextExprAction(tText * text){
 
 tExpr * ImgExprAction(tImage * img){
 	LogDebug("ImgExprAction()");
-	tExpr * exp = malloc(sizeof(tExpr));
+	tExpr * exp = calloc(BLOCK, sizeof(tExprs));
 	if(exp == NULL)
 		return NULL;
 	exp->type = IMGEXPR;
@@ -128,7 +130,7 @@ tExpr * ImgExprAction(tImage * img){
 
 tExpr * LinkExprAction(tLink * link){
 	LogDebug("LinkExprAction()");
-	tExpr * exp = malloc(sizeof(tExpr));
+	tExpr * exp = calloc(BLOCK, sizeof(tExprs));
 	if(exp == NULL)
 		return NULL;
 	exp->type = LINKEXPR;
@@ -139,7 +141,7 @@ tExpr * LinkExprAction(tLink * link){
 
 tExpr * TableExprAction(tTable * table){
 	LogDebug("TableExprAction()");
-	tExpr * exp = malloc(sizeof(tExpr));
+	tExpr * exp = calloc(BLOCK, sizeof(tExpr));
 	if(exp == NULL)
 		return NULL;
 	exp->type = TABLEEXPR;
@@ -150,7 +152,7 @@ tExpr * TableExprAction(tTable * table){
 
 tExpr * ContainerExprAction(tContainer * div){
 	LogDebug("ContainerExprAction()");
-	tExpr * exp = malloc(sizeof(tExpr));
+	tExpr * exp = calloc(BLOCK, sizeof(tExprs));
 	if(exp == NULL)
 		return NULL;
 	exp->type = CONTAINEREXPR;
@@ -161,22 +163,22 @@ tExpr * ContainerExprAction(tContainer * div){
 
 tFont * FontGrammarAction(char * content) {
 	LogDebug("FontGrammarAction()");
-	tFont * font = malloc(sizeof(tFont));
+	tFont * font = calloc(BLOCK, sizeof(tFont));
 	if(font == NULL){
 		return NULL;
 	}
-	font->content = malloc(sizeof(char) * (strlen(content) + 1));
+	font->content = calloc((strlen(content) + 1), sizeof(char));
 	strcpy(font->content, content);
 	return font;
 }
 
 tTitle * TitleWithoutAttrsGrammarAction(char * content){
 	LogDebug("TitleWithoutAttrsGrammarAction()");
-	tTitle * title = malloc(sizeof(tTitle));
+	tTitle * title = calloc(BLOCK, sizeof(tTitle));
 	if(title == NULL){
 		return NULL;
 	}
-	title->content = malloc(sizeof(char) * (strlen(content) + 1));
+	title->content = calloc((strlen(content) + 1), sizeof(char));
 	strcpy(title->content, content);
 	title->attrs = NULL;
 	return title;
@@ -184,11 +186,11 @@ tTitle * TitleWithoutAttrsGrammarAction(char * content){
 
 tText * TextWithoutAttrsGrammarAction(char * content){
 	LogDebug("TextWithoutAttrsGrammarAction()");
-	tText* text = malloc(sizeof(tText));
+	tText* text = calloc(BLOCK, sizeof(tText));
 	if(text == NULL){
 		return NULL;
 	}
-	text->content = malloc(sizeof(char) * (strlen(content) + 1));
+	text->content = calloc((strlen(content) + 1), sizeof(char));
 	strcpy(text->content, content);
 	text->attrs = NULL;
 	return text;
@@ -196,10 +198,10 @@ tText * TextWithoutAttrsGrammarAction(char * content){
 
 tImage * ImgWithoutAttrsGrammarAction(char * link){
 	LogDebug("ImgWithoutAttrsGrammarAction()");
-	tImage * img = malloc(sizeof(tImage));
+	tImage * img = calloc(BLOCK, sizeof(tImage));
 	if(img == NULL)
 		return NULL;
-	img->link = malloc(sizeof(char) * (strlen(link) + 1));
+	img->link = calloc((strlen(link) + 1), sizeof(char));
 	strcpy(img->link, link);
 	img->attrs = NULL;
 	return img;
@@ -207,14 +209,20 @@ tImage * ImgWithoutAttrsGrammarAction(char * link){
 
 tLink * LinkWithoutAttrsGrammarAction(char * ref, char * text){
 	LogDebug("LinkWithoutAttrsGrammarAction()");
-	tLink * link = malloc(sizeof(tLink));
+	tLink * link = calloc(BLOCK, sizeof(tLink));
 	if(link == NULL){
 		return NULL;
 	}
 
-	link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
-	link->text = malloc(sizeof(char)*(strlen(text) + 1));
-	strncpy(link->ref, ref + 5, strlen(ref) - 6);
+	link->ref = calloc((strlen(ref) + 1), sizeof(char));
+	link->text = calloc((strlen(text) + 1), sizeof(char));
+	
+	//FIXME
+	// link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
+	// link->text = malloc(sizeof(char)*(strlen(text) + 1));
+	// strncpy(link->ref, ref + 5, strlen(ref) - 6);
+
+	strcpy(link->ref, ref);
 	strcpy(link->text, text);
 	link->attrs = NULL;
 	return link;
@@ -222,7 +230,7 @@ tLink * LinkWithoutAttrsGrammarAction(char * ref, char * text){
 
 tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs){
 	LogDebug("ContainerWithoutAttrsGrammarAction()");
-	tContainer * container = malloc(sizeof(tContainer));
+	tContainer * container = calloc(BLOCK, sizeof(tContainer));
 	if(container == NULL){
 		return NULL;
 	}
@@ -235,11 +243,11 @@ tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs){
 //ACA HAY ATTRS
 tTitle * TitleWithAttrsGrammarAction(tAttributes * attrs, char * content){
 	LogDebug("TitleWithAttrsGrammarAction()");
-	tTitle * title = malloc(sizeof(tTitle));
+	tTitle * title = calloc(BLOCK, sizeof(tTitle));
 	if(title == NULL){
 		return NULL;
 	}
-	title->content = malloc(sizeof(char) * (strlen(content) + 1));
+	title->content = calloc((strlen(content) + 1), sizeof(char));
 	strcpy(title->content, content);
 	title->attrs = attrs;
 	return title;
@@ -247,7 +255,7 @@ tTitle * TitleWithAttrsGrammarAction(tAttributes * attrs, char * content){
 
 tText * TextWithAttrsGrammarAction(tAttributes * attrs, char * content){
 	LogDebug("TextWithAttrsGrammarAction()");
-	tText * text = malloc(sizeof(tText));
+	tText * text = calloc(BLOCK, sizeof(tText));
 	if(text == NULL){
 		return NULL;
 	}
@@ -259,7 +267,7 @@ tText * TextWithAttrsGrammarAction(tAttributes * attrs, char * content){
 		LogDebug("Si 2");
 	}
 	
-	text->content = malloc(sizeof(char) * (strlen(content) + 1));
+	text->content = calloc((strlen(content) + 1), sizeof(char));
 	strcpy(text->content, content);
 	text->attrs = attrs;
 
@@ -268,10 +276,10 @@ tText * TextWithAttrsGrammarAction(tAttributes * attrs, char * content){
 
 tImage * ImgWithAttrsGrammarAction(tAttributes * attrs, char * link){
 	LogDebug("ImgWithAttrsGrammarAction()");
-	tImage * img = malloc(sizeof(tImage));
+	tImage * img = calloc(BLOCK, sizeof(tImage));
 	if(img == NULL)
 		return NULL; 
-	img->link = malloc(sizeof(char) * (strlen(link) + 1));
+	img->link = calloc((strlen(link) + 1), sizeof(char));
 	strcpy(img->link, link);
 	img->attrs = attrs;
 	return img;
@@ -279,14 +287,19 @@ tImage * ImgWithAttrsGrammarAction(tAttributes * attrs, char * link){
 
 tLink * LinkWithAttrsGrammarAction(tAttributes * attrs, char * ref, char * text){
 	LogDebug("LinkWithAttrsGrammarAction()");
-	tLink * link = malloc(sizeof(tLink));
+	tLink * link = calloc(BLOCK, sizeof(tLink));
 	if(link == NULL){
 		return NULL;
 	}
 
-	link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
-	link->text = malloc(sizeof(char)*(strlen(text) + 1));
-	strncpy(link->ref, ref + 5, strlen(ref) - 7);
+	//FIXME
+	// link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
+	// link->text = malloc(sizeof(char)*(strlen(text) + 1));
+	// strncpy(link->ref, ref + 5, strlen(ref) - 7);
+
+	link->ref = calloc((strlen(ref) + 1), sizeof(char));
+	link->text = calloc((strlen(text) + 1), sizeof(char));
+	strcpy(link->ref, ref);
 	strcpy(link->text, text);
 	link->attrs = attrs;
 	return link;
@@ -294,7 +307,7 @@ tLink * LinkWithAttrsGrammarAction(tAttributes * attrs, char * ref, char * text)
 
 tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs){
 	LogDebug("ContainerWithAttrsGrammarAction()");
-	tContainer * container = malloc(sizeof(tContainer));
+	tContainer * container = calloc(BLOCK, sizeof(tContainer));
 	if(container == NULL){
 		return NULL;
 	}
@@ -305,12 +318,12 @@ tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs
 }
 
 tAttributes * AttrAction(tAttribute * attr){
-	LogDebug("ATTRAACTION()");
+	LogDebug("AttrAction()");
 	if(attr == NULL){
 		LogDebug("Error with attr parameter");
 		return NULL;
 	}
-	tAttributes * aux = malloc(sizeof(tAttributes));
+	tAttributes * aux = calloc(BLOCK, sizeof(tAttributes));
 	if(aux == NULL){
 		return NULL;
 	}
@@ -320,7 +333,7 @@ tAttributes * AttrAction(tAttribute * attr){
 }
 
 tAttributes * AttrsAction(tAttribute * attr, tAttributes * attrs){
-	LogDebug("ATTRSACTION()");
+	LogDebug("AttrsAction()");
 	if(attr == NULL || attrs == NULL){
 		LogDebug("Error with parameters on AttrsAction");
 		return NULL;
@@ -333,8 +346,8 @@ tAttributes * AttrsAction(tAttribute * attr, tAttributes * attrs){
 
 tAttributes * IdAttrPatternAction(tAttribute * id){
 	LogDebug("IdAttrPatternAction()");
-	tAttribute * AttrAux = malloc(sizeof(tAttribute));
-	tAttributes * AttrsAux = malloc(sizeof(tAttributes));
+	tAttribute * AttrAux = calloc(BLOCK, sizeof(tAttribute));
+	tAttributes * AttrsAux = calloc(BLOCK, sizeof(tAttributes));
 	if(AttrAux == NULL || AttrsAux == NULL){
 		return NULL;
 	}
@@ -349,12 +362,15 @@ tAttributes * IdAttrPatternAction(tAttribute * id){
 tAttribute * IdAttrAction(char * ID){
 	LogDebug("IdAttrAction()");
 
-	tAttribute * aux = malloc(sizeof(tAttribute));
+	tAttribute * aux = calloc(BLOCK, sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(ID) - 3));
+	aux->value = calloc(strlen(ID) + 1, sizeof(char));
 	strncpy(aux->value, ID + 4, strlen(ID) - 5);
+	//FIXME: REVISAR USO DE STRNCPY
+	//aux->value = calloc(sizeof(char) * (strlen(ID) - 3));
+	//strncpy(aux->value, ID + 4, strlen(ID) - 5);
 	aux->type = IDVALUE;
 	aux->next = NULL;
 	return aux;
@@ -362,12 +378,15 @@ tAttribute * IdAttrAction(char * ID){
 
 tAttribute * SizeAttrAction(char * Size){
 	LogDebug("SizeAttrAction()");
-	tAttribute * aux = malloc(sizeof(tAttribute));
+	tAttribute * aux = calloc(BLOCK, sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Size) - 3));
-	strncpy(aux->value, Size + 4, strlen(Size) - 5);
+	aux->value = calloc(strlen(Size) + 1, sizeof(char));
+	strcpy(aux->value, Size);
+	//FIXME: REVISAR USO DE STRNCPY
+	//aux->value = malloc(sizeof(char) * (strlen(Size) - 3));
+	//strncpy(aux->value, Size + 4, strlen(Size) - 5);
 	aux->type = SIZEVALUE;
 	aux->next = NULL;
 	return aux;
@@ -375,11 +394,11 @@ tAttribute * SizeAttrAction(char * Size){
 
 tAttribute * ColorAttrAction(char * Color){
 	LogDebug("ColorAttrAction()");
-	tAttribute * aux = malloc(sizeof(tAttribute));
+	tAttribute * aux = calloc(BLOCK, sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Color) + 1));
+	aux->value = calloc(strlen(Color) + 1, sizeof(char));
 	strcpy(aux->value, Color);
 	aux->type = COLORVALUE;
 	aux->next = NULL;
@@ -388,12 +407,15 @@ tAttribute * ColorAttrAction(char * Color){
 
 tAttribute * PositionAttrAction(char * Position){
 	LogDebug("PositionAttrAction()");
-	tAttribute * aux = malloc(sizeof(tAttribute));
+	tAttribute * aux = calloc(BLOCK, sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Position) - 3));
-	strncpy(aux->value, Position + 4, strlen(Position) - 5);
+	aux->value = calloc(strlen(Position) + 1, sizeof(char));
+	strcpy(aux->value, Position);
+	//FIXME: REVISAR USO DE STRNCPY
+	//aux->value = malloc(sizeof(char) * (strlen(Position) - 3));
+	//strncpy(aux->value, Position + 4, strlen(Position) - 5);
 	aux->type = POSITIONVALUE;
 	aux->next = NULL;
 	return aux;
@@ -401,11 +423,11 @@ tAttribute * PositionAttrAction(char * Position){
 
 tAttribute * BoldAttrAction(char * Bold){
 	LogDebug("BoldAttrAction()");
-	tAttribute * aux = malloc(sizeof(tAttribute));
+	tAttribute * aux = calloc(BLOCK, sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Bold) + 1));
+	aux->value = calloc(strlen(Bold) + 1, sizeof(char));
 	strcpy(aux->value, Bold);
 	aux->type = BOLDVALUE;
 	aux->next = NULL;
@@ -414,11 +436,11 @@ tAttribute * BoldAttrAction(char * Bold){
 
 tAttribute * UnderlinedAttrAction(char * Underlined){
 	LogDebug("UnderlinedAttrAction()");
-	tAttribute * aux = malloc(sizeof(tAttribute));
+	tAttribute * aux = calloc(BLOCK, sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Underlined) + 1));
+	aux->value = calloc(strlen(Underlined) + 1, sizeof(char));
 	strcpy(aux->value, Underlined);
 	aux->type = UNDERLINEDVALUE;
 	aux->next = NULL;
@@ -427,11 +449,11 @@ tAttribute * UnderlinedAttrAction(char * Underlined){
 
 tAttribute * ItalicsAttrAction(char * Italics){
 	LogDebug("ItalicsAttrAction()");
-	tAttribute * aux = malloc(sizeof(tAttribute));
+	tAttribute * aux = calloc(BLOCK, sizeof(tAttribute));
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->value = malloc(sizeof(char) * (strlen(Italics) + 1));
+	aux->value = calloc(strlen(Italics) + 1, sizeof(char));
 	strcpy(aux->value, Italics);
 	aux->type = ITALICVALUE;
 	aux->next = NULL;
@@ -441,7 +463,7 @@ tAttribute * ItalicsAttrAction(char * Italics){
 //TABLE
 tTable * TableGrammarAction(tTableAttrs * attrs, tRows * rows){
 	LogDebug("TableGrammarAction()");
-	tTable * table = malloc(sizeof(tTable));
+	tTable * table = calloc(BLOCK, sizeof(tTable));
 	if(table == NULL){
 		return NULL;
 	}
@@ -452,7 +474,7 @@ tTable * TableGrammarAction(tTableAttrs * attrs, tRows * rows){
 
 tTableAttrs * IdAndRowxColAttrPaternAction(tAttribute * id, tRowxColAttr * rowxcol){
 	LogDebug("IdAndRowxColAttrPaternAction()");
-	tTableAttrs * aux = malloc(sizeof(tTableAttrs));
+	tTableAttrs * aux = calloc(BLOCK, sizeof(tTableAttrs));
 	if(aux == NULL){
 		return NULL;
 	}
@@ -463,7 +485,7 @@ tTableAttrs * IdAndRowxColAttrPaternAction(tAttribute * id, tRowxColAttr * rowxc
 
 tTableAttrs * RowxColAttrPatternAction(tRowxColAttr * rowxcol){
 	LogDebug("RowxColAttrPatternAction()");
-	tTableAttrs * aux = malloc(sizeof(tTableAttrs));
+	tTableAttrs * aux = calloc(BLOCK, sizeof(tTableAttrs));
 	if(aux == NULL){
 		return NULL;
 	}
@@ -474,7 +496,7 @@ tTableAttrs * RowxColAttrPatternAction(tRowxColAttr * rowxcol){
 
 tRowxColAttr * RowxColAttrAction(int cols, int rows){
 	LogDebug("RowxColAttrAction()");
-	tRowxColAttr * aux = malloc(sizeof(tRowxColAttr));
+	tRowxColAttr * aux = calloc(BLOCK, sizeof(tRowxColAttr));
 	if(aux == NULL){
 		return NULL;
 	}
@@ -495,7 +517,7 @@ tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content){
 
 tRows * RowContentAction(tRow * row_content){
 	LogDebug("RowContentAction()");
-	tRows * aux = malloc(sizeof(tRows));
+	tRows * aux = calloc(BLOCK, sizeof(tRows));
 	if(aux == NULL){
 		return NULL;
 	}
@@ -506,7 +528,7 @@ tRows * RowContentAction(tRow * row_content){
 
 tRow * RowExpressionsAction(tExprs * content){
 	LogDebug("RowExpressionsAction()");
-	tRow * aux = malloc(sizeof(tRow));
+	tRow * aux = calloc(BLOCK, sizeof(tRow));
 	if(aux == NULL){
 		return NULL;
 	}

@@ -99,7 +99,7 @@ token BoldAttributeValue() {
 	char * text = (char *) calloc(length, sizeof(char));
 	strncpy(text, "bold", length);
 	yylval.token_string = text;
-	free(text);
+	//free(text);
 	return BOLD;
 }
 
@@ -109,7 +109,7 @@ token UnderlinedAttributeValue() {
 	char * text = (char *) calloc(length, sizeof(char));
 	strncpy(text, "underlined", length);
 	yylval.token_string = text;
-	free(text);
+	//free(text);
 	return UNDERLINED;
 }
 
@@ -119,7 +119,7 @@ token ItalicsAttributeValue() {
 	char * text = (char *) calloc(length, sizeof(char));
 	strncpy(text, "italics", length);
 	yylval.token_string = text;
-	free(text);
+	//free(text);
 	return ITALICS;
 }
 
@@ -188,7 +188,7 @@ token IdAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.token_string = text;
-	free(text);
+	//free(text);
 	return ID_ATTR;
 }
 
@@ -197,7 +197,7 @@ token StringAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.token_string = text;
-	// free(text);
+	//free(text);
 	return STRING;
 }
 
@@ -207,7 +207,7 @@ token SizeAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.token_string = text;
-	free(text);
+	//free(text);
 	return SIZE_ATTR;
 }
 
@@ -216,7 +216,7 @@ token ColorAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.token_string = text;
-	free(text);
+	//free(text);
 	return COLOR_ATTR;
 }
 
@@ -225,7 +225,7 @@ token PositionAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.token_string = text;
-	free(text);
+	//free(text);
 	return POSITION_ATTR;
 }
 
@@ -234,7 +234,7 @@ token NumberAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.number = atoi(text);
-	free(text);
+	//free(text);
 	return NUMBER;
 }
 
@@ -243,7 +243,7 @@ token FontAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.token_string = text;
-	free(text);
+	//free(text);
 	return FONT_ATTR;
 }
 
