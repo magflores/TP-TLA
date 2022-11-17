@@ -22,7 +22,7 @@ void addRowContent(tExprs *rowContent, int cols);
 
 int getTitleSize(tAttributes * attrs);
 int getFontSize(tAttributes * attrs);
-int getImgSize(tAttributes * attrs);
+int getImgSize(char * value);
 
 void freeMemory(tExpr * expr);
 void freeExpression(tExpr * expr);

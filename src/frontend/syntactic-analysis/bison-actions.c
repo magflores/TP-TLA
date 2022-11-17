@@ -213,15 +213,8 @@ tLink * LinkWithoutAttrsGrammarAction(char * ref, char * text){
 	if(link == NULL){
 		return NULL;
 	}
-
 	link->ref = calloc((strlen(ref) + 1), sizeof(char));
 	link->text = calloc((strlen(text) + 1), sizeof(char));
-	
-	//FIXME
-	// link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
-	// link->text = malloc(sizeof(char)*(strlen(text) + 1));
-	// strncpy(link->ref, ref + 5, strlen(ref) - 6);
-
 	strcpy(link->ref, ref);
 	strcpy(link->text, text);
 	link->attrs = NULL;
@@ -291,12 +284,6 @@ tLink * LinkWithAttrsGrammarAction(tAttributes * attrs, char * ref, char * text)
 	if(link == NULL){
 		return NULL;
 	}
-
-	//FIXME
-	// link->ref = malloc(sizeof(char)*(strlen(ref) - 4));
-	// link->text = malloc(sizeof(char)*(strlen(text) + 1));
-	// strncpy(link->ref, ref + 5, strlen(ref) - 7);
-
 	link->ref = calloc((strlen(ref) + 1), sizeof(char));
 	link->text = calloc((strlen(text) + 1), sizeof(char));
 	strcpy(link->ref, ref);
@@ -364,13 +351,11 @@ tAttribute * IdAttrAction(char * ID){
 
 	tAttribute * aux = calloc(BLOCK, sizeof(tAttribute));
 	if(aux == NULL){
+		LogDebug("IdAttrAction() RETORNO NULL");
 		return NULL;
 	}
-	aux->value = calloc(strlen(ID) + 1, sizeof(char));
-	strncpy(aux->value, ID + 4, strlen(ID) - 5);
-	//FIXME: REVISAR USO DE STRNCPY
-	//aux->value = calloc(sizeof(char) * (strlen(ID) - 3));
-	//strncpy(aux->value, ID + 4, strlen(ID) - 5);
+	aux->value = (char *) calloc(strlen(ID) + 1, sizeof(char));
+	strcpy(aux->value, ID);
 	aux->type = IDVALUE;
 	aux->next = NULL;
 	return aux;
@@ -384,9 +369,6 @@ tAttribute * SizeAttrAction(char * Size){
 	}
 	aux->value = calloc(strlen(Size) + 1, sizeof(char));
 	strcpy(aux->value, Size);
-	//FIXME: REVISAR USO DE STRNCPY
-	//aux->value = malloc(sizeof(char) * (strlen(Size) - 3));
-	//strncpy(aux->value, Size + 4, strlen(Size) - 5);
 	aux->type = SIZEVALUE;
 	aux->next = NULL;
 	return aux;
@@ -413,9 +395,6 @@ tAttribute * PositionAttrAction(char * Position){
 	}
 	aux->value = calloc(strlen(Position) + 1, sizeof(char));
 	strcpy(aux->value, Position);
-	//FIXME: REVISAR USO DE STRNCPY
-	//aux->value = malloc(sizeof(char) * (strlen(Position) - 3));
-	//strncpy(aux->value, Position + 4, strlen(Position) - 5);
 	aux->type = POSITIONVALUE;
 	aux->next = NULL;
 	return aux;

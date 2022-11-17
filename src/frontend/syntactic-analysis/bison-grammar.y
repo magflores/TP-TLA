@@ -165,7 +165,6 @@ img_attrs: img_attr img_attrs										{ $$ = AttrsAction($1, $2); }
 
 img_attr: ID COLON ID_ATTR											{ $$ = IdAttrAction($3); }
 		| SIZE COLON SIZE_ATTR										{ $$ = SizeAttrAction($3); } 
-		| POSITION COLON POSITION_ATTR								{ $$ = PositionAttrAction($3); }
 		;
 
 container_attrs: container_attr container_attrs						{ $$ = AttrsAction($1, $2); }

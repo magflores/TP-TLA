@@ -197,18 +197,7 @@ token StringAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.token_string = text;
-	//free(text);
 	return STRING;
-}
-
-
-token SizeAttributeValue(const char * lexeme, const int length) {
-	LogDebug("SizeAttributeValue: '%s' (length = %d).", lexeme, length);
-	char * text = (char *) calloc(length + 1, sizeof(char));
-	strncpy(text, lexeme, length);
-	yylval.token_string = text;
-	//free(text);
-	return SIZE_ATTR;
 }
 
 token ColorAttributeValue(const char * lexeme, const int length) {
@@ -218,6 +207,15 @@ token ColorAttributeValue(const char * lexeme, const int length) {
 	yylval.token_string = text;
 	//free(text);
 	return COLOR_ATTR;
+}
+
+token SizeAttributeValue(const char * lexeme, const int length) {
+	LogDebug("SizeAttributeValue: '%s' (length = %d).", lexeme, length);
+	char * text = (char *) calloc(length + 1, sizeof(char));
+	strncpy(text, lexeme, length);
+	yylval.token_string = text;
+	//free(text);
+	return SIZE_ATTR;
 }
 
 token PositionAttributeValue(const char * lexeme, const int length) {
@@ -243,7 +241,6 @@ token FontAttributeValue(const char * lexeme, const int length) {
 	char * text = (char *) calloc(length + 1, sizeof(char));
 	strncpy(text, lexeme, length);
 	yylval.token_string = text;
-	//free(text);
 	return FONT_ATTR;
 }
 

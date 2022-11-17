@@ -51,6 +51,7 @@ void Generator(tProgram *result)
 
 void WebPage(tExprs *expressions)
 {
+	LogDebug("WebPage()");
 	tExpr *current = expressions->first;
 	while (current != NULL)
 	{
@@ -61,7 +62,7 @@ void WebPage(tExprs *expressions)
 
 void addHTML(tExpr *result)
 {
-
+	LogDebug("AddHtml()");
 	tExpr *current = result;
 
 	switch (current->type)
@@ -95,6 +96,7 @@ void addHTML(tExpr *result)
 
 int getTitleSize(tAttributes * attrs)
 {
+	LogDebug("getTitleSize()");
 	tAttribute *currAttr = attrs->first;
 	while (currAttr != NULL)
 	{
@@ -132,12 +134,13 @@ int getTitleSize(tAttributes * attrs)
 
 void addTitle(tTitle *title)
 {
+	LogDebug("AddTitle()");
 	int bold = 0, italic = 0, underlined = 0;
 	int size = 3;
 
 	if (title->attrs != NULL)
 	{
-		size = getTitleSize(title->attrs);
+		// size = getTitleSize(title->attrs);
 
 		tAttribute *currAttr = title->attrs->first;
 
@@ -151,10 +154,10 @@ void addTitle(tTitle *title)
 				fprintf(file, " id=\"%s\"", currAttr->value);
 				break;
 			case COLORVALUE:
-				fprintf(file, " color=%s", currAttr->value);
+				fprintf(file, " color=\"%s\"", currAttr->value);
 				break;
 			case POSITIONVALUE:
-				fprintf(file, " style=\"text-align:%s;\"", currAttr->value);
+				fprintf(file, " style=\"text-align:%s;", currAttr->value);
 				break;
 			case BOLDVALUE:
 				bold = 1;
@@ -251,7 +254,7 @@ void addStyle(tAttributes * attrs) {
 		if (currAttr->type == POSITIONVALUE)
 		{
 			fprintf(file, " style=\"");
-			fprintf(file, " text-align:%s;", currAttr->value);
+			fprintf(file, " text-align:\"%s\";", currAttr->value);
 			while(currAttr != NULL) {
 				if(currAttr->type != SIZEVALUE)
 					currAttr = currAttr->next;
@@ -272,7 +275,7 @@ void addStyle(tAttributes * attrs) {
 			}
 			if (currAttr->type == POSITIONVALUE)
 			{
-				fprintf(file, " text-align:%s;", currAttr->value);
+				fprintf(file, " text-align:\"%s\";", currAttr->value);
 			}
 			fprintf(file, " \"");
 		}
@@ -355,7 +358,7 @@ void addLink(tLink *link)
 			switch (current->type)
 			{
 			case COLORVALUE:
-				fprintf(file, " color=%s", current->value);
+				fprintf(file, " color=\"%s\"", current->value);
 				break;
 			case BOLDVALUE:
 				bold = 1;
@@ -391,36 +394,29 @@ void addLink(tLink *link)
 	fprintf(file, "</a>\n");
 }
 
-int getImgSize(tAttributes *attrs)
+int getImgSize(char * value)
 {
-	tAttribute *currAttr = attrs->first;
-	
-	while (currAttr != NULL)
-	{
-		if(currAttr->type != SIZEVALUE)
-			currAttr = currAttr->next;
-	}
-	if (strcmp(currAttr->value, "x-small"))
+	if (strcmp(value, "x-small") == 0)
 	{
 		return 100;
 	}
-	if (strcmp(currAttr->value, "small"))
+	if (strcmp(value, "small") == 0)
 	{
 		return 200;
 	}
-	if (strcmp(currAttr->value, "medium"))
+	if (strcmp(value, "medium") == 0)
 	{
 		return 300;
 	}
-	if (strcmp(currAttr->value, "large"))
+	if (strcmp(value, "large") == 0)
 	{
 		return 400;
 	}
-	if (strcmp(currAttr->value, "x-large"))
+	if (strcmp(value, "x-large") == 0)
 	{
 		return 500;
 	}
-	if (strcmp(currAttr->value, "xx-large"))
+	if (strcmp(value, "xx-large") == 0)
 	{
 		return 600;
 	}
@@ -430,14 +426,11 @@ int getImgSize(tAttributes *attrs)
 void addImage(tImage *image)
 {
 
-	int size[2] = {300, 300};
+	int size = 300;
 	fprintf(file, "<img");
 
 	if (image->attrs != NULL)
 	{
-
-		//size[0] = getImgSize(image->attrs);
-		//size[1] = size[0];
 
 		tAttribute *current = image->attrs->first;
 
@@ -448,19 +441,17 @@ void addImage(tImage *image)
 			case IDVALUE:
 				fprintf(file, " id=\"%s\"", current->value);
 				break;
-			case POSITIONVALUE:
-				fprintf(file, " style=\"text-align:%s;\"", current->value);
-				break;
 			case SIZEVALUE:
-				fprintf(file, " height=\"%d\" width=\"%d\"", size[0], size[1]);
+				size = getImgSize(current->value);
+				fprintf(file, " height=\"%d\"", size);
 				break;
 			}
 			current = current->next;
 		}
 	}
 
-	fprintf(file, " src=%s", image->link);
-	fprintf(file, " alt=%s", image->link);
+	fprintf(file, " src=\"%s\"", image->link);
+	fprintf(file, " alt=\"%s\"", image->link);
 
 	fprintf(file, "/>\n");
 }
