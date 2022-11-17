@@ -252,14 +252,6 @@ tText * TextWithAttrsGrammarAction(tAttributes * attrs, char * content){
 	if(text == NULL){
 		return NULL;
 	}
-	if (attrs != NULL)
-	{
-		LogDebug("Si");
-	}
-	if(attrs->first->type == COLORVALUE){
-		LogDebug("Si 2");
-	}
-	
 	text->content = calloc((strlen(content) + 1), sizeof(char));
 	strcpy(text->content, content);
 	text->attrs = attrs;
