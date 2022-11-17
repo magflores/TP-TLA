@@ -21,7 +21,7 @@ void addFont(tFont * font);
 void addRowContent(tExprs *rowContent, int cols);
 
 int getTitleSize(tAttributes * attrs);
-int getFontSize(tAttributes * attrs);
+int getFontSize(char * value);
 int getImgSize(char * value);
 
 void freeMemory(tExpr * expr);

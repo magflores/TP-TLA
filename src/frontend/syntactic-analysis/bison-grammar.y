@@ -20,6 +20,8 @@
 	tContainer * container;
 	tAttributes * title_attrs;
 	tAttribute * title_attr;
+	tAttributes * link_attrs;
+	tAttribute * link_attr;
 	tAttributes * img_attrs;
 	tAttribute * img_attr;
 	tAttributes * container_attrs;
@@ -87,7 +89,9 @@
 %type <table> table
 %type <container> container
 %type <title_attrs> title_attrs 
-%type <title_attr> title_attr 
+%type <title_attr> link_attr
+%type <link_attrs> link_attrs 
+%type <link_attr> title_attr 
 %type <img_attrs> img_attrs
 %type <img_attr> img_attr
 %type <container_attrs> container_attrs
@@ -135,7 +139,7 @@ img: IMG img_attrs STRING											{ $$ = ImgWithAttrsGrammarAction($2, $3); }
 	 	| IMG STRING												{ $$ = ImgWithoutAttrsGrammarAction($2); }
 		;
 
-link: LINK title_attrs STRING COMMA STRING							{ $$ = LinkWithAttrsGrammarAction($2, $3, $5); }
+link: LINK link_attrs STRING COMMA STRING							{ $$ = LinkWithAttrsGrammarAction($2, $3, $5); }
 		| LINK STRING COMMA STRING									{ $$ = LinkWithoutAttrsGrammarAction($2, $4); }
 		;	
 
@@ -158,6 +162,16 @@ title_attr: ID COLON ID_ATTR										{ $$ = IdAttrAction($3); }
 		| UNDERLINED 												{ $$ = UnderlinedAttrAction($1); } 
 		| ITALICS 													{ $$ = ItalicsAttrAction($1); }
 		;
+
+link_attrs: link_attr link_attrs									{ $$ = AttrsAction($1, $2); }
+		| link_attr												    { $$ = AttrAction($1); }
+		;
+
+link_attr: SIZE COLON SIZE_ATTR										{ $$ = SizeAttrAction($3); }
+		| BOLD 														{ $$ = BoldAttrAction($1); } 
+		| ITALICS 													{ $$ = ItalicsAttrAction($1); }
+		;
+
 
 img_attrs: img_attr img_attrs										{ $$ = AttrsAction($1, $2); }
 		| img_attr													{ $$ = AttrAction($1); }

@@ -98,34 +98,31 @@ int getTitleSize(tAttributes * attrs)
 {
 	LogDebug("getTitleSize()");
 	tAttribute *currAttr = attrs->first;
-	while (currAttr != NULL)
+	while (currAttr != NULL && currAttr->type != SIZEVALUE)
 	{
-		if (currAttr->type != SIZEVALUE)
-		{
-			currAttr = currAttr->next;
-		}
+		currAttr = currAttr->next;
 	}
-	if (strcmp(currAttr->value, "x-small"))
+	if (strcmp(currAttr->value, "x-small") == 0)
 	{
 		return 6;
 	}
-	if (strcmp(currAttr->value, "small"))
+	if (strcmp(currAttr->value, "small") == 0)
 	{
 		return 5;
 	}
-	if (strcmp(currAttr->value, "medium"))
+	if (strcmp(currAttr->value, "medium") == 0)
 	{
 		return 4;
 	}
-	if (strcmp(currAttr->value, "large"))
+	if (strcmp(currAttr->value, "large") == 0)
 	{
 		return 3;
 	}
-	if (strcmp(currAttr->value, "x-large"))
+	if (strcmp(currAttr->value, "x-large") == 0)
 	{
 		return 2;
 	}
-	if (strcmp(currAttr->value, "xx-large"))
+	if (strcmp(currAttr->value, "xx-large") == 0)
 	{
 		return 1;
 	}
@@ -140,7 +137,7 @@ void addTitle(tTitle *title)
 
 	if (title->attrs != NULL)
 	{
-		// size = getTitleSize(title->attrs);
+		size = getTitleSize(title->attrs);
 
 		tAttribute *currAttr = title->attrs->first;
 
@@ -157,7 +154,7 @@ void addTitle(tTitle *title)
 				fprintf(file, " color=\"%s\"", currAttr->value);
 				break;
 			case POSITIONVALUE:
-				fprintf(file, " style=\"text-align:%s;", currAttr->value);
+				fprintf(file, " style=\"text-align:%s;\"", currAttr->value);
 				break;
 			case BOLDVALUE:
 				bold = 1;
@@ -197,37 +194,29 @@ void addTitle(tTitle *title)
 	fprintf(file, "</h%d>\n", size);
 }
 
-int getFontSize(tAttributes *attrs)
+int getFontSize(char * value)
 {
-	tAttribute *currAttr = attrs->first;
-	while (currAttr != NULL)
-	{
-		if (currAttr->type != SIZEVALUE)
-		{
-			currAttr = currAttr->next;
-		}
-	}
-	if (strcmp(currAttr->value, "x-small"))
+	if (strcmp(value, "x-small") == 0)
 	{
 		return 10;
 	}
-	if (strcmp(currAttr->value, "small"))
+	if (strcmp(value, "small") == 0)
 	{
 		return 14;
 	}
-	if (strcmp(currAttr->value, "medium"))
+	if (strcmp(value, "medium") == 0)
 	{
 		return 25;
 	}
-	if (strcmp(currAttr->value, "large"))
+	if (strcmp(value, "large") == 0)
 	{
 		return 40;
 	}
-	if (strcmp(currAttr->value, "x-large"))
+	if (strcmp(value, "x-large") == 0)
 	{
 		return 50;
 	}
-	if (strcmp(currAttr->value, "xx-large"))
+	if (strcmp(value, "xx-large") == 0)
 	{
 		return 64;
 	}
@@ -242,42 +231,41 @@ int getFontSize(tAttributes *attrs)
 	Finalmente cerrar el tag style
 */
 void addStyle(tAttributes * attrs) {
-	int size = getFontSize(attrs);
 
 	tAttribute *currAttr = attrs->first;
 
-	while (currAttr != NULL)
-	{ 
-		if (currAttr->type != POSITIONVALUE || currAttr->type != SIZEVALUE) {
-			currAttr = currAttr->next;
-		}
+	while (currAttr != NULL && (currAttr->type != POSITIONVALUE || currAttr->type != SIZEVALUE)) 
+	{
 		if (currAttr->type == POSITIONVALUE)
 		{
 			fprintf(file, " style=\"");
-			fprintf(file, " text-align:\"%s\";", currAttr->value);
-			while(currAttr != NULL) {
-				if(currAttr->type != SIZEVALUE)
-					currAttr = currAttr->next;
+			fprintf(file, "text-align:%s;", currAttr->value);
+			while(currAttr != NULL && currAttr->type != SIZEVALUE) {
+				currAttr = currAttr->next;
 			}
-			if (currAttr->type == SIZEVALUE)
+			if (currAttr != NULL && currAttr->type == SIZEVALUE)
 			{
+				int size = getFontSize(currAttr->value);
 				fprintf(file, " font-size:%dpt;", size);
 			}
-			fprintf(file, " \"");
+			fprintf(file, "\"");
 		}
 		else if (currAttr->type == SIZEVALUE)
 		{
+			int size = getFontSize(currAttr->value);
 			fprintf(file, " style=\"");
-			fprintf(file, " font-size:%dpt;", size);
-			while(currAttr != NULL) {
-				if(currAttr->type != POSITIONVALUE)
-					currAttr = currAttr->next;
+			fprintf(file, "font-size:%dpt;", size);
+			while(currAttr != NULL && currAttr->type != POSITIONVALUE) {
+				currAttr = currAttr->next;
 			}
-			if (currAttr->type == POSITIONVALUE)
+			if (currAttr != NULL && currAttr->type == POSITIONVALUE)
 			{
-				fprintf(file, " text-align:\"%s\";", currAttr->value);
+				fprintf(file, " text-align:%s;", currAttr->value);
 			}
-			fprintf(file, " \"");
+			fprintf(file, "\"");
+		}
+		if(currAttr != NULL){
+			currAttr = currAttr->next;
 		}
 	}
 
@@ -292,7 +280,7 @@ void addText(tText *text)
 
 	if (text->attrs != NULL)
 	{
-		// addStyle(text->attrs);
+		addStyle(text->attrs);
 
 		tAttribute *current = text->attrs->first;
 
@@ -349,7 +337,6 @@ void addLink(tLink *link)
 
 	if (link->attrs != NULL)
 	{
-		// addStyle(link->attrs);
 
 		tAttribute *current = link->attrs->first;
 		
@@ -357,17 +344,15 @@ void addLink(tLink *link)
 		{
 			switch (current->type)
 			{
-			case COLORVALUE:
-				fprintf(file, " color=\"%s\"", current->value);
+			case SIZEVALUE:
+				int size = getFontSize(current->value);
+				fprintf(file, " style=\"font-size:%dpt;\"", size);
 				break;
 			case BOLDVALUE:
 				bold = 1;
 				break;
 			case ITALICVALUE:
 				italic = 1;
-				break;
-			case UNDERLINEDVALUE:
-				underlined = 1;
 				break;
 			}
 			current = current->next;
@@ -379,13 +364,9 @@ void addLink(tLink *link)
 		fprintf(file, "<b>");
 	if (italic == 1)
 		fprintf(file, "<i>");
-	if (underlined == 1)
-		fprintf(file, "<u>");
 
 	fprintf(file, "%s", link->text);
 
-	if (underlined == 1)
-		fprintf(file, "</u>");
 	if (italic == 1)
 		fprintf(file, "</i>");
 	if (bold == 1)
