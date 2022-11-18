@@ -58,7 +58,6 @@ tExprs * ExprAction(tExpr * exp){
 	}
 	exp->next = NULL;
 	exps->first = exp;
-	exps->size = 1;
 	return exps;
 }
 
@@ -69,7 +68,6 @@ tExprs * ExprsAction(tExpr * exp, tExprs * exps){
 		aux = aux->next;
 	}
 	aux->next = exp;
-	exps->size++;
 	return exps;
 }
 
@@ -231,7 +229,6 @@ tContainer * ContainerWithoutAttrsGrammarAction(tExprs * exprs){
 	}
 	container->attrs = NULL;
 	container->content = exprs;
-	container->size++;
 	return container;
 }
 
@@ -294,7 +291,6 @@ tContainer * ContainerWithAttrsGrammarAction(tAttributes * attrs, tExprs * exprs
 	}
 	container->attrs = attrs;
 	container->content = exprs;
-	container->size++;
 	return container;
 }
 
@@ -309,7 +305,6 @@ tAttributes * AttrAction(tAttribute * attr){
 		return NULL;
 	}
 	aux->first = attr;
-	aux->size = 1;
 	return aux;
 }
 
@@ -321,7 +316,6 @@ tAttributes * AttrsAction(tAttribute * attr, tAttributes * attrs){
 	}
 	attr->next = attrs->first;
 	attrs->first = attr;
-	attrs->size++;
 	return attrs;
 }
 
@@ -336,7 +330,6 @@ tAttributes * IdAttrPatternAction(tAttribute * id){
 	AttrAux->next = id->next;
 	AttrAux->value = id->value;
 	AttrsAux->first = AttrAux;
-	AttrsAux->size++;
 	return AttrsAux;
 }
 
@@ -485,7 +478,6 @@ tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content){
 		aux = aux->nextRow;
 	}
 	aux->nextRow = row_content;
-	table_content->size++;
 	return table_content;
 }
 
@@ -496,7 +488,6 @@ tRows * RowContentAction(tRow * row_content){
 		return NULL;
 	}
 	aux->firstRow = row_content;
-	aux->size++;
 	return aux;
 }
 
@@ -506,7 +497,6 @@ tRow * RowExpressionsAction(tExprs * content){
 	if(aux == NULL){
 		return NULL;
 	}
-	aux->size = 1;
 	aux->nextRow = NULL;
 	aux->content = content;
 	return aux;

@@ -1,3 +1,4 @@
+/* Un programa que genere un HTML que contenga todos los elementos y estilos definidos. */
 START
 FONT Arial
 TITLE id:A1  size:large color:red position:center bold underlined "Hola mundo!"

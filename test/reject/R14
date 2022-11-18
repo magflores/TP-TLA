@@ -1,3 +1,4 @@
+/* Un programa que intente asignar más de un valor a un atributo de estilo que no lo permita */
 START
 TITULO color:red color:blue position:left position:center 
 IMG color:red "LINK"

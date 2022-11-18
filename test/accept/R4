@@ -1,3 +1,4 @@
+/* Un programa que produzca un HTML con niveles de anidamiento. */
 START
 CONTAINER
 TITLE "Tabla de prueba"

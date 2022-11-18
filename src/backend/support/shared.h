@@ -64,7 +64,6 @@ typedef struct tExpr{
 } tExpr;
 
 typedef struct tExprs{
-	int size;
 	tExpr * first;
 } tExprs;
 
@@ -82,7 +81,6 @@ typedef struct tAttribute
 typedef struct tAttributes
 {
 	struct tAttribute * first;
-	int size;
 } tAttributes;
 
 typedef struct tTitle{
@@ -114,13 +112,11 @@ typedef struct tRow
 {
 	struct tRow * nextRow;
 	tExprs * content;
-	int size;
 } tRow;
 
 typedef struct tRows
 {
 	tRow * firstRow;
-	int size;
 } tRows;
 
 typedef struct tRowxColAttr{
@@ -141,7 +137,6 @@ typedef struct tTable{
 typedef struct tContainer{
 	tAttributes * attrs;
 	tExprs * content;
-	int size;
 } tContainer;
 
 

@@ -1,3 +1,4 @@
+/* Un programa que defina una tipografía elegida por el usuario (distinta a la default). */
 START
 
 FONT Arial

@@ -1,5 +1,6 @@
+/* Un programa mal formado, utilizando palabras claves erróneas. */
 TITLE 
-TEXT "HOLA MUNDO"
+TXT "HOLA MUNDO"
 LINK "Un LINK"
 TABLE 
 

@@ -1,3 +1,4 @@
+/* Un programa de aperturas y cierres de contenedores impares. */
 START
 BEGIN CONTAINER
 

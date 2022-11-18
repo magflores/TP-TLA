@@ -1,5 +1,6 @@
+/* Un programa que genere un HTML que contenga LINKS externos. */
 START
 LINK  "https://www.google.com/","Google"
-LINK "https://www.campus.itba.edu.ar/","Campus ITBA"
+LINK "https://twitter.com/","Twitter"
 LINK "https://www.youtube.com/","Youtube"
 END

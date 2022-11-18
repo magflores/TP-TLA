@@ -1,3 +1,4 @@
+/* Un programa que asigne el contenido de un elemento sin utilizar comillas para delimitarlo. */
 START
 TEXT Texto sin comillas
 END

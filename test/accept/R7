@@ -1,3 +1,4 @@
+/* Un programa que genere una grilla (tabla). */
 START
 TABLE id:A1 rowxcol:(3x3)
 ROW

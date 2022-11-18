@@ -1,7 +1,6 @@
+/* Un programa que genere un HTML que contenga imágenes. */
 START
 IMG "https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png"
-IMG "https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png"
-IMG "https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png"
-IMG "https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png"
-IMG "https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png"
+IMG "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+IMG "https://educacion30.b-cdn.net/wp-content/uploads/2019/02/girasoles-978x652.jpg"
 END

@@ -1,5 +1,8 @@
+/* Un programa que genere un HTML utilizando todas las posiciones disponibles. */
 START
 TITLE position:left "Titulo en posicion izquierda"
 TEXT position:center "Texto en posicion central"
-IMG "https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png"
+CONTAINER position:right
+IMG size:x-small "https://imagenes.20minutos.es/files/image_990_v3/uploads/imagenes/2021/11/24/google-imagenes-2.png"
+END CONTAINER
 END
