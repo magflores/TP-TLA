@@ -37,7 +37,7 @@ Luego se deberá abrir la solución generada `bin\Compiler.sln` con el IDE _Micr
 
 ## Ejecución
 
-Para compilar un programa, primero cree un archivo vacío denominado `program` (o el nombre que desee). La forma correcta de utilizar el lenguaje se encuentra detallado en el archivo TUTORIAL.pdf. Tambien, se puede correr el programa elegiendo el archivo donde se quiera guardar la salida HTML (con el nombre del archivo sin el ".html").
+Para compilar un programa, primero cree un archivo vacío denominado `program` (o el nombre que desee). La forma correcta de utilizar el lenguaje se encuentra detallado en el archivo TUTORIAL.pdf que se encuentra dentro del directorio 'doc'. Tambien, se puede correr el programa elegiendo el archivo donde se quiera guardar la salida HTML (con el nombre del archivo sin el ".html").
 
 Luego, ejecute el compilador desde el directorio raíz del proyecto, o desde cualquier otro lugar indicando el path hacia el script `start.sh` y pasando por parámetro el path hacia el programa a compilar:
 
