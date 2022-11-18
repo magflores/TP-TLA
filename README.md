@@ -16,6 +16,8 @@ Para construir el compilador, se requieren las siguientes dependencias:
 
 Si en lugar de trabajar con un entorno _Linux_, se está construyendo el proyecto sobre un entorno _Microsoft Windows_, se debe instalar _Microsoft Visual Studio 2022_ con las extensiones para desarrollar aplicaciones en _C/C++_, así como también las herramientas requeridas, con excepción del compilador _GCC_ y la herramienta _Make_.
 
+Particularmente, este proyecto fue testeado y construido con las directivas de Windows.
+
 ## Construcción
 
 Para construir el proyecto por completo, ejecute en la raíz del repositorio los siguientes comandos (en _Linux_):
@@ -35,16 +37,15 @@ Luego se deberá abrir la solución generada `bin\Compiler.sln` con el IDE _Micr
 
 ## Ejecución
 
-Para compilar un programa, primero cree un archivo vacío denominado `program` (o el nombre que desee), con el siguiente contenido:
-
-```
-123123 + 123 - 2 * (454 + 890 / 89)
-```
+Para compilar un programa, primero cree un archivo vacío denominado `program` (o el nombre que desee). La forma correcta de utilizar el lenguaje se encuentra detallado en el archivo TUTORIAL.pdf. Tambien, se puede correr el programa elegiendo el archivo donde se quiera guardar la salida HTML.
 
 Luego, ejecute el compilador desde el directorio raíz del proyecto, o desde cualquier otro lugar indicando el path hacia el script `start.sh` y pasando por parámetro el path hacia el programa a compilar:
 
 ```bash
 user@machine:path/ $ script/start.sh program
+```
+```bash
+user@machine:path/ $ script/start.sh program path
 ```
 
 En Windows:
@@ -52,8 +53,9 @@ En Windows:
 ```bash
 user@machine:path/ $ script\start.bat program
 ```
-
-Debería obtener el resultado correcto de evaluar el programa anterior: `122318`.
+```bash
+user@machine:path/ $ script\start.bat program path
+```
 
 ## Testing
 
