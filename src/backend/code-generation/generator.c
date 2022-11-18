@@ -26,7 +26,7 @@ void Generator(tProgram *result)
 	{
 		fprintf(file, "<!DOCTYPE html>\n<html>\n\t<head>\n\t<meta charset=\"utf-8\">\n</head>\n<body>\n</body>\n</html>\n\n");
 		fclose(file);
-		free(result);
+		//free(result);
 		return;
 	}
 

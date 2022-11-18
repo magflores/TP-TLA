@@ -3,7 +3,7 @@
 
 #include "../../backend/support/shared.h"
 #include "../../backend/support/logger.h"
-// #include "../../backend/semantic-analysis/abstract-syntax-tree.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
