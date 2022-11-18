@@ -111,7 +111,7 @@ program: START expressions END										{ $$ = ProgramGrammarAction($2); }
 		| START /*lambda*/ END										{ $$ = EmptyExprAction(); }
 		;
 
-expressions: expression expressions 								{ $$ = ExprsAction($1, $2); }
+expressions: expressions expression 								{ $$ = ExprsAction($2, $1); }
 		| expression 												{ $$ = ExprAction($1); }
 		;
 
@@ -199,7 +199,7 @@ table_attr: id rowxcol												{ $$ = IdAndRowxColAttrPaternAction($1, $2); }
 rowxcol: ROWXCOL COLON OPEN_PARENTHESIS NUMBER X NUMBER CLOSE_PARENTHESIS			{ $$ = RowxColAttrAction($4, $6); }
 		;
 
-table_content: row_content table_content  							{ $$ = TableAndRowContentAction($1, $2); } 
+table_content: table_content row_content  							{ $$ = TableAndRowContentAction($2, $1); } 
 		| row_content  												{ $$ = RowContentAction($1); } 
 		;
 

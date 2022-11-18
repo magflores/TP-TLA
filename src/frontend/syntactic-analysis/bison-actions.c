@@ -53,19 +53,21 @@ tProgram * ProgramGrammarAction(tExprs * exprs) {
 tExprs * ExprAction(tExpr * exp){
 	LogDebug("ExprAction()");
 	tExprs * exps = calloc(BLOCK, sizeof(tExprs));
-	if(exps == NULL)
+	if(exps == NULL) {
 		return NULL;
+	}
 	exp->next = NULL;
 	exps->first = exp;
-	exps->size++;
+	exps->size = 1;
 	return exps;
 }
 
 tExprs * ExprsAction(tExpr * exp, tExprs * exps){
 	LogDebug("ExprsAction()");
 	tExpr * aux = exps->first;
-	while(aux->next != NULL)
+	while(aux->next != NULL) {
 		aux = aux->next;
+	}
 	aux->next = exp;
 	exps->size++;
 	return exps;
@@ -465,7 +467,7 @@ tTableAttrs * RowxColAttrPatternAction(tRowxColAttr * rowxcol){
 	return aux;
 }
 
-tRowxColAttr * RowxColAttrAction(int cols, int rows){
+tRowxColAttr * RowxColAttrAction(int rows, int cols){
 	LogDebug("RowxColAttrAction()");
 	tRowxColAttr * aux = calloc(BLOCK, sizeof(tRowxColAttr));
 	if(aux == NULL){
@@ -479,8 +481,9 @@ tRowxColAttr * RowxColAttrAction(int cols, int rows){
 tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content){
 	LogDebug("TableAndRowContentAction()");
 	tRow * aux = table_content->firstRow;
-	while(aux->nextRow != NULL)
+	while(aux->nextRow != NULL) {
 		aux = aux->nextRow;
+	}
 	aux->nextRow = row_content;
 	table_content->size++;
 	return table_content;

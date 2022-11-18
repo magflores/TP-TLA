@@ -86,7 +86,7 @@ tTableAttrs * IdAndRowxColAttrPaternAction(tAttribute * id, tRowxColAttr * rowxc
 
 tTableAttrs * RowxColAttrPatternAction(tRowxColAttr * rowxcol);
 
-tRowxColAttr * RowxColAttrAction(int cols, int rows); //FIXME: PUEDE SER QUE NO LE LLEGUEN int?
+tRowxColAttr * RowxColAttrAction(int rows, int cols);
 
 tRows * TableAndRowContentAction(tRow * row_content, tRows * table_content);
 

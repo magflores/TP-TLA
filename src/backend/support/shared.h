@@ -2,7 +2,6 @@
 #define SHARED_HEADER
 
 #include <stdio.h>
-#include "../semantic-analysis/abstract-syntax-tree.h"
 
 // Descriptor del archivo de entrada que utiliza Bison.
 extern FILE * yyin;

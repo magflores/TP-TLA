@@ -574,19 +574,22 @@ void addContainer(tContainer *container)
 		}
 	}
 	fprintf(file, ">\n");
-	WebPage(container->content); // LO DE ADENTRO EN COMO UNA PAGINA
+	WebPage(container->content); // LO DE ADENTRO ES COMO UNA PAGINA
 	fprintf(file, "</div>\n");
 }
 
 void addRowContent(tExprs *rowContent, int cols)
 {
 	tExpr *auxExpr = rowContent->first;
+	tText * aux1 = (tText *)auxExpr->expr;
+	LogDebug("NEXT CONTENT1: %s", aux1->content);
 	for (int col = 0; col < cols; col++)
 	{
 		if (auxExpr != NULL)
 		{
 			fprintf(file, "\n\t<td>");
 			addHTML(auxExpr);
+			auxExpr = auxExpr->next;
 		}
 		else
 		{
@@ -594,7 +597,6 @@ void addRowContent(tExprs *rowContent, int cols)
 		}
 		fprintf(file, "</td>\n");
 	}
-	auxExpr = auxExpr->next;
 }
 
 void addTable(tTable *table)
